@@ -52,52 +52,56 @@ const ResetPassword = () => {
   };
 
   return (
-    <Container>
-      <Center style={{ width: "100%", height: "100vh" }}>
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "100%", maxWidth: 340, padding: 10 }}
-        >
-          <Title order={2} mb={5}>
-            Create your new password
-          </Title>
-          <Text c="dimmed">
-            Almost done. Enter your new password and youre all set
+    <Container className="max-w-[340px] px-6">
+      <Center className="w-full h-screen">
+        <div className="space-y-10">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Title order={2}>Create your new password</Title>
+            {error?.includes("expired") && (
+              <Alert className="bg-red-50">{error}</Alert>
+            )}
+            <PasswordInput
+              size="md"
+              icon={<MdLockOutline />}
+              placeholder="Password"
+              label="New password"
+              withAsterisk
+              error={error?.toLowerCase().includes("length") && error}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <PasswordInput
+              size="md"
+              icon={<MdLockOutline />}
+              my={13}
+              placeholder="Confirm password"
+              label="Confirm new password"
+              withAsterisk
+              value={confirmPassword}
+              error={error?.toLowerCase().includes("match") && error}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                setError(null);
+              }}
+            />
+            <Button
+              size="md"
+              type="submit"
+              className="bg-green-500"
+              fullWidth
+              mb={7}
+            >
+              {processing ? "Updating" : "Set new password"}
+            </Button>
+          </form>
+          <Text className="text-sm text-gray-600 text-center" fw={700}>
+            linkd is your bookmark to save your important links, organized and
+            accessible.
           </Text>
-          {error?.includes("expired") && (
-            <Alert mt={10} color="red">
-              {error}
-            </Alert>
-          )}
-          <PasswordInput
-            size="md"
-            icon={<MdLockOutline />}
-            my={13}
-            placeholder="Password"
-            label="New password"
-            withAsterisk
-            error={error?.toLowerCase().includes("length") && error}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <PasswordInput
-            size="md"
-            icon={<MdLockOutline />}
-            my={13}
-            placeholder="Confirm password"
-            label="Confirm new password"
-            withAsterisk
-            value={confirmPassword}
-            error={error?.toLowerCase().includes("match") && error}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-              setError(null);
-            }}
-          />
-          <Button size="md" type="submit" color="green" fullWidth mb={7}>
-            {processing ? "Updating" : "Set new password"}
-          </Button>
-        </form>
+          <Title className="text-[26px] text-center">
+            <span className="">linkd.io</span>
+          </Title>
+        </div>
       </Center>
     </Container>
   );
