@@ -1,21 +1,2 @@
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root {
-  color-scheme: light dark;
-}
-
-a {
-  text-decoration: none;
-  color: #213547;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-}
