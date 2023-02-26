@@ -93,7 +93,7 @@ const Register = () => {
               </Text>
             </div>
           </form>
-          <Text className="text-sm text-gray-700" fw={500}>
+          <Text className="text-sm text-gray-600" fw={700}>
             linkd is your bookmark to save your important links, organized and
             accessible.
           </Text>
