@@ -53,7 +53,9 @@ const ResetPassword = () => {
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Title order={2}>Create your new password</Title>
+            <Title order={2} className="text-center">
+              Reset your password
+            </Title>
             {error?.includes("expired") && (
               <Alert className="bg-red-50">{error}</Alert>
             )}
@@ -92,8 +94,8 @@ const ResetPassword = () => {
             </Button>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>
-            linkd is your bookmark to save your important links, organized and
-            accessible.
+            linkd.io is your bookmark for saving important topics, organizing
+            your links, and making them easily accessible.
           </Text>
           <Title className="text-[26px] text-center">
             <span className="">linkd.io</span>

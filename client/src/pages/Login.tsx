@@ -51,8 +51,8 @@ const Login = () => {
   return (
     <Container className="max-w-[340px] px-6">
       <Center className="w-full h-screen">
-        <div className="space-y-10 text-center">
-          <Title order={1} className="text-[40px] text-gray-700">
+        <div className="space-y-10">
+          <Title order={1} className="text-[40px] text-gray-700 text-center">
             Sign In
           </Title>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -94,11 +94,11 @@ const Login = () => {
               </div>
             </div>
           </form>
-          <Text className="text-sm text-gray-600" fw={700}>
-            linkd is your bookmark to save your important links, organized and
-            accessible.
+          <Text className="text-sm text-gray-600 text-center" fw={700}>
+            linkd.io is your bookmark for saving important topics, organizing
+            your links, and making them easily accessible.
           </Text>
-          <Title className="text-[26px]">
+          <Title className="text-[26px] text-center">
             <span className="">linkd.io</span>
           </Title>
         </div>

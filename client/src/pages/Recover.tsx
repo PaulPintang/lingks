@@ -59,16 +59,16 @@ const Recover = () => {
   return (
     <Container className="max-w-[340px] px-6">
       <Center className="w-full h-screen">
-        <div className="space-y-10 text-center">
+        <div className="space-y-10">
           <form onSubmit={handleSubmit} className="space-y-4">
             {status === 200 ? (
               <>
                 <Center>
                   <Title order={3}>Verify email</Title>
+                  <Text fz="sm" align="center">
+                    Enter the 6 digit code we sent to your email
+                  </Text>
                 </Center>
-                <Text fz="sm" align="center">
-                  Enter the 6 digit code we sent to your email
-                </Text>
 
                 <NumberInput
                   size="md"
@@ -149,13 +149,15 @@ const Recover = () => {
               </>
             )}
           </form>
-          <Text className="text-sm text-gray-600" fw={700}>
-            linkd is your bookmark to save your important links, organized and
-            accessible.
+          <Text className="text-sm text-gray-600 text-center" fw={700}>
+            linkd.io is your bookmark for saving important topics, organizing
+            your links, and making them easily accessible.
           </Text>
-          <Title className="text-[26px]">
-            <span className="">linkd.io</span>
-          </Title>
+          <Center>
+            <Title className="text-[26px]">
+              <span className="">linkd.io</span>
+            </Title>
+          </Center>
         </div>
       </Center>
     </Container>
