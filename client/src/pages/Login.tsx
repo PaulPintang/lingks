@@ -11,6 +11,7 @@ import {
   TextInput,
   Center,
   UnstyledButton,
+  Input,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { User } from "./Register";
@@ -51,58 +52,59 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <Center style={{ width: "100%", height: "100vh" }}>
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "100%", maxWidth: 340, padding: 10 }}
-        >
-          <Title order={2}>Hi, Welcome back!</Title>
-          <Text c="dimmed" mb={15}>
-            Please enter your details
-          </Text>
-
-          <TextInput
-            icon={<MdAlternateEmail />}
-            withAsterisk
-            label="Email"
-            placeholder="Your email"
-            value={email}
-            error={error?.toLowerCase().includes("email") && error}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <PasswordInput
-            icon={<MdLockOutline />}
-            my={15}
-            placeholder="Password"
-            label="Password"
-            withAsterisk
-            value={password}
-            error={error?.toLowerCase().includes("password") && error}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Link to="/recover">
-            <Text fz="xs" align="right" my={13} c="dimmed">
-              Forgot password?
-            </Text>
-          </Link>
-
-          <Flex justify="space-between" align="center">
-            <Text fz="xs" align="center">
-              Don't have an account? {""}
-              <UnstyledButton type="submit">
-                <Link to="/register">
-                  <Text fz="xs" align="center" color="blue">
-                    Register
-                  </Text>
-                </Link>
-              </UnstyledButton>
-            </Text>
-            <Button type="submit">
+    <Container className="max-w-[340px] px-6">
+      <Center className="w-full h-screen">
+        <div className="space-y-10 text-center">
+          <Title order={1} className="text-[40px] text-gray-700">
+            Sign In
+          </Title>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <TextInput
+              size="md"
+              icon={<MdAlternateEmail />}
+              placeholder="Your email"
+              value={email}
+              error={error?.toLowerCase().includes("email") && error}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <PasswordInput
+              size="md"
+              icon={<MdLockOutline />}
+              placeholder="Password"
+              value={password}
+              error={error?.toLowerCase().includes("password") && error}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" size="md" variant="outline" fullWidth>
               {processing ? "Signing in..." : "Sign in"}
             </Button>
-          </Flex>
-        </form>
+            <div className="text-gray-700">
+              <div className="flex text-sm justify-center gap-1 ">
+                <Text fw={500}>Forgot your password?</Text>
+                <Text fw={500}>
+                  <Link to="/recover" className="no-underline text-blue-500">
+                    Reset password
+                  </Link>
+                </Text>
+              </div>
+              <div className="flex text-sm justify-center gap-1">
+                <Text fw={500}>Don't have an account?</Text>
+                <Text fw={500}>
+                  <Link to="/register" className="no-underline text-blue-500">
+                    Sign up
+                  </Link>
+                </Text>
+              </div>
+            </div>
+          </form>
+          <Text className="text-sm text-gray-700" fw={500}>
+            linkd is your bookmark to save your important links, organized and
+            accessible.
+          </Text>
+          <Title className="text-[26px]">
+            <span className="">linkd.io</span>
+          </Title>
+        </div>
       </Center>
     </Container>
   );
