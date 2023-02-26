@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
+import { GiBookmarklet } from "react-icons/gi";
 
 export interface User {
   name?: string;
@@ -95,9 +96,14 @@ const Register = () => {
             linkd.io is your bookmark for saving important topics, organizing
             your links, and making them easily accessible.
           </Text>
-          <Title className="text-[26px] text-center">
-            <span className="">linkd.io</span>
-          </Title>
+          <div className="flex items-center justify-center gap-2">
+            <GiBookmarklet size={25} className="text-purple-500" />
+            <Title className="text-[26px]">
+              <Link to="/" className="no-underline text-gray-800">
+                <span className="">linkd.io</span>
+              </Link>
+            </Title>
+          </div>
         </div>
       </Center>
     </Container>

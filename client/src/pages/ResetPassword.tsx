@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { handleChangePass } from "../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   PasswordInput,
@@ -11,6 +11,7 @@ import {
   Alert,
 } from "@mantine/core";
 import { MdLockOutline } from "react-icons/md";
+import { GiBookmarklet } from "react-icons/gi";
 
 export interface User {
   name?: string;
@@ -86,20 +87,25 @@ const ResetPassword = () => {
             <Button
               size="md"
               type="submit"
-              className="bg-green-500"
+              className="bg-green-500 hover:bg-green-400 transition-all"
               fullWidth
               mb={7}
             >
-              {processing ? "Updating" : "Set new password"}
+              {processing ? "Updating" : "Confirm"}
             </Button>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>
             linkd.io is your bookmark for saving important topics, organizing
             your links, and making them easily accessible.
           </Text>
-          <Title className="text-[26px] text-center">
-            <span className="">linkd.io</span>
-          </Title>
+          <div className="flex items-center justify-center gap-2">
+            <GiBookmarklet size={25} className="text-purple-500" />
+            <Title className="text-[26px]">
+              <Link to="/" className="no-underline text-gray-800">
+                <span className="">linkd.io</span>
+              </Link>
+            </Title>
+          </div>
         </div>
       </Center>
     </Container>

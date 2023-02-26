@@ -13,6 +13,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { MdAlternateEmail } from "react-icons/md";
+import { GiBookmarklet } from "react-icons/gi";
 
 const Recover = () => {
   const navigate = useNavigate();
@@ -153,11 +154,14 @@ const Recover = () => {
             linkd.io is your bookmark for saving important topics, organizing
             your links, and making them easily accessible.
           </Text>
-          <Center>
+          <div className="flex items-center justify-center gap-2">
+            <GiBookmarklet size={25} className="text-purple-500" />
             <Title className="text-[26px]">
-              <span className="">linkd.io</span>
+              <Link to="/" className="no-underline text-gray-800">
+                <span className="">linkd.io</span>
+              </Link>
             </Title>
-          </Center>
+          </div>
         </div>
       </Center>
     </Container>
