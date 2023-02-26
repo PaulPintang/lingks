@@ -12,8 +12,7 @@ import {
   NumberInput,
   UnstyledButton,
 } from "@mantine/core";
-import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
-import { User } from "./Register";
+import { MdAlternateEmail } from "react-icons/md";
 
 const Recover = () => {
   const navigate = useNavigate();

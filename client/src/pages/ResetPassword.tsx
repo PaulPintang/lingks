@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { handleChangePass } from "../utils/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
-  Card,
-  TextInput,
   PasswordInput,
-  Flex,
   Text,
   Container,
   Title,
   Center,
   Alert,
 } from "@mantine/core";
-import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
+import { MdLockOutline } from "react-icons/md";
 
 export interface User {
   name?: string;

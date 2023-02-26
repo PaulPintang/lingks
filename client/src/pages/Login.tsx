@@ -5,13 +5,10 @@ import {
   Button,
   Title,
   PasswordInput,
-  Flex,
   Text,
   Container,
   TextInput,
   Center,
-  UnstyledButton,
-  Input,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { User } from "./Register";
