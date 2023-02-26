@@ -13,6 +13,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
+import { FaRegUserCircle } from "react-icons/fa";
 
 export interface User {
   name?: string;
@@ -49,60 +50,57 @@ const Register = () => {
   };
 
   return (
-    <Container>
-      <Center style={{ width: "100%", height: "100vh" }}>
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "100%", maxWidth: 340, padding: 10 }}
-        >
-          <Title order={2}>Create an account</Title>
-          <Text c="dimmed" mb={15}>
-            Please enter your details
-          </Text>
-          <TextInput
-            withAsterisk
-            label="Name"
-            placeholder="Your name"
-            value={name}
-            error={error?.toLowerCase().includes("name") && error}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextInput
-            icon={<MdAlternateEmail />}
-            mt={13}
-            withAsterisk
-            label="Email"
-            placeholder="Your email"
-            value={email}
-            error={error?.toLowerCase().includes("email") && error}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <PasswordInput
-            icon={<MdLockOutline />}
-            my={13}
-            placeholder="Password"
-            label="Password"
-            withAsterisk
-            value={password}
-            error={error?.toLowerCase().includes("password") && error}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Flex justify="space-between" align="center" mt={20}>
-            <Text fz="xs" align="center">
-              Have an account? {""}
-              <UnstyledButton type="submit">
-                <Link to="/">
-                  <Text fz="xs" align="center" color="blue">
-                    Login
-                  </Text>
-                </Link>
-              </UnstyledButton>
-            </Text>
-            <Button type="submit">
-              {processing ? "Signing up..." : "Sign up"}
+    <Container className="max-w-[340px] px-6">
+      <Center className="w-full h-screen">
+        <div className="space-y-10 text-center">
+          <Title order={1} className="text-[40px] text-gray-700">
+            Sign Up
+          </Title>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <TextInput
+              size="md"
+              icon={<FaRegUserCircle />}
+              placeholder="Your name"
+              value={name}
+              error={error?.toLowerCase().includes("name") && error}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextInput
+              size="md"
+              icon={<MdAlternateEmail />}
+              placeholder="Your email"
+              value={email}
+              error={error?.toLowerCase().includes("email") && error}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <PasswordInput
+              size="md"
+              icon={<MdLockOutline />}
+              placeholder="Password"
+              value={password}
+              error={error?.toLowerCase().includes("password") && error}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" size="md" variant="outline" fullWidth>
+              {processing ? "Signing in..." : "Sign in"}
             </Button>
-          </Flex>
-        </form>
+            <div className="flex text-sm justify-center gap-1 text-gray-700">
+              <Text fw={500}>Have an account?</Text>
+              <Text fw={500}>
+                <Link to="/" className="no-underline text-blue-500">
+                  Sign in
+                </Link>
+              </Text>
+            </div>
+          </form>
+          <Text className="text-sm text-gray-700" fw={500}>
+            linkd is your bookmark to save your important links, organized and
+            accessible.
+          </Text>
+          <Title className="text-[26px]">
+            <span className="">linkd.io</span>
+          </Title>
+        </div>
       </Center>
     </Container>
   );

@@ -58,7 +58,7 @@ const ResetPassword = () => {
           onSubmit={handleSubmit}
           style={{ width: "100%", maxWidth: 340, padding: 10 }}
         >
-          <Title order={3} mb={5}>
+          <Title order={2} mb={5}>
             Create your new password
           </Title>
           <Text c="dimmed">
@@ -70,6 +70,7 @@ const ResetPassword = () => {
             </Alert>
           )}
           <PasswordInput
+            size="md"
             icon={<MdLockOutline />}
             my={13}
             placeholder="Password"
@@ -80,6 +81,7 @@ const ResetPassword = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <PasswordInput
+            size="md"
             icon={<MdLockOutline />}
             my={13}
             placeholder="Confirm password"
@@ -92,7 +94,7 @@ const ResetPassword = () => {
               setError(null);
             }}
           />
-          <Button type="submit" color="green" fullWidth mb={7}>
+          <Button size="md" type="submit" color="green" fullWidth mb={7}>
             {processing ? "Updating" : "Set new password"}
           </Button>
         </form>

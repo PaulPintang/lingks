@@ -74,6 +74,7 @@ const Recover = () => {
               </Text>
 
               <NumberInput
+                size="md"
                 my={10}
                 hideControls
                 value={OTP!}
@@ -85,6 +86,7 @@ const Recover = () => {
               />
 
               <Button
+                size="md"
                 color="green"
                 fullWidth
                 mb={7}
@@ -95,19 +97,23 @@ const Recover = () => {
                 Continue
               </Button>
 
-              <Text fz="sm" align="center">
-                Didn't receive code? {""}
+              <div className="flex text-sm justify-center gap-1 text-gray-700">
+                <Text fw={500}>Didn't receive code?</Text>
                 <UnstyledButton type="submit">
-                  <Text fz="sm" align="center" color="green">
+                  <Text
+                    fw={500}
+                    fz="sm"
+                    className="no-underline text-green-500"
+                  >
                     Resend
                   </Text>
                 </UnstyledButton>
-              </Text>
+              </div>
             </>
           ) : (
             <>
               <Center>
-                <Title order={3}>Forgot your password?</Title>
+                <Title order={2}>Forgot your password?</Title>
               </Center>
               <Text fz="sm" align="center">
                 Enter your email address and we will send an OTP to recover your
@@ -115,6 +121,7 @@ const Recover = () => {
               </Text>
 
               <TextInput
+                size="md"
                 my={16}
                 icon={<MdAlternateEmail />}
                 withAsterisk
@@ -125,6 +132,7 @@ const Recover = () => {
               />
 
               <Button
+                size="md"
                 type="submit"
                 fullWidth
                 mb={10}
@@ -133,16 +141,14 @@ const Recover = () => {
                 {processing ? "Sending..." : "Send"}
               </Button>
 
-              <Text fz="sm" align="center">
-                Don't have an account? {""}
-                <UnstyledButton type="submit">
-                  <Link to="/register">
-                    <Text fz="sm" align="center" color="blue">
-                      Register
-                    </Text>
+              <div className="flex text-sm justify-center gap-1 text-gray-700">
+                <Text fw={500}>Dont have an account?</Text>
+                <Text fw={500}>
+                  <Link to="/register" className="no-underline text-blue-500">
+                    Sign up
                   </Link>
-                </UnstyledButton>
-              </Text>
+                </Text>
+              </div>
             </>
           )}
         </form>
