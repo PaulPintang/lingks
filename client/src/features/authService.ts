@@ -1,10 +1,16 @@
 import axios from "axios";
-import { WritableDraft } from "immer/dist/internal";
-import { User } from "../pages/Register";
 
-export const handleLogin = async (user: User) => {
+export interface UserInterface {
+  name?: string;
+  email: string;
+  password: string;
+}
+
+export const handleLogin = async (user: UserInterface) => {
   try {
     const res = await axios.post("/api/user/login", user);
+    localStorage.setItem("token", res.data.token);
+    localStorage.removeItem("email");
     return res.data.token;
   } catch (err: any) {
     const err_msg = err.response.data.error;
@@ -12,16 +18,19 @@ export const handleLogin = async (user: User) => {
   }
 };
 
-export const handleRegister = async (newUser: User) => {
+export const handleRegister = async (newUser: UserInterface) => {
   try {
     const res = await axios.post("/api/user", newUser);
-    const user = res.data.user;
     localStorage.setItem("email", newUser.email);
-    return user;
+    return res.data.user;
   } catch (err: any) {
     const err_msg = err.response.data.error;
     return err_msg;
   }
+};
+
+export const handleLogout = () => {
+  localStorage.removeItem("token");
 };
 
 export const handleOTP = async (
@@ -40,7 +49,7 @@ export const handleOTP = async (
 };
 
 export const handleChangePass = async (
-  data: User,
+  data: UserInterface,
   setError: (val: string) => void
 ) => {
   try {
@@ -68,6 +77,11 @@ export const userLoggedIn = async (token: string) => {
 };
 
 export const handleError = (response: string) => {
+  if (JSON.stringify(response).toLowerCase().includes("name")) {
+    console.log("name error");
+    return response;
+  }
+
   if (JSON.stringify(response).toLowerCase().includes("email")) {
     console.log("email error");
     return response;

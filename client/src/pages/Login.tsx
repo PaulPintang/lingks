@@ -15,36 +15,38 @@ import {
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/authSlice";
+import { login, reset } from "../features/authSlice";
 import { AppDispatch, RootState } from "../app/store";
 
 const Login = () => {
-  const email = useRef<HTMLInputElement | null>(null);
-  const password = useRef<HTMLInputElement | null>(null);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const { status, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const user = {
-      email: email.current!.value,
-      password: password.current!.value,
+  useEffect(() => {
+    setEmail(localStorage.getItem("email") || "");
+    return () => {
+      dispatch(reset());
     };
-    dispatch(login(user));
-  };
+  }, []);
 
   useEffect(() => {
     localStorage.getItem("token") && navigate("/me");
   }, [status]);
 
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const user = {
+      email,
+      password,
+    };
+    dispatch(login(user));
+  };
+
   return (
     <Container className="max-w-[340px] px-6">
-      {/* <LoadingOverlay
-        visible={}
-        loader={<Loader variant="bars" />}
-        overlayOpacity={1}
-      /> */}
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <Title order={1} className="text-[40px] text-gray-700 text-center">
@@ -55,14 +57,16 @@ const Login = () => {
               size="md"
               icon={<MdAlternateEmail />}
               placeholder="Your email"
-              ref={email!}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               error={error?.toLowerCase().includes("email") && error}
             />
             <PasswordInput
               size="md"
               icon={<MdLockOutline />}
               placeholder="Password"
-              ref={password!}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               error={error?.toLowerCase().includes("password") && error}
             />
             <Button type="submit" size="md" variant="outline" fullWidth>
