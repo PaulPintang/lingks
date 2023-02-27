@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
 import { Protected } from "./middleware/Protected";
 
 // Axios baseUrl
@@ -12,7 +13,11 @@ import Register from "./pages/Register";
 import Recover from "./pages/Recover";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
+
+import Todo from "./test/Todo";
+
 import { AuthProvider } from "./context/AuthContext";
+import { store } from "./app/store";
 
 const router = createBrowserRouter([
   {
@@ -40,15 +45,19 @@ const router = createBrowserRouter([
       </Protected>
     ),
   },
+  {
+    path: "/todo",
+    element: <Todo />,
+  },
 ]);
 
 const App = () => {
   return (
-    <AuthProvider>
+    <Provider store={store}>
       <main>
         <RouterProvider router={router}></RouterProvider>
       </main>
-    </AuthProvider>
+    </Provider>
   );
 };
 

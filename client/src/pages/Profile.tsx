@@ -29,32 +29,32 @@ const Profile = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await userLoggedIn(localStorage.getItem("token")!);
-      setUser(user);
-      setIsLoading(false);
-    };
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const user = await userLoggedIn(localStorage.getItem("token")!);
+  //     setUser(user);
+  //     setIsLoading(false);
+  //   };
 
-    fetchUser().catch((error) => console.log(error));
-    return () => {
-      setUser(null);
-    };
-  }, []);
+  //   fetchUser().catch((error) => console.log(error));
+  //   return () => {
+  //     setUser(null);
+  //   };
+  // }, []);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   navigate("/");
+  // };
 
-  const onCrop = (view: any) => {
-    setViewImg(view);
-  };
+  // const onCrop = (view: any) => {
+  //   setViewImg(view);
+  // };
 
-  const onClose = () => {
-    setViewImg(null);
-    setError(false);
-  };
+  // const onClose = () => {
+  //   setViewImg(null);
+  //   setError(false);
+  // };
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +82,7 @@ const Profile = () => {
           "auth-token": localStorage.getItem("token"),
         },
       });
-      res && handleLogout();
+      // res && handleLogout();
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +91,7 @@ const Profile = () => {
   return (
     <Container>
       <LoadingOverlay
-        visible={isLoading}
+        visible={!isLoading}
         loader={<Loader variant="bars" />}
         overlayOpacity={1}
       />
@@ -111,14 +111,14 @@ const Profile = () => {
               {user?.email}
             </Text>
           </div>
-          <Center>
+          {/* <Center>
             <Button onClick={handleLogout} style={{ width: 100 }} mr="sm">
               Log out
             </Button>
             <Button onClick={handleDelete} style={{ width: 100 }} color="red">
               Delete
             </Button>
-          </Center>
+          </Center> */}
         </Stack>
         <Modal
           centered
@@ -133,7 +133,7 @@ const Profile = () => {
         >
           <form onSubmit={handleUpload}>
             <div>
-              <Avatar
+              {/* <Avatar
                 onClose={onClose}
                 onCrop={onCrop}
                 width="100%"
@@ -147,7 +147,7 @@ const Profile = () => {
 
               <Button type="submit" mt={10}>
                 {processing ? "Uploading" : "Upload"}
-              </Button>
+              </Button> */}
             </div>
           </form>
         </Modal>

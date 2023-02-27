@@ -81,7 +81,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <Button type="submit" size="md" variant="outline" fullWidth>
-              {processing ? "Signing in..." : "Sign in"}
+              {processing ? "Signing up..." : "Sign up"}
             </Button>
             <div className="flex text-sm justify-center gap-1 text-gray-700">
               <Text fw={500}>Have an account?</Text>

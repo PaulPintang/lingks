@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { handleLogin, userLoggedIn } from "../utils/auth";
 import {
@@ -9,72 +9,64 @@ import {
   Container,
   TextInput,
   Center,
+  LoadingOverlay,
+  Loader,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
-import { User } from "./Register";
-import AuthContext from "../context/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/authSlice";
+import { AppDispatch, RootState } from "../app/store";
 
 const Login = () => {
-  const { setUser } = useContext(AuthContext);
+  const email = useRef<HTMLInputElement | null>(null);
+  const password = useRef<HTMLInputElement | null>(null);
+  const { status, error } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
 
-  const [processing, setProcessing] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    setError(null);
-  }, [email, password]);
-
-  useEffect(() => {
-    setEmail(localStorage.getItem("email") || "");
-    localStorage.getItem("token") && navigate("/me");
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const user: User = {
-      email,
-      password,
+    const user = {
+      email: email.current!.value,
+      password: password.current!.value,
     };
-    email && password && setProcessing(true);
-    const returnToken = await handleLogin(user, setProcessing, setError);
-    if (returnToken) {
-      const user = await userLoggedIn(returnToken);
-      setUser(user);
-      navigate("/me");
-    }
+    dispatch(login(user));
   };
+
+  useEffect(() => {
+    localStorage.getItem("token") && navigate("/me");
+  }, [status]);
 
   return (
     <Container className="max-w-[340px] px-6">
+      {/* <LoadingOverlay
+        visible={}
+        loader={<Loader variant="bars" />}
+        overlayOpacity={1}
+      /> */}
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <Title order={1} className="text-[40px] text-gray-700 text-center">
             Sign In
           </Title>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form className="space-y-4" onSubmit={onSubmit}>
             <TextInput
               size="md"
               icon={<MdAlternateEmail />}
               placeholder="Your email"
-              value={email}
+              ref={email!}
               error={error?.toLowerCase().includes("email") && error}
-              onChange={(e) => setEmail(e.target.value)}
             />
             <PasswordInput
               size="md"
               icon={<MdLockOutline />}
               placeholder="Password"
-              value={password}
+              ref={password!}
               error={error?.toLowerCase().includes("password") && error}
-              onChange={(e) => setPassword(e.target.value)}
             />
             <Button type="submit" size="md" variant="outline" fullWidth>
-              {processing ? "Signing in..." : "Sign in"}
+              {status === "pending" ? "Signing in..." : "Sign in"}
             </Button>
             <div className="text-gray-700">
               <div className="flex text-sm justify-center gap-1 ">
