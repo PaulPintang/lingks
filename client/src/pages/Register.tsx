@@ -14,7 +14,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { GiBookmarklet } from "react-icons/gi";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import { register, reset } from "../features/authSlice";
+import { register, reset } from "../features/auth/authSlice";
 
 const Register = () => {
   const [name, setName] = useState<string>("");

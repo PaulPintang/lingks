@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { handleOTP } from "../utils/auth";
-import axios from "axios";
 import {
   Button,
   Title,
@@ -14,98 +12,82 @@ import {
 } from "@mantine/core";
 import { MdAlternateEmail } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
+import { useDispatch, useSelector } from "react-redux";
+import { sendOTP, verifyOTP } from "../features/recover/recoverSlice";
+import { AppDispatch, RootState } from "../app/store";
 
 const Recover = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
-  const [status, setStatus] = useState<number | null>(null);
   const [OTP, setOTP] = useState<number | null>(null);
-  const [processing, setProcessing] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    setError(null);
-  }, [email]);
+  const { status, error, isVerified } = useSelector(
+    (state: RootState) => state.recover
+  );
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
     localStorage.getItem("token") && navigate("/me");
+
+    return () => {
+      localStorage.removeItem("email");
+    };
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    email && setProcessing(true);
-    const res = await handleOTP({ email: email }, setProcessing, setError);
-    res && setStatus(res);
-    status && setProcessing(false);
-  };
+  useEffect(() => {
+    isVerified && navigate("/reset");
+  }, [isVerified]);
 
-  const verifyOTP = async () => {
-    setProcessing(true);
-    try {
-      const res = await axios.get("/api/user/verify", {
-        params: { OTP },
-      });
-      const session = res.data;
-      if (session === true) {
-        navigate("/reset");
-        localStorage.setItem("email", email);
-      }
-      setError("Invalid OTP");
-    } catch (err: any) {
-      console.log(err);
-    }
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch(sendOTP(email));
   };
 
   return (
     <Container className="max-w-[340px] px-6">
       <Center className="w-full h-screen">
         <div className="space-y-10">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {status === 200 ? (
+          <form onSubmit={onSubmit} className="space-y-4">
+            {localStorage.getItem("email") ? (
               <>
                 <Center>
-                  <Title order={3}>Verify email</Title>
-                  <Text fz="sm" align="center">
-                    Enter the 6 digit code we sent to your email
-                  </Text>
+                  <Title order={2}>Verify email</Title>
                 </Center>
+                <Text fz="sm" align="center">
+                  Enter the 6 digit code we sent to your email
+                </Text>
 
                 <NumberInput
                   size="md"
                   my={10}
                   hideControls
                   value={OTP!}
-                  onChange={(value) => {
-                    setOTP(value!);
-                    setError(null);
-                  }}
+                  onChange={(value) => setOTP(value!)}
                   error={error}
                 />
 
                 <Button
                   size="md"
+                  type="button"
+                  onClick={() => dispatch(verifyOTP(OTP!))}
                   color="green"
                   fullWidth
                   mb={7}
                   disabled={OTP!?.toString().length >= 6 ? false : true}
-                  onClick={verifyOTP}
                 >
-                  {/* {processing ? "Verifying..." : "Continue"} */}
-                  Continue
+                  {status === "pending" ? "Verifying..." : "Continue"}
                 </Button>
 
-                <div className="flex text-sm justify-center gap-1 text-gray-700">
+                <div className="flex text-sm justify-center gap-1 ">
                   <Text fw={500}>Didn't receive code?</Text>
-                  <UnstyledButton type="submit">
-                    <Text
-                      fw={500}
-                      fz="sm"
-                      className="no-underline text-green-500"
+                  <Text fw={500}>
+                    <UnstyledButton
+                      type="submit"
+                      className="text-green-500 text-sm hover:text-green-400 transition-all"
                     >
                       Resend
-                    </Text>
-                  </UnstyledButton>
+                    </UnstyledButton>
+                  </Text>
                 </div>
               </>
             ) : (
@@ -125,7 +107,6 @@ const Recover = () => {
                   withAsterisk
                   placeholder="Your email"
                   value={email}
-                  error={error}
                   onChange={(e) => setEmail(e.target.value)}
                 />
 
@@ -136,17 +117,8 @@ const Recover = () => {
                   mb={10}
                   disabled={email.length >= 12 ? false : true}
                 >
-                  {processing ? "Sending..." : "Send"}
+                  {status === "pending" ? "Sending..." : "Send"}
                 </Button>
-
-                <div className="flex text-sm justify-center gap-1 text-gray-700">
-                  <Text fw={500}>Dont have an account?</Text>
-                  <Text fw={500}>
-                    <Link to="/register" className="no-underline text-blue-500">
-                      Sign up
-                    </Link>
-                  </Text>
-                </div>
               </>
             )}
           </form>

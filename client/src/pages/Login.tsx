@@ -15,7 +15,7 @@ import {
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../features/authSlice";
+import { login, reset } from "../features/auth/authSlice";
 import { AppDispatch, RootState } from "../app/store";
 
 const Login = () => {
