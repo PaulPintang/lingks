@@ -42,10 +42,10 @@ const Profile = () => {
   //   };
   // }, []);
 
-  // const handleLogout = () => {
-  //   localStorage.clear();
-  //   navigate("/");
-  // };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   // const onCrop = (view: any) => {
   //   setViewImg(view);
@@ -119,6 +119,9 @@ const Profile = () => {
               Delete
             </Button>
           </Center> */}
+          <Button onClick={handleLogout} style={{ width: 100 }} mr="sm">
+            Log out
+          </Button>
         </Stack>
         <Modal
           centered

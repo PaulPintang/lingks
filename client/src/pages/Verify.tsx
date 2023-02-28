@@ -16,10 +16,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendOTP, verifyOTP, reset } from "../features/recover/recoverSlice";
 import { AppDispatch, RootState } from "../app/store";
 
-const Recover = () => {
+const Verify = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
+  const [OTP, setOTP] = useState<number | null>(null);
   const { status, error } = useSelector((state: RootState) => state.recover);
 
   useEffect(() => {
@@ -31,11 +32,13 @@ const Recover = () => {
     };
   }, []);
 
+  useEffect(() => {
+    !localStorage.getItem("session") && navigate("/");
+  }, []);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(sendOTP(email)).then(
-      (res) => res.payload === 200 && navigate("/verify")
-    );
+    dispatch(sendOTP(email));
   };
 
   return (
@@ -44,22 +47,19 @@ const Recover = () => {
         <div className="space-y-10">
           <form onSubmit={onSubmit} className="space-y-4">
             <Center>
-              <Title order={2}>Forgot your password?</Title>
+              <Title order={2}>Verify email</Title>
             </Center>
             <Text fz="sm" align="center">
-              Enter your email address and we will send an OTP to recover your
-              password
+              Enter the 6 digit code we sent to your email
             </Text>
 
-            <TextInput
+            <NumberInput
               size="md"
-              my={16}
-              icon={<MdAlternateEmail />}
-              withAsterisk
-              placeholder="Your email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
+              my={10}
+              hideControls
+              value={OTP!}
+              onChange={(value) => {
+                setOTP(value!);
                 dispatch(reset());
               }}
               error={error}
@@ -67,13 +67,31 @@ const Recover = () => {
 
             <Button
               size="md"
-              type="submit"
+              type="button"
+              onClick={() =>
+                dispatch(verifyOTP(OTP!)).then(
+                  (res) => res.payload === true && navigate("/reset")
+                )
+              }
+              color="green"
               fullWidth
-              mb={10}
-              disabled={email.length >= 12 ? false : true}
+              mb={7}
+              disabled={OTP!?.toString().length >= 6 ? false : true}
             >
-              {status === "pending" ? "Sending..." : "Send"}
+              {status === "pending" ? "Verifying..." : "Continue"}
             </Button>
+
+            <div className="flex text-sm justify-center gap-1 ">
+              <Text fw={500}>Didn't receive code?</Text>
+              <Text fw={500}>
+                <UnstyledButton
+                  type="submit"
+                  className="text-green-500 text-sm hover:text-green-400 transition-all"
+                >
+                  Resend
+                </UnstyledButton>
+              </Text>
+            </div>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>
             linkd.io is your bookmark for saving important topics, organizing
@@ -93,4 +111,4 @@ const Recover = () => {
   );
 };
 
-export default Recover;
+export default Verify;

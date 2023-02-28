@@ -4,14 +4,12 @@ import { UserInterface } from "../auth/authService";
 interface OTPInterface {
   email: string;
   status: "idle" | "pending" | "succeeded" | "failed";
-  isVerified: boolean;
   error: string | null;
 }
 
 const initialState: OTPInterface = {
   email: "",
   status: "idle",
-  isVerified: false,
   error: null,
 };
 
@@ -19,8 +17,9 @@ export const sendOTP = createAsyncThunk(
   "/user/sendOTP",
   async (email: string) => {
     try {
-      const status = await handleOTP(email);
-      return status;
+      // payload return true
+      const res = await handleOTP(email);
+      return res;
     } catch (error) {
       return error;
     }
@@ -31,6 +30,7 @@ export const verifyOTP = createAsyncThunk(
   "/user/verifyOTP",
   async (OTP: number) => {
     try {
+      // payload return true
       const res = await handleVerifyOTP(OTP);
       return res;
     } catch (err: any) {
@@ -43,6 +43,7 @@ export const resetPassword = createAsyncThunk(
   "/user/resetPassword",
   async (data: UserInterface) => {
     try {
+      // payload return true
       const res = await handleChangePass(data);
       return res;
     } catch (err: any) {
@@ -57,6 +58,7 @@ const recoverSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.error = null;
+      state.status = "idle";
     },
   },
   extraReducers(builder) {
@@ -81,10 +83,9 @@ const recoverSlice = createSlice({
         state.status = "pending";
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
-        state.status = "succeeded";
         // payload return TRUE
         if (action.payload) {
-          state.isVerified = action.payload;
+          state.status = "succeeded";
         } else {
           state.error = "Invalid OTP";
           state.status = "idle";

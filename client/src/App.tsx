@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Recover from "./pages/Recover";
+import Verify from "./pages/Verify";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/recover",
     element: <Recover />,
+  },
+  {
+    path: "/verify",
+    element: <Verify />,
   },
   {
     path: "/reset",

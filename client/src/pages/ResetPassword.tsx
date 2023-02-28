@@ -32,6 +32,7 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const { status } = useSelector((state: RootState) => state.recover);
+
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
     localStorage.getItem("token") && navigate("/me");
@@ -39,15 +40,10 @@ const ResetPassword = () => {
 
   useEffect(() => {
     !localStorage.getItem("session") && navigate("/");
-
     return () => {
       localStorage.removeItem("session");
     };
   }, []);
-
-  useEffect(() => {
-    status === "succeeded" && navigate("/");
-  }, [status]);
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -56,7 +52,10 @@ const ResetPassword = () => {
         email,
         password,
       };
-      return dispatch(resetPassword(user));
+      // payload return true if response id success
+      return dispatch(resetPassword(user)).then(
+        (res) => res.payload && navigate("/")
+      );
     }
     setError("Those passwords didn't match. Try again");
   };
@@ -69,9 +68,6 @@ const ResetPassword = () => {
             <Title order={2} className="text-center">
               Reset your password
             </Title>
-            {/* {error?.includes("expired") && (
-              <Alert className="bg-red-50">{error}</Alert>
-            )} */}
             <PasswordInput
               size="md"
               icon={<MdLockOutline />}
