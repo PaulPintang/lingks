@@ -74,7 +74,16 @@ const Recover = () => {
             >
               {status === "pending" ? "Sending..." : "Send"}
             </Button>
+            <div className="flex text-sm justify-center gap-1">
+              <Text fw={500}>Don't have an account?</Text>
+              <Text fw={500}>
+                <Link to="/register" className="no-underline text-blue-500">
+                  Sign up
+                </Link>
+              </Text>
+            </div>
           </form>
+
           <Text className="text-sm text-gray-600 text-center" fw={700}>
             linkd.io is your bookmark for saving important topics, organizing
             your links, and making them easily accessible.
