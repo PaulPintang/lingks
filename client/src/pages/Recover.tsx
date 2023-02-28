@@ -13,7 +13,7 @@ import {
 import { MdAlternateEmail } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOTP, verifyOTP } from "../features/recover/recoverSlice";
+import { sendOTP, verifyOTP, reset } from "../features/recover/recoverSlice";
 import { AppDispatch, RootState } from "../app/store";
 
 const Recover = () => {
@@ -30,7 +30,7 @@ const Recover = () => {
     localStorage.getItem("token") && navigate("/me");
 
     return () => {
-      localStorage.removeItem("email");
+      dispatch(reset());
     };
   }, []);
 
@@ -62,7 +62,10 @@ const Recover = () => {
                   my={10}
                   hideControls
                   value={OTP!}
-                  onChange={(value) => setOTP(value!)}
+                  onChange={(value) => {
+                    setOTP(value!);
+                    dispatch(reset());
+                  }}
                   error={error}
                 />
 
@@ -107,7 +110,11 @@ const Recover = () => {
                   withAsterisk
                   placeholder="Your email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    dispatch(reset());
+                  }}
+                  error={error}
                 />
 
                 <Button

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { handleOTP, handleVerifyOTP } from "./recoverService";
-
+import { handleChangePass, handleOTP, handleVerifyOTP } from "./recoverService";
+import { UserInterface } from "../auth/authService";
 interface OTPInterface {
   email: string;
   status: "idle" | "pending" | "succeeded" | "failed";
@@ -39,10 +39,26 @@ export const verifyOTP = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  "/user/resetPassword",
+  async (data: UserInterface) => {
+    try {
+      const res = await handleChangePass(data);
+      return res;
+    } catch (err: any) {
+      return err.response.data.error;
+    }
+  }
+);
+
 const recoverSlice = createSlice({
   name: "recoverSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(sendOTP.pending, (state) => {
@@ -52,6 +68,10 @@ const recoverSlice = createSlice({
         // payload return response status 200
         if (action.payload === 200) {
           state.status = "succeeded";
+        } else {
+          // payload return catch error
+          state.error = action.payload;
+          state.status = "idle";
         }
       })
       .addCase(sendOTP.rejected, (state) => {
@@ -62,15 +82,25 @@ const recoverSlice = createSlice({
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         // payload return TRUE
-        state.isVerified = action.payload;
+        if (action.payload) {
+          state.isVerified = action.payload;
+        } else {
+          state.error = "Invalid OTP";
+          state.status = "idle";
+        }
       })
-      .addCase(verifyOTP.rejected, (state) => {
+      .addCase(resetPassword.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.status = "succeeded";
+      })
+      .addCase(resetPassword.rejected, (state) => {
         state.status = "failed";
       });
   },
 });
 
-export const {} = recoverSlice.actions;
+export const { reset } = recoverSlice.actions;
 export default recoverSlice.reducer;

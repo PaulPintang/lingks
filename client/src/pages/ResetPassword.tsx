@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { handleChangePass } from "../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -12,6 +13,9 @@ import {
 } from "@mantine/core";
 import { MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
+import { reset } from "../features/auth/authSlice";
+import { AppDispatch, RootState } from "../app/store";
+import { resetPassword } from "../features/recover/recoverSlice";
 
 export interface User {
   name?: string;
@@ -21,54 +25,64 @@ export interface User {
 
 const ResetPassword = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [processing, setProcessing] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
+  const [error, setError] = useState<string>("");
+  const { status } = useSelector((state: RootState) => state.recover);
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
     localStorage.getItem("token") && navigate("/me");
   }, []);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const user: User = {
-      email,
-      password,
+  useEffect(() => {
+    !localStorage.getItem("session") && navigate("/");
+
+    return () => {
+      localStorage.removeItem("session");
     };
-    setProcessing(true);
-    if (password === confirmPassword) {
-      const res = await handleChangePass(user, setError);
-      setProcessing(false);
-      res && navigate("/");
-    } else {
-      setError("Password did not match!");
-      setProcessing(false);
+  }, []);
+
+  useEffect(() => {
+    status === "succeeded" && navigate("/");
+  }, [status]);
+
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (password == confirmPassword) {
+      const user: User = {
+        email,
+        password,
+      };
+      return dispatch(resetPassword(user));
     }
+    setError("Those passwords didn't match. Try again");
   };
 
   return (
     <Container className="max-w-[340px] px-6">
       <Center className="w-full h-screen">
         <div className="space-y-10">
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={onSubmit} className="space-y-4">
             <Title order={2} className="text-center">
               Reset your password
             </Title>
-            {error?.includes("expired") && (
+            {/* {error?.includes("expired") && (
               <Alert className="bg-red-50">{error}</Alert>
-            )}
+            )} */}
             <PasswordInput
               size="md"
               icon={<MdLockOutline />}
               placeholder="Password"
               label="New password"
               withAsterisk
-              error={error?.toLowerCase().includes("length") && error}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
             />
             <PasswordInput
               size="md"
@@ -78,10 +92,10 @@ const ResetPassword = () => {
               label="Confirm new password"
               withAsterisk
               value={confirmPassword}
-              error={error?.toLowerCase().includes("match") && error}
+              error={error}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
-                setError(null);
+                setError("");
               }}
             />
             <Button
@@ -89,9 +103,10 @@ const ResetPassword = () => {
               type="submit"
               className="bg-green-500 hover:bg-green-400 transition-all"
               fullWidth
+              disabled={password.length < 6}
               mb={7}
             >
-              {processing ? "Updating" : "Confirm"}
+              {status === "pending" ? "Updating" : "Confirm"}
             </Button>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>
