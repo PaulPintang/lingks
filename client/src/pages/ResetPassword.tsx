@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleChangePass } from "../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,

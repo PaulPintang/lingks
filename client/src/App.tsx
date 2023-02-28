@@ -15,9 +15,6 @@ import Verify from "./pages/Verify";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
-import Todo from "./test/Todo";
-
-import { AuthProvider } from "./context/AuthContext";
 import { store } from "./app/store";
 
 const router = createBrowserRouter([
@@ -49,10 +46,6 @@ const router = createBrowserRouter([
         <Profile />
       </Protected>
     ),
-  },
-  {
-    path: "/todo",
-    element: <Todo />,
   },
 ]);
 

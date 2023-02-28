@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducers from "../features/auth/authSlice";
 import recoverReducers from "../features/recover/recoverSlice";
-import todoReducers from "../test/todoSlice";
 
 export const store = configureStore({
   reducer: {
     user: authReducers,
-    todo: todoReducers,
     recover: recoverReducers,
   },
 });
