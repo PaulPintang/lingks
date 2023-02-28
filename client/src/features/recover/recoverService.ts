@@ -4,9 +4,10 @@ import { UserInterface } from "../auth/authService";
 export const handleOTP = async (email: string) => {
   try {
     const res = await axios.post("/api/user/recover", { email: email });
+
     localStorage.setItem("email", email);
     localStorage.setItem("session", res.data);
-    return res.status;
+    return res.data;
   } catch (err: any) {
     return err.response.data.error;
   }

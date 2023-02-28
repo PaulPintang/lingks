@@ -128,7 +128,7 @@ const generateOTP = async (req, res) => {
 
   if (req.app.locals.OTP) {
     const sent = await sendEmail(data);
-    sent && res.send().status(200);
+    sent && res.send(true).status(200);
   }
 };
 

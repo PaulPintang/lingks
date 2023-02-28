@@ -68,7 +68,7 @@ const recoverSlice = createSlice({
       })
       .addCase(sendOTP.fulfilled, (state, action) => {
         // payload return response status 200
-        if (action.payload === 200) {
+        if (action.payload) {
           state.status = "succeeded";
         } else {
           // payload return catch error

@@ -34,7 +34,7 @@ const Recover = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(sendOTP(email)).then(
-      (res) => res.payload === 200 && navigate("/verify")
+      (res) => res.payload === true && navigate("/verify")
     );
   };
 
