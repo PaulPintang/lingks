@@ -7,6 +7,7 @@ export const store = configureStore({
     user: authReducers,
     recover: recoverReducers,
   },
+  devTools: import.meta.env.VITE_NODE_ENV === "production" ? false : true,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -26,7 +26,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { status } = useSelector((state: RootState) => state.user);
+  const { status, user } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -85,12 +85,12 @@ const Profile = () => {
   return (
     <Container>
       <LoadingOverlay
-        visible={status === "pending" && true}
+        visible={status !== "succeeded" && true}
         loader={<Loader variant="bars" />}
         overlayOpacity={1}
       />
       <Center style={{ width: "100%", height: "100vh" }}>
-        <Title order={1}>Hey, this is linkd</Title>
+        <Title order={1}>Hey {user?.name}, this is linkd</Title>
         <Button onClick={handleLogout} size="md">
           Logout
         </Button>
