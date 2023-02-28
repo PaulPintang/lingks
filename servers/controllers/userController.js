@@ -139,27 +139,25 @@ const verifyOTP = async (req, res) => {
     req.app.locals.session = true;
     return res.send(req.app.locals.session);
   }
+  req.app.locals.session = false;
   return res.send(req.app.locals.session);
 };
 
 const resetPassword = async (req, res, next) => {
-  const { error } = passValidation({ password: req.body.password });
-  if (error) return res.status(400).json({ error: error.details[0].message });
-
-  if (!req.app.locals.session)
-    return res.status(440).send({ error: "Session expired!" });
+  // if (!req.app.locals.session)
+  //   return res.status(440).send({ error: "Session expired!" });
 
   // Hash password
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(req.body.password, salt);
   try {
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       req.body.email,
       { password: hashedPassword },
       { new: true }
     );
-    res.json(user.data);
     req.app.locals.session = false;
+    res.json({ success: true });
   } catch (error) {
     next(error);
   }
