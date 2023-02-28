@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { handleLogin, userLoggedIn } from "../utils/auth";
 import {
   Button,
   Title,
