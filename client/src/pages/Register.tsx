@@ -15,6 +15,7 @@ import { GiBookmarklet } from "react-icons/gi";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { register, reset } from "../features/auth/authSlice";
+import Loader from "../components/Loader";
 
 const Register = () => {
   const [name, setName] = useState<string>("");
@@ -48,6 +49,7 @@ const Register = () => {
 
   return (
     <Container className="max-w-[340px] px-6">
+      <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <Title order={1} className="text-[40px] text-gray-700 text-center">

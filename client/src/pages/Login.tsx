@@ -8,14 +8,13 @@ import {
   Container,
   TextInput,
   Center,
-  LoadingOverlay,
-  Loader,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { login, reset } from "../features/auth/authSlice";
 import { AppDispatch, RootState } from "../app/store";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -46,6 +45,7 @@ const Login = () => {
 
   return (
     <Container className="max-w-[340px] px-6">
+      <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <Title order={1} className="text-[40px] text-gray-700 text-center">
@@ -57,7 +57,10 @@ const Login = () => {
               icon={<MdAlternateEmail />}
               placeholder="Your email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                dispatch(reset());
+              }}
               error={error?.toLowerCase().includes("email") && error}
             />
             <PasswordInput
@@ -65,7 +68,10 @@ const Login = () => {
               icon={<MdLockOutline />}
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                dispatch(reset());
+              }}
               error={error?.toLowerCase().includes("password") && error}
             />
             <Button type="submit" size="md" variant="outline" fullWidth>

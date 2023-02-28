@@ -15,6 +15,7 @@ import { GiBookmarklet } from "react-icons/gi";
 import { reset } from "../features/auth/authSlice";
 import { AppDispatch, RootState } from "../app/store";
 import { resetPassword } from "../features/recover/recoverSlice";
+import Loader from "../components/Loader";
 
 export interface User {
   name?: string;
@@ -61,6 +62,7 @@ const ResetPassword = () => {
 
   return (
     <Container className="max-w-[340px] px-6">
+      <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <form onSubmit={onSubmit} className="space-y-4">

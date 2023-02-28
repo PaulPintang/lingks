@@ -4,12 +4,14 @@ import {
   handleLogin,
   handleRegister,
   handleLogout,
+  handleUserProfile,
 } from "./authService";
 import { UserInterface } from "./authService";
 
 interface User extends UserInterface {
   status?: "idle" | "pending" | "succeeded" | "failed";
   error?: string | null;
+  token: string;
 }
 
 const initialState: User = {
@@ -17,6 +19,7 @@ const initialState: User = {
   password: "",
   status: "idle",
   error: "",
+  token: "",
 };
 
 export const login = createAsyncThunk(
@@ -24,6 +27,7 @@ export const login = createAsyncThunk(
   async (user: UserInterface) => {
     try {
       const token = await handleLogin(user);
+      await handleUserProfile(token);
       return token;
     } catch (err: any) {
       return err.response.data.error;
@@ -47,6 +51,18 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await handleLogout();
 });
 
+export const profile = createAsyncThunk(
+  "user/profile",
+  async (token: string) => {
+    try {
+      const res = await handleUserProfile(token);
+      return res;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "user",
   initialState,
@@ -69,7 +85,6 @@ export const authSlice = createSlice({
           state.status = "idle";
           return;
         }
-
         state.status = "succeeded";
       })
       .addCase(login.rejected, (state) => {
@@ -90,6 +105,15 @@ export const authSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(register.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(profile.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(profile.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(profile.rejected, (state) => {
         state.status = "failed";
       });
   },

@@ -16,24 +16,25 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import avatar from "../assets/user.png";
+import { AppDispatch, RootState } from "../app/store";
+import { useSelector, useDispatch } from "react-redux";
+import { profile } from "../features/auth/authSlice";
 
 const Profile = () => {
   const [opened, setOpened] = useState<boolean>(false);
   const [viewImg, setViewImg] = useState<string | null>(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const user = await userLoggedIn(localStorage.getItem("token")!);
-  //     setUser(user);
-  //     setIsLoading(false);
-  //   };
+  const { status } = useSelector((state: RootState) => state.user);
 
-  //   fetchUser().catch((error) => console.log(error));
-  //   return () => {
-  //     setUser(null);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      dispatch(profile(localStorage.getItem("token")!));
+    };
+
+    fetchUser().catch((error) => console.log(error));
+  }, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -83,11 +84,11 @@ const Profile = () => {
 
   return (
     <Container>
-      {/* <LoadingOverlay
-        visible={!isLoading}
+      <LoadingOverlay
+        visible={status === "pending" && true}
         loader={<Loader variant="bars" />}
         overlayOpacity={1}
-      /> */}
+      />
       <Center style={{ width: "100%", height: "100vh" }}>
         <Title order={1}>Hey, this is linkd</Title>
         <Button onClick={handleLogout} size="md">

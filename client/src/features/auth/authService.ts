@@ -48,7 +48,7 @@ export const handleChangePass = async (
   }
 };
 
-export const userLoggedIn = async (token: string) => {
+export const handleUserProfile = async (token: string) => {
   try {
     const user = await axios.get("/api/user/me", {
       headers: {
@@ -60,7 +60,6 @@ export const userLoggedIn = async (token: string) => {
     console.log(error);
   }
 };
-
 export const handleError = (response: string) => {
   if (JSON.stringify(response).toLowerCase().includes("name")) {
     console.log("name error");
