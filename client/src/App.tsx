@@ -7,12 +7,12 @@ import { Protected } from "./middleware/Protected";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 // Routes
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Register from "./pages/Register";
-import Recover from "./pages/Recover";
-import Verify from "./pages/Verify";
-import ResetPassword from "./pages/ResetPassword";
+import Login from "./pages/Authentication/Login";
+import Profile from "./pages/Home/Profile";
+import Register from "./pages/Authentication/Register";
+import Recover from "./pages/Authentication/Recover";
+import Verify from "./pages/Authentication/Verify";
+import ResetPassword from "./pages/Authentication/ResetPassword";
 import NotFound from "./pages/NotFound";
 
 import { store } from "./app/store";
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <Provider store={store}>
-      <main>
+      <main className="w-full max-w-[340px] mx-auto">
         <RouterProvider router={router}></RouterProvider>
       </main>
     </Provider>

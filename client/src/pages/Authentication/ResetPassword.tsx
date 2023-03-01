@@ -12,10 +12,10 @@ import {
 } from "@mantine/core";
 import { MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
-import { reset } from "../features/auth/authSlice";
-import { AppDispatch, RootState } from "../app/store";
-import { resetPassword } from "../features/recover/recoverSlice";
-import Loader from "../components/Loader";
+import { reset } from "../../features/auth/authSlice";
+import { AppDispatch, RootState } from "../../app/store";
+import { resetPassword } from "../../features/recover/recoverSlice";
+import Loader from "../../components/Loader";
 
 export interface User {
   name?: string;
@@ -61,7 +61,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <Container className="max-w-[340px] px-6">
+    <Container>
       <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">

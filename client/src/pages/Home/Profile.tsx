@@ -16,9 +16,9 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import avatar from "../assets/user.png";
-import { AppDispatch, RootState } from "../app/store";
+import { AppDispatch, RootState } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
-import { profile } from "../features/auth/authSlice";
+import { profile } from "../../features/auth/authSlice";
 
 const Profile = () => {
   const [opened, setOpened] = useState<boolean>(false);

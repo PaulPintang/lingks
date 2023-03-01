@@ -1,16 +1,15 @@
 import { Center } from "@mantine/core";
-import { useRouteError } from "react-router-dom";
 
 const NotFound = () => {
-  const error: any = useRouteError();
   return (
-    <Center>
-      <div id="error-page">
-        <h1>Oops!</h1>
-        <p>Sorry, an unexpected error has occurred.</p>
-        <p>
-          <i>{error.statusText || error.message}</i>
-        </p>
+    <Center className="w-full h-screen">
+      <div className="container flex flex-col md:flex-row items-center justify-center px-5 text-gray-700">
+        <div className="max-w-md">
+          <div className="text-6xl font-dark font-bold">404</div>
+          <p className="text-2xl md:text-3xl font-light leading-normal">
+            Sorry we couldn't find this page
+          </p>
+        </div>
       </div>
     </Center>
   );

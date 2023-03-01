@@ -1,99 +1,104 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
-  Title,
+  Center,
+  TextInput,
   PasswordInput,
   Text,
+  Title,
   Container,
-  TextInput,
-  Center,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
+import { FaRegUserCircle } from "react-icons/fa";
 import { GiBookmarklet } from "react-icons/gi";
-import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../features/auth/authSlice";
-import { AppDispatch, RootState } from "../app/store";
-import Loader from "../components/Loader";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../app/store";
+import { register, reset } from "../../features/auth/authSlice";
+import Loader from "../../components/Loader";
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { status, error } = useSelector((state: RootState) => state.user);
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setEmail(localStorage.getItem("email") || "");
+    localStorage.getItem("token") && navigate("/me");
     return () => {
       dispatch(reset());
     };
   }, []);
 
   useEffect(() => {
-    localStorage.getItem("token") && navigate("/me");
+    status === "succeeded" && navigate("/");
   }, [status]);
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const user = {
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const newUser = {
+      name,
       email,
       password,
     };
-    dispatch(login(user));
+    dispatch(register(newUser));
   };
 
   return (
-    <Container className="max-w-[340px] px-6">
+    <Container>
       <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <Title order={1} className="text-[40px] text-gray-700 text-center">
-            Sign In
+            Sign Up
           </Title>
-          <form className="space-y-4" onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="space-y-4">
+            <TextInput
+              size="md"
+              icon={<FaRegUserCircle />}
+              placeholder="Your name"
+              value={name}
+              error={error?.toLowerCase().includes("name") && error}
+              onChange={(e) => {
+                setName(e.target.value);
+                dispatch(reset());
+              }}
+            />
             <TextInput
               size="md"
               icon={<MdAlternateEmail />}
               placeholder="Your email"
               value={email}
+              error={error?.toLowerCase().includes("email") && error}
               onChange={(e) => {
                 setEmail(e.target.value);
                 dispatch(reset());
               }}
-              error={error?.toLowerCase().includes("email") && error}
             />
             <PasswordInput
               size="md"
               icon={<MdLockOutline />}
               placeholder="Password"
               value={password}
+              error={error?.toLowerCase().includes("password") && error}
               onChange={(e) => {
                 setPassword(e.target.value);
                 dispatch(reset());
               }}
-              error={error?.toLowerCase().includes("password") && error}
             />
             <Button type="submit" size="md" variant="outline" fullWidth>
-              {status === "pending" ? "Signing in..." : "Sign in"}
+              {status === "pending" ? "Signing up..." : "Sign up"}
             </Button>
-            <div className="text-gray-700">
-              <div className="flex text-sm justify-center gap-1 ">
-                <Text fw={500}>Forgot your password?</Text>
-                <Text fw={500}>
-                  <Link to="/recover" className="no-underline text-blue-500">
-                    Reset password
-                  </Link>
-                </Text>
-              </div>
-              <div className="flex text-sm justify-center gap-1">
-                <Text fw={500}>Don't have an account?</Text>
-                <Text fw={500}>
-                  <Link to="/register" className="no-underline text-blue-500">
-                    Sign up
-                  </Link>
-                </Text>
-              </div>
+            <div className="flex text-sm justify-center gap-1 text-gray-700">
+              <Text fw={500}>Have an account?</Text>
+              <Text fw={500}>
+                <Link to="/" className="no-underline text-blue-500">
+                  Sign in
+                </Link>
+              </Text>
             </div>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>
@@ -114,4 +119,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

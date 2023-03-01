@@ -13,9 +13,9 @@ import {
 import { MdAlternateEmail } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOTP, verifyOTP, reset } from "../features/recover/recoverSlice";
-import { AppDispatch, RootState } from "../app/store";
-import Loader from "../components/Loader";
+import { sendOTP, verifyOTP, reset } from "../../features/recover/recoverSlice";
+import { AppDispatch, RootState } from "../../app/store";
+import Loader from "../../components/Loader";
 
 const Recover = () => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const Recover = () => {
   };
 
   return (
-    <Container className="max-w-[340px] px-6">
+    <Container>
       <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
