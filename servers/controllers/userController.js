@@ -58,17 +58,22 @@ const loginUser = async (req, res) => {
 };
 
 const deleteAccount = async (req, res, next) => {
+  if (req.user._id !== req.params.userId) {
+    return res.send("Something went wrong!");
+  }
+
+  // res.send("deleted");
   try {
-    const current = await User.findById(req.params.id);
+    const current = await User.findById(req.params.userId);
 
     const ImgId = current.image.public_id;
 
     if (ImgId) {
       await cloudinary.uploader.destroy(ImgId);
     }
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await User.findByIdAndDelete(req.params.userId);
 
-    res.json({ Deleted: user._id });
+    res.json({ success: true, deletedUser: user._id });
   } catch (error) {
     next(error);
   }
@@ -163,7 +168,7 @@ const resetPassword = async (req, res, next) => {
   }
 };
 
-const getMe = async (req, res, next) => {
+const profile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     const { name, email, image, _id } = user;
@@ -180,6 +185,6 @@ module.exports = {
   generateOTP,
   verifyOTP,
   resetPassword,
-  getMe,
+  profile,
   uploadPicture,
 };

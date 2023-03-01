@@ -4,7 +4,7 @@ const {
   registerUser,
   loginUser,
   generateOTP,
-  getMe,
+  profile,
   verifyOTP,
   resetPassword,
   uploadPicture,
@@ -18,7 +18,7 @@ router.post("/login", loginUser);
 router.post("/recover", generateOTP);
 router.get("/verify", verifyOTP);
 router.put("/reset", resetPassword);
-router.get("/me", Protected, getMe);
+router.get("/me", Protected, profile);
 router.delete("/me/:id", Protected, deleteAccount);
 router.put("/upload", uploadPicture);
 
