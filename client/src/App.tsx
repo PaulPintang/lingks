@@ -7,17 +7,17 @@ import { Protected } from "./middleware/Protected";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 // Routes
-import Login from "./pages/Authentication/Login";
-import Profile from "./pages/Home/Profile";
-import Register from "./pages/Authentication/Register";
-import Recover from "./pages/Authentication/Recover";
-import Verify from "./pages/Authentication/Verify";
-import ResetPassword from "./pages/Authentication/ResetPassword";
-import NotFound from "./pages/NotFound";
+import Login from "./routes/Authentication/Login";
+import Profile from "./routes/Bookmark/Profile";
+import Register from "./routes/Authentication/Register";
+import Recover from "./routes/Authentication/Recover";
+import Verify from "./routes/Authentication/Verify";
+import ResetPassword from "./routes/Authentication/ResetPassword";
+import NotFound from "./routes/NotFound";
 
 import { store } from "./app/store";
-import BookmarkView from "./pages/Home/components/BookmarkView";
-import Bookmarks from "./pages/Home/components/Bookmarks";
+import BookmarkView from "./routes/Bookmark/components/BookmarkView";
+import Bookmarks from "./routes/Bookmark/components/Bookmarks";
 import RootLayout from "./routes/RootLayout";
 
 const router = createBrowserRouter([

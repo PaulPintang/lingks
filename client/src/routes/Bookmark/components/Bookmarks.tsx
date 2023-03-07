@@ -14,7 +14,10 @@ const Bookmarks = () => {
 
   return (
     <Flex gap={20} py="md" className="w-full" wrap="wrap">
-      <Link to="hello" className="no-underline lg:w-[295px] w-full">
+      <Link
+        to="hello"
+        className="no-underline lg:w-[295px] md:w-[295px]  w-full"
+      >
         <Card shadow="sm" radius="md" withBorder>
           <Card.Section>
             <Image
@@ -73,7 +76,10 @@ const Bookmarks = () => {
           </Card.Section>
         </Card>
       </Link>
-      <Link to="hello" className="no-underline lg:w-[295px] w-full">
+      <Link
+        to="hello"
+        className="no-underline lg:w-[295px]  md:w-[295px] w-full"
+      >
         <Card shadow="sm" radius="md" withBorder>
           <Card.Section>
             <Image
@@ -133,7 +139,10 @@ const Bookmarks = () => {
         </Card>
       </Link>
 
-      <Link to="hello" className="no-underline lg:w-[295px] w-full">
+      <Link
+        to="hello"
+        className="no-underline lg:w-[295px]  md:w-[295px] w-full"
+      >
         <Card shadow="sm" radius="md" withBorder>
           <Card.Section>
             <Image

@@ -21,8 +21,8 @@ const BookmarkView = () => {
 
   return (
     <Grid py="md">
-      <Grid.Col className="bg-red- 300" lg={4}>
-        <Card className="lg:w-[295px] w-full">
+      <Grid.Col className="bg-red- 300" lg={4} md={4} sm={5}>
+        <Card className="lg:w-[295px] md:w-[295px] w-full">
           <Card.Section>
             <Image
               src="https://ckl-website-static.s3.amazonaws.com/wp-content/uploads/2017/07/Banner_css-300x300.png.webp"
@@ -51,25 +51,25 @@ const BookmarkView = () => {
           </Card.Section>
         </Card>
       </Grid.Col>
-      <Grid.Col lg={8} className="bg-red -500">
+      <Grid.Col lg={8} md={8} sm={7} className="bg-red -500 w-full">
         <Flex>
           <Flex align="center" gap={10} className="w-full">
             <Input
               size="sm"
-              className="lg:w-[240px] w-full"
+              className="lg:w-[240px] md:w-[240px] w-full"
               placeholder="Search your bookmark..."
             />
             <Button color="violet" size="sm">
               Search
             </Button>
           </Flex>
-          <Button onClick={open} size="sm" className="hidden lg:flex">
+          <Button onClick={open} size="sm" className="hidden lg:flex md:flex">
             Add link
           </Button>
 
           <ActionIcon
             onClick={open}
-            className="lg:hidden fixed bottom-12 right-4 z-10"
+            className="lg:hidden md:hidden fixed bottom-10 right-4 z-10"
             color="green"
             variant="filled"
             size="lg"
@@ -84,7 +84,7 @@ const BookmarkView = () => {
             mt={10}
             withBorder
             radius={10}
-            className="lg:w-[300px] w-full cursor-pointer hover:bg-gray-100 transition-all"
+            className="lg:w-[300px] md:w-[300px] w-full cursor-pointer hover:bg-gray-100 transition-all"
           >
             <Text className="lg:text-[12.3px] text-sm text-gray-800" fw={600}>
               React Important Hooks

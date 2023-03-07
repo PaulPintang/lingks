@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import profile from "../assets/user.png";
-import AddBookmarkModal from "../pages/Home/components/AddBookmarkModal";
+import AddBookmarkModal from "../routes/Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
 import { AiOutlinePlus } from "react-icons/ai";
 import Logo from "./Logo";
@@ -18,12 +18,12 @@ const Header = () => {
     <Flex justify="space-between" align="center" className="h-[100px]">
       <Logo />
       <Flex justify="space-between" align="center" gap={15}>
-        <Button className="hidden lg:flex" size="xs" onClick={open}>
+        <Button className="hidden lg:flex md:flex" size="xs" onClick={open}>
           Add bookmark
         </Button>
         <ActionIcon
           onClick={open}
-          className="lg:hidden"
+          className="lg:hidden md:hidden"
           size="sm"
           color="blue"
           variant="filled"

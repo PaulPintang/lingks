@@ -9,11 +9,13 @@ const Footer = () => {
         <Text className="text-gray-600 uppercase text-xs font-semibold">
           &copy; 2023 | All right reserved
         </Text>
-        {true ? (
-          <MdDarkMode className="text-gray-800 cursor-pointer" />
-        ) : (
-          <MdLightMode className="text-gray-800 cursor-pointer" />
-        )}
+        <div className="hidden md:flex lg:flex">
+          {true ? (
+            <MdDarkMode className="text-gray-800 cursor-pointer" />
+          ) : (
+            <MdLightMode className="text-gray-800 cursor-pointer" />
+          )}
+        </div>
       </Flex>
     </div>
   );
