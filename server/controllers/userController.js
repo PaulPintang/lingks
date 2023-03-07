@@ -53,7 +53,9 @@ const loginUser = async (req, res) => {
   const isValidPass = await bcrypt.compare(req.body.password, user.password);
   if (!isValidPass) return res.status(400).json({ error: "Invalid password!" });
 
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SCRT);
+  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SCRT, {
+    expiresIn: "30d",
+  });
   res.header("auth-token", token).json({ token: token });
 };
 

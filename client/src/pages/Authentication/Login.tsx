@@ -31,7 +31,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.getItem("token") && navigate("/me");
+    localStorage.getItem("token") && navigate("/me/bookmarks");
   }, [status]);
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <Container>
+    <Container className="w-full max-w-[340px] lg:ma-w-100px mx-auto">
       <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">

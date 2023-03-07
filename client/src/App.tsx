@@ -16,6 +16,9 @@ import ResetPassword from "./pages/Authentication/ResetPassword";
 import NotFound from "./pages/NotFound";
 
 import { store } from "./app/store";
+import BookmarkView from "./pages/Home/components/BookmarkView";
+import Bookmarks from "./pages/Home/components/Bookmarks";
+import RootLayout from "./routes/RootLayout";
 
 const router = createBrowserRouter([
   {
@@ -43,16 +46,26 @@ const router = createBrowserRouter([
     path: "/me",
     element: (
       <Protected>
-        <Profile />
+        <RootLayout />
       </Protected>
     ),
+    children: [
+      {
+        path: "bookmarks",
+        element: <Bookmarks />,
+      },
+      {
+        path: "bookmarks/:id",
+        element: <BookmarkView />,
+      },
+    ],
   },
 ]);
 
 const App = () => {
   return (
     <Provider store={store}>
-      <main className="w-full max-w-[340px] mx-auto">
+      <main>
         <RouterProvider router={router}></RouterProvider>
       </main>
     </Provider>

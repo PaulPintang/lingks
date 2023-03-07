@@ -27,7 +27,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.getItem("token") && navigate("/me");
+    localStorage.getItem("token") && navigate("/me/bookmarks");
     return () => {
       dispatch(reset());
     };
@@ -48,7 +48,7 @@ const Register = () => {
   };
 
   return (
-    <Container>
+    <Container className="w-full max-w-[340px] lg:ma-w-100px mx-auto">
       <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">

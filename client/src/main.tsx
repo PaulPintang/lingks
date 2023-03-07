@@ -16,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     withNormalizeCSS
     theme={{
       fontFamily: "Lato, sans-serif",
+      // colorScheme: "dark",
     }}
   >
     <App />

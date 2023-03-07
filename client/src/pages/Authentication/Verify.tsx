@@ -26,7 +26,7 @@ const Verify = () => {
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
-    localStorage.getItem("token") && navigate("/me");
+    localStorage.getItem("token") && navigate("/me/bookmarks");
 
     return () => {
       dispatch(reset());
@@ -43,7 +43,7 @@ const Verify = () => {
   };
 
   return (
-    <Container>
+    <Container className="w-full max-w-[340px] lg:ma-w-100px mx-auto">
       <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
