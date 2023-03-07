@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { Protected } from "./middleware/Protected";
 
 // Axios baseUrl
-axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+axios.defaults.baseURL = import.meta.env.VITE_LOCAL_SERVER;
 
 // Routes
 import Login from "./routes/Authentication/Login";
