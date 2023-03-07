@@ -11,7 +11,7 @@ import {
   Textarea,
   Button,
 } from "@mantine/core";
-import { ModalPropsInterface } from "./Bookmarks";
+import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
@@ -73,7 +73,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                     </Text>
                     <Flex className="text-gray-400" align="center" gap={5}>
                       <RxLink2 size={14} />
-                      <Text c="dimmed" fz="xs" className="truncate">
+                      <Text c="dimmed" fz="xs" className="truncate w-full">
                         https://beta.reactjs.org/reference/react
                       </Text>
                     </Flex>

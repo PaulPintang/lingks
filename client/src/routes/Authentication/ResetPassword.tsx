@@ -108,8 +108,8 @@ const ResetPassword = () => {
             </Button>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>
-            linkd.io is your bookmark for saving important topics, organizing
-            your links, and making them easily accessible.
+            lingks is your bookmark for saving important topics, organizing your
+            links, and making them easily accessible.
           </Text>
           <Logo />
         </div>

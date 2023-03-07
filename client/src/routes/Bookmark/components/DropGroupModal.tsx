@@ -9,7 +9,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { ModalPropsInterface } from "./Bookmarks";
+import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 
 const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {

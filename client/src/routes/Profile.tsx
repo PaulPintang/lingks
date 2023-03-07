@@ -23,14 +23,14 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import avatar from "../assets/user.png";
-import { AppDispatch, RootState } from "../../app/store";
+import { AppDispatch, RootState } from "../app/store";
 import { useSelector, useDispatch } from "react-redux";
-import { profile } from "../../features/auth/authSlice";
-import Header from "../../components/Header";
+import { profile } from "../features/auth/authSlice";
+import Header from "../components/Header";
 import userimg from "../../assets/user.png";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import Bookmarks from "./components/Bookmarks";
+import Bookmarks from "./Bookmark/Bookmarks";
 import { Outlet } from "react-router-dom";
 
 const Profile = () => {

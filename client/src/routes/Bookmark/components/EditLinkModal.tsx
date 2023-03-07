@@ -8,7 +8,7 @@ import {
   Modal,
   ActionIcon,
 } from "@mantine/core";
-import { ModalPropsInterface } from "./Bookmarks";
+import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { BiTrash } from "react-icons/bi";
 

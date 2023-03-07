@@ -87,18 +87,14 @@ const BookmarkView = () => {
               className="lg:w-[240px] md:w-[240px] w-full"
               placeholder="Search your bookmark..."
             />
-            <Button color="violet" size="sm">
+            <Button color="blue" size="sm">
               Search
             </Button>
           </Flex>
-          <Button onClick={open} size="sm" className="hidden lg:flex md:flex">
-            Add link
-          </Button>
 
           <ActionIcon
             onClick={open}
-            className="lg:hidden md:hidden fixed bottom-10 right-4 z-10"
-            color="green"
+            className="lg:static md:static bg-green-500 hover:bg-green-400 transition-all fixed bottom-10 right-4 z-10"
             variant="filled"
             size="lg"
           >
@@ -128,7 +124,7 @@ const BookmarkView = () => {
             </Flex>
             <Flex className="text-gray-400" align="center" gap={5}>
               <RxLink2 size={14} />
-              <Text c="dimmed" fz="xs" className="truncate">
+              <Text c="dimmed" fz="xs" className="truncate w-full">
                 https://beta.reactjs.org/reference/react
               </Text>
             </Flex>

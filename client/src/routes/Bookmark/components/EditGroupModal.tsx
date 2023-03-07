@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Image, TextInput, Textarea, Button, Flex, Modal } from "@mantine/core";
-import { ModalPropsInterface } from "./Bookmarks";
+import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 
 const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
@@ -21,8 +21,8 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           onChange={(e) => setImage(e.target.value)}
         />
         <TextInput
-          placeholder="Bookmark group name"
-          label="Bookmark Name"
+          placeholder="Bookmark name"
+          label="Bookmark name"
           className="space-y-1"
           value={title!}
         />

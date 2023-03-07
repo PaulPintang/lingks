@@ -8,7 +8,7 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 // Routes
 import Login from "./routes/Authentication/Login";
-import Profile from "./routes/Bookmark/Profile";
+import Profile from "./routes/Profile";
 import Register from "./routes/Authentication/Register";
 import Recover from "./routes/Authentication/Recover";
 import Verify from "./routes/Authentication/Verify";
@@ -17,7 +17,7 @@ import NotFound from "./routes/NotFound";
 
 import { store } from "./app/store";
 import BookmarkView from "./routes/Bookmark/components/BookmarkView";
-import Bookmarks from "./routes/Bookmark/components/Bookmarks";
+import Bookmarks from "./routes/Bookmark/Bookmarks";
 import RootLayout from "./routes/RootLayout";
 
 const router = createBrowserRouter([

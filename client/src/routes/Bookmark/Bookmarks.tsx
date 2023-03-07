@@ -28,12 +28,7 @@ const Bookmarks = () => {
           </Card.Section>
           <Card.Section p={13} pb={18}>
             <div>
-              <Flex justify="space-between" align="center">
-                <Text weight={600}>React Js</Text>
-                <Badge color="pink" variant="light">
-                  Front-end
-                </Badge>
-              </Flex>
+              <Text weight={600}>React Js</Text>
               <Text c="dimmed" fz="sm">
                 My important links related to React
               </Text>
@@ -42,6 +37,14 @@ const Bookmarks = () => {
                   Bookmarks:
                 </Text>
                 <Text>30 links</Text>
+              </Flex>
+              <Flex className="py-2" gap={5} wrap="wrap">
+                <Badge color="pink" variant="light" className="normal-case">
+                  Front-end
+                </Badge>
+                <Badge color="green" variant="light" className="normal-case">
+                  Web Development
+                </Badge>
               </Flex>
             </div>
             <Card
@@ -57,7 +60,7 @@ const Bookmarks = () => {
               </Text>
               <Flex className="text-gray-400" align="center" gap={5}>
                 <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs" className="truncate">
+                <Text c="dimmed" fz="xs" className="truncate w-full">
                   https://beta.reactjs.org/reference/react
                 </Text>
               </Flex>
@@ -90,12 +93,7 @@ const Bookmarks = () => {
           </Card.Section>
           <Card.Section p={13} pb={18}>
             <div>
-              <Flex justify="space-between" align="center">
-                <Text weight={600}>Node&Express.Js</Text>
-                <Badge color="yellow" variant="light">
-                  Backend
-                </Badge>
-              </Flex>
+              <Text weight={600}>Node&Express.Js</Text>
               <Text c="dimmed" fz="sm">
                 Backend development important links
               </Text>
@@ -104,6 +102,14 @@ const Bookmarks = () => {
                   Bookmarks:
                 </Text>
                 <Text>4 links</Text>
+              </Flex>
+              <Flex className="py-2" gap={5} wrap="wrap">
+                <Badge color="yellow" variant="light" className="normal-case">
+                  Backend
+                </Badge>
+                <Badge color="green" variant="light" className="normal-case">
+                  Web Development
+                </Badge>
               </Flex>
             </div>
             <Card
@@ -117,9 +123,9 @@ const Bookmarks = () => {
               <Text className="text-[12.3px] text-gray-800" fw={600}>
                 Authentication
               </Text>
-              <Flex className="text-gray-400" align="center" gap={5}>
+              <Flex className="text-gray-400 " align="center" gap={5}>
                 <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs" className="truncate">
+                <Text c="dimmed" fz="xs" className="truncate w-full">
                   https://www.knowledgehut.com/blog/web-development/authentication-method-node
                 </Text>
               </Flex>
@@ -153,12 +159,8 @@ const Bookmarks = () => {
           </Card.Section>
           <Card.Section p={13} pb={18}>
             <div>
-              <Flex justify="space-between" align="center">
-                <Text weight={600}>MongoDB</Text>
-                <Badge color="green" variant="light">
-                  Database
-                </Badge>
-              </Flex>
+              <Text weight={600}>MongoDB</Text>
+
               <Text c="dimmed" fz="sm">
                 No SQL important links, etc
               </Text>
@@ -167,6 +169,14 @@ const Bookmarks = () => {
                   Bookmarks:
                 </Text>
                 <Text>8 links</Text>
+              </Flex>
+              <Flex className="py-2" gap={5} wrap="wrap">
+                <Badge color="blue" variant="light" className="normal-case">
+                  Database
+                </Badge>
+                <Badge color="green" variant="light" className="normal-case">
+                  Web Development
+                </Badge>
               </Flex>
             </div>
             <Card
@@ -182,7 +192,7 @@ const Bookmarks = () => {
               </Text>
               <Flex className="text-gray-400" align="center" gap={5}>
                 <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs" className="truncate">
+                <Text c="dimmed" fz="xs" className="truncate w-full">
                   https://mongoosejs.com/docs/
                 </Text>
               </Flex>
