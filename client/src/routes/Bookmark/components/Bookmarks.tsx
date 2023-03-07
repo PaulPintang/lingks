@@ -21,7 +21,7 @@ const Bookmarks = () => {
         <Card shadow="sm" radius="md" withBorder>
           <Card.Section>
             <Image
-              src="https://ckl-website-static.s3.amazonaws.com/wp-content/uploads/2017/07/Banner_css-300x300.png.webp"
+              src="https://www.sjinnovation.com/sites/default/files/pictures/blog-post/Everything%20to%20Know%20about%20React%20JS%20and%20How%20it%20Works.png"
               height={100}
               alt="React"
             />
@@ -57,7 +57,7 @@ const Bookmarks = () => {
               </Text>
               <Flex className="text-gray-400" align="center" gap={5}>
                 <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs">
+                <Text c="dimmed" fz="xs" className="truncate">
                   https://beta.reactjs.org/reference/react
                 </Text>
               </Flex>
@@ -182,7 +182,7 @@ const Bookmarks = () => {
               </Text>
               <Flex className="text-gray-400" align="center" gap={5}>
                 <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs">
+                <Text c="dimmed" fz="xs" className="truncate">
                   https://mongoosejs.com/docs/
                 </Text>
               </Flex>

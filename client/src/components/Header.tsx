@@ -18,18 +18,10 @@ const Header = () => {
     <Flex justify="space-between" align="center" className="h-[100px]">
       <Logo />
       <Flex justify="space-between" align="center" gap={15}>
-        <Button className="hidden lg:flex md:flex" size="xs" onClick={open}>
-          Add bookmark
+        <Button size="xs" onClick={open}>
+          <span className="hidden lg:flex md:flex">Add bookmark</span>
+          <span className="flex lg:hidden md:hidden">Add</span>
         </Button>
-        <ActionIcon
-          onClick={open}
-          className="lg:hidden md:hidden"
-          size="sm"
-          color="blue"
-          variant="filled"
-        >
-          <AiOutlinePlus size={17} />
-        </ActionIcon>
         {user?.image ? (
           <img src={user?.image} alt="" />
         ) : (

@@ -73,7 +73,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                     </Text>
                     <Flex className="text-gray-400" align="center" gap={5}>
                       <RxLink2 size={14} />
-                      <Text c="dimmed" fz="xs">
+                      <Text c="dimmed" fz="xs" className="truncate">
                         https://beta.reactjs.org/reference/react
                       </Text>
                     </Flex>

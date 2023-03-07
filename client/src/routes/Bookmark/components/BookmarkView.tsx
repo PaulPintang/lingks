@@ -15,9 +15,16 @@ import { BiSearchAlt } from "react-icons/bi";
 import { RxLink2 } from "react-icons/rx";
 import { AiOutlinePlus } from "react-icons/ai";
 import AddLinksModal from "./AddLinksModal";
+import EditGroupModal from "./EditGroupModal";
+import DropGroupModal from "./DropGroupModal";
+import EditLinkModal from "./EditLinkModal";
+import { BiEdit, BiTrash } from "react-icons/bi";
 
 const BookmarkView = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [editGroup, editGroupHandlers] = useDisclosure(false);
+  const [dropGroup, dropGroupHandlers] = useDisclosure(false);
+  const [editLink, editLinkHandlers] = useDisclosure(false);
 
   return (
     <Grid py="md">
@@ -25,7 +32,7 @@ const BookmarkView = () => {
         <Card className="lg:w-[295px] md:w-[295px] w-full">
           <Card.Section>
             <Image
-              src="https://ckl-website-static.s3.amazonaws.com/wp-content/uploads/2017/07/Banner_css-300x300.png.webp"
+              src="https://www.sjinnovation.com/sites/default/files/pictures/blog-post/Everything%20to%20Know%20about%20React%20JS%20and%20How%20it%20Works.png"
               height={100}
               alt="React"
             />
@@ -34,9 +41,22 @@ const BookmarkView = () => {
             <div>
               <Flex justify="space-between" align="center">
                 <Text weight={600}>React Js</Text>
-                <Badge color="pink" variant="light">
-                  Front-end
-                </Badge>
+                <Flex gap={5}>
+                  <ActionIcon
+                    onClick={() => dropGroupHandlers.open()}
+                    color="red"
+                    variant="light"
+                  >
+                    <BiTrash />
+                  </ActionIcon>
+                  <ActionIcon
+                    onClick={() => editGroupHandlers.open()}
+                    color="green"
+                    variant="light"
+                  >
+                    <BiEdit />
+                  </ActionIcon>
+                </Flex>
               </Flex>
               <Text c="dimmed" fz="sm">
                 My important links related to React
@@ -46,6 +66,14 @@ const BookmarkView = () => {
                   Bookmarks:
                 </Text>
                 <Text>30 links</Text>
+              </Flex>
+              <Flex className="py-2" gap={5} wrap="wrap">
+                <Badge color="pink" variant="light" className="normal-case">
+                  Front-end
+                </Badge>
+                <Badge color="green" variant="light" className="normal-case">
+                  Web Development
+                </Badge>
               </Flex>
             </div>
           </Card.Section>
@@ -86,12 +114,21 @@ const BookmarkView = () => {
             radius={10}
             className="lg:w-[300px] md:w-[300px] w-full cursor-pointer hover:bg-gray-100 transition-all"
           >
-            <Text className="lg:text-[12.3px] text-sm text-gray-800" fw={600}>
-              React Important Hooks
-            </Text>
+            <Flex justify="space-between" align="center">
+              <Text className="lg:text-[12.3px] text-sm text-gray-800" fw={600}>
+                React Important Hooks
+              </Text>
+              <ActionIcon
+                onClick={() => editLinkHandlers.open()}
+                color="gray"
+                variant="light"
+              >
+                <BiEdit />
+              </ActionIcon>
+            </Flex>
             <Flex className="text-gray-400" align="center" gap={5}>
               <RxLink2 size={14} />
-              <Text c="dimmed" fz="xs">
+              <Text c="dimmed" fz="xs" className="truncate">
                 https://beta.reactjs.org/reference/react
               </Text>
             </Flex>
@@ -107,6 +144,9 @@ const BookmarkView = () => {
         </Flex>
       </Grid.Col>
       <AddLinksModal opened={opened} close={close} />
+      <EditGroupModal opened={editGroup} close={editGroupHandlers.close} />
+      <DropGroupModal opened={dropGroup} close={dropGroupHandlers.close} />
+      <EditLinkModal opened={editLink} close={editLinkHandlers.close} />
     </Grid>
   );
 };
