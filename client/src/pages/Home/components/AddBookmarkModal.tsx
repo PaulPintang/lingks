@@ -16,7 +16,7 @@ import { RxLink2 } from "react-icons/rx";
 
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const [image, setImage] = useState<string | null>(
-    "https://ckl-website-static.s3.amazonaws.com/wp-content/uploads/2017/07/Banner_css-300x300.png.webp"
+    "https://images.unsplash.com/photo-1531256379416-9f000e90aacc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
   );
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
@@ -30,11 +30,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
         <>
           <Card radius="md" className="w-full">
             <Card.Section>
-              <Image
-                src="https://ckl-website-static.s3.amazonaws.com/wp-content/uploads/2017/07/Banner_css-300x300.png.webp"
-                height={100}
-                alt="React"
-              />
+              <Image src={image} height={100} alt="React" />
             </Card.Section>
             <Card.Section p={13}>
               <div>

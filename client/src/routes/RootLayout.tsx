@@ -20,8 +20,9 @@ import {
   Image,
   Group,
   Badge,
+  ActionIcon,
 } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import avatar from "../assets/user.png";
 import { AppDispatch, RootState } from "../app/store";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,6 +34,7 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 // import Bookmarks from "./components/Bookmarks";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const RootLayout = () => {
   const [opened, setOpened] = useState<boolean>(false);
@@ -58,7 +60,16 @@ const RootLayout = () => {
         overlayOpacity={1}
       />
       <Header />
-      <Title order={1}>Your bookmarks</Title>
+      {/* <Flex align="center" gap={20}>
+        <Link to="/me/bookmarks">
+          <ActionIcon variant="transparent">
+            <AiOutlineArrowLeft size={18} />
+          </ActionIcon>
+        </Link>
+        <Title order={1}>React js Bookmark</Title>
+      </Flex> */}
+      <Title order={1}>Your Bookmarks</Title>
+
       <main className="h-[calc(100vh-170px)]">
         <Outlet />
       </main>

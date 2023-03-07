@@ -9,9 +9,11 @@ import {
   Text,
   Input,
   Button,
+  ActionIcon,
 } from "@mantine/core";
 import { BiSearchAlt } from "react-icons/bi";
 import { RxLink2 } from "react-icons/rx";
+import { AiOutlinePlus } from "react-icons/ai";
 import AddLinksModal from "./AddLinksModal";
 
 const BookmarkView = () => {
@@ -19,7 +21,7 @@ const BookmarkView = () => {
 
   return (
     <Grid py="md">
-      <Grid.Col span={4} className="bg-red- 300">
+      <Grid.Col className="bg-red- 300" lg={4}>
         <Card className="lg:w-[295px] w-full">
           <Card.Section>
             <Image
@@ -49,25 +51,31 @@ const BookmarkView = () => {
           </Card.Section>
         </Card>
       </Grid.Col>
-      <Grid.Col span={8} className="bg-red -500">
-        <Flex justify="space-between">
-          <Flex align="center" gap={10}>
+      <Grid.Col lg={8} className="bg-red -500">
+        <Flex>
+          <Flex align="center" gap={10} className="w-full">
             <Input
               size="sm"
-              className="w-[240px]"
+              className="lg:w-[240px] w-full"
               placeholder="Search your bookmark..."
             />
-            <Button
-              leftIcon={<BiSearchAlt size="1rem" />}
-              color="violet"
-              size="sm"
-            >
+            <Button color="violet" size="sm">
               Search
             </Button>
           </Flex>
-          <Button onClick={open} size="sm">
+          <Button onClick={open} size="sm" className="hidden lg:flex">
             Add link
           </Button>
+
+          <ActionIcon
+            onClick={open}
+            className="lg:hidden fixed bottom-12 right-4 z-10"
+            color="green"
+            variant="filled"
+            size="lg"
+          >
+            <AiOutlinePlus />
+          </ActionIcon>
         </Flex>
         <Flex className="w-full" wrap="wrap" justify="space-between" gap={5}>
           <Card
@@ -76,9 +84,9 @@ const BookmarkView = () => {
             mt={10}
             withBorder
             radius={10}
-            className="lg:w-[300px] cursor-pointer hover:bg-gray-100 transition-all"
+            className="lg:w-[300px] w-full cursor-pointer hover:bg-gray-100 transition-all"
           >
-            <Text className="text-[12.3px] text-gray-800" fw={600}>
+            <Text className="lg:text-[12.3px] text-sm text-gray-800" fw={600}>
               React Important Hooks
             </Text>
             <Flex className="text-gray-400" align="center" gap={5}>

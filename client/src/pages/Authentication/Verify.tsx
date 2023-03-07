@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendOTP, verifyOTP, reset } from "../../features/recover/recoverSlice";
 import { AppDispatch, RootState } from "../../app/store";
 import Loader from "../../components/Loader";
+import Logo from "../../components/Logo";
 
 const Verify = () => {
   const navigate = useNavigate();
@@ -99,14 +100,7 @@ const Verify = () => {
             linkd.io is your bookmark for saving important topics, organizing
             your links, and making them easily accessible.
           </Text>
-          <div className="flex items-center justify-center gap-2">
-            <GiBookmarklet size={25} className="text-purple-500" />
-            <Title className="text-[26px]">
-              <Link to="/" className="no-underline text-gray-800">
-                <span className="">linkd.io</span>
-              </Link>
-            </Title>
-          </div>
+          <Logo />
         </div>
       </Center>
     </Container>
