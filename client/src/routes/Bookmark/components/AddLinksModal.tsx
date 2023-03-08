@@ -15,6 +15,7 @@ import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import {
   addLink,
+  getBookmarks,
   LinksInterface,
 } from "../../../features/bookmarks/bookmarkSlice";
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -24,8 +25,12 @@ import { useParams } from "react-router-dom";
 
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { status } = useSelector((state: RootState) => state.bookmark);
+  const { status, bookmarks } = useSelector(
+    (state: RootState) => state.bookmark
+  );
   const { id } = useParams();
+  const bookmark = bookmarks.filter((bm) => bm._id === id);
+
   const [links, setLinks] = useState<LinksInterface[]>([]);
   const [name, setName] = useState<string | null>(null);
   const [link, setLink] = useState<string | null>(null);
@@ -72,7 +77,12 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   };
 
   const onConfirm = () => {
-    dispatch(addLink({ links, id }));
+    dispatch(addLink({ links: [...bookmark[0].links, ...links], id })).then(
+      () =>
+        dispatch(getBookmarks(localStorage.getItem("token")!)).then(() =>
+          onClose()
+        )
+    );
   };
   return (
     <Modal opened={opened} onClose={onClose} title="Add link" size="sm">
@@ -154,8 +164,13 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
           </>
         )}
 
-        <Button onClick={onConfirm} mt={10} className="block mt-5">
-          Confirm
+        <Button
+          onClick={onConfirm}
+          mt={10}
+          className="block mt-5"
+          disabled={links.length === 0 && true}
+        >
+          {status === "pending" ? "loading" : "Confirm"}
         </Button>
       </>
     </Modal>

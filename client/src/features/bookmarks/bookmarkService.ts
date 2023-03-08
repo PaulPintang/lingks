@@ -42,14 +42,10 @@ export const handleDropBookmark = async (id: string) => {
 
 // ? NOT DONE
 export const handleAddLink = async (data: any) => {
+  const { id, links } = data;
   try {
-    const response = await axios.put(`api/bookmark/${data.id}`, data.links, {
-      headers: {
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    console.log(response);
-    // return response.data;
+    const response = await axios.put(`api/bookmark/${id}`, { links });
+    return response.data;
   } catch (error) {
     return error;
   }
