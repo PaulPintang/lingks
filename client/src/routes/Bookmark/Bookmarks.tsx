@@ -28,8 +28,8 @@ const Bookmarks = () => {
     <Flex gap={20} py="md" className="w-full" wrap="wrap">
       {bookmarks.map((bookmark) => (
         <Link
-          key={bookmark.id}
-          to="hello"
+          key={bookmark._id}
+          to={`../bookmarks/${bookmark._id}`}
           className="no-underline lg:w-[295px] md:w-[295px]  w-full"
         >
           <Card shadow="sm" radius="md" withBorder>
@@ -46,7 +46,7 @@ const Bookmarks = () => {
                   <Text c="dimmed" fw={600}>
                     Bookmarks:
                   </Text>
-                  <Text>{bookmarks.length} links</Text>
+                  <Text>{bookmark.links.length} links</Text>
                 </Flex>
                 <Flex className="py-2" gap={5} wrap="wrap">
                   {bookmark.labels.map((label) => (

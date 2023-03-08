@@ -8,7 +8,7 @@ export interface LinksInterface {
 }
 
 export interface BookmarkInterface {
-  id?: string;
+  _id?: string;
   title: string | null;
   description: string | null;
   banner: string | null;

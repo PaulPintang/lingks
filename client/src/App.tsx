@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         element: <Bookmarks />,
       },
       {
-        path: "bookmarks/:id",
+        path: "/:id",
         element: <BookmarkView />,
       },
     ],
