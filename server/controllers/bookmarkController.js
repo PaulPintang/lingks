@@ -2,7 +2,7 @@ const Bookmark = require("../models/bookmarkModel");
 
 const getBookmark = async (req, res, next) => {
   try {
-    const bookmarks = await Post.find();
+    const bookmarks = await Bookmark.find({ user: req.user._id });
     res.json(bookmarks);
   } catch (error) {
     next(error);

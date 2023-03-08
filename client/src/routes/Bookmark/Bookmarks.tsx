@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RxLink2 } from "react-icons/rx";
 import { Flex, Card, Text, Group, Image, Badge } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../app/store";
+import { getBookmarks } from "../../features/bookmarks/bookmarkSlice";
 
 export interface ModalPropsInterface {
   opened: boolean;
@@ -10,207 +12,85 @@ export interface ModalPropsInterface {
 }
 
 const Bookmarks = () => {
-  const [opened, { open, close }] = useDisclosure(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { bookmarks, status } = useSelector(
+    (state: RootState) => state.bookmark
+  );
+
+  useEffect(() => {
+    dispatch(getBookmarks());
+    console.log("rendered");
+  }, []);
+
+  console.log("yeah", bookmarks);
 
   return (
     <Flex gap={20} py="md" className="w-full" wrap="wrap">
-      <Link
-        to="hello"
-        className="no-underline lg:w-[295px] md:w-[295px]  w-full"
-      >
-        <Card shadow="sm" radius="md" withBorder>
-          <Card.Section>
-            <Image
-              src="https://www.sjinnovation.com/sites/default/files/pictures/blog-post/Everything%20to%20Know%20about%20React%20JS%20and%20How%20it%20Works.png"
-              height={100}
-              alt="React"
-            />
-          </Card.Section>
-          <Card.Section p={13} pb={18}>
-            <div>
-              <Text weight={600}>React Js</Text>
-              <Text c="dimmed" fz="sm">
-                My important links related to React
-              </Text>
-              <Flex gap={10} align="center" className="text-sm">
-                <Text c="dimmed" fw={600}>
-                  Bookmarks:
+      {bookmarks.map((bookmark) => (
+        <Link
+          key={bookmark.id}
+          to="hello"
+          className="no-underline lg:w-[295px] md:w-[295px]  w-full"
+        >
+          <Card shadow="sm" radius="md" withBorder>
+            <Card.Section>
+              <Image src={bookmark.banner} height={100} alt="React" />
+            </Card.Section>
+            <Card.Section p={13} pb={18}>
+              <div>
+                <Text weight={600}>{bookmark.title}</Text>
+                <Text c="dimmed" fz="sm">
+                  {bookmark.description}
                 </Text>
-                <Text>30 links</Text>
-              </Flex>
-              <Flex className="py-2" gap={5} wrap="wrap">
-                <Badge color="pink" variant="light" className="normal-case">
-                  Front-end
-                </Badge>
-                <Badge color="green" variant="light" className="normal-case">
-                  Web Development
-                </Badge>
-              </Flex>
-            </div>
-            <Card
-              px={10}
-              py={6}
-              mt={10}
-              withBorder
-              radius={10}
-              className="cursor-pointer hover:bg-gray-50 transition-all"
-            >
-              <Text className="text-[12.3px] text-gray-800" fw={600}>
-                React Important Hooks
-              </Text>
-              <Flex className="text-gray-400" align="center" gap={5}>
-                <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs" className="truncate w-full">
-                  https://beta.reactjs.org/reference/react
-                </Text>
-              </Flex>
-              <Flex gap={10} align="center" className="text-xs">
-                <Text c="dimmed" fw={600}>
-                  Date Added:
-                </Text>
-                <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                  March 05, 2023, 5: 20 PM
-                </Text>
-              </Flex>
-              <Text c="dimmed" fz="xs" fs="italic">
-                recently added
-              </Text>
-            </Card>
-          </Card.Section>
-        </Card>
-      </Link>
-      <Link
-        to="hello"
-        className="no-underline lg:w-[295px]  md:w-[295px] w-full"
-      >
-        <Card shadow="sm" radius="md" withBorder>
-          <Card.Section>
-            <Image
-              src="https://assets.toptal.io/images?url=https://bs-uploads.toptal.io/blackfish-uploads/components/blog_post_page/content/cover_image_file/cover_image/1181581/retina_500x200_cover-secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png"
-              height={100}
-              alt="React"
-            />
-          </Card.Section>
-          <Card.Section p={13} pb={18}>
-            <div>
-              <Text weight={600}>Node&Express.Js</Text>
-              <Text c="dimmed" fz="sm">
-                Backend development important links
-              </Text>
-              <Flex gap={10} align="center" className="text-sm">
-                <Text c="dimmed" fw={600}>
-                  Bookmarks:
-                </Text>
-                <Text>4 links</Text>
-              </Flex>
-              <Flex className="py-2" gap={5} wrap="wrap">
-                <Badge color="yellow" variant="light" className="normal-case">
-                  Backend
-                </Badge>
-                <Badge color="green" variant="light" className="normal-case">
-                  Web Development
-                </Badge>
-              </Flex>
-            </div>
-            <Card
-              px={10}
-              py={6}
-              mt={10}
-              withBorder
-              radius={10}
-              className="cursor-pointer hover:bg-gray-50 transition-all"
-            >
-              <Text className="text-[12.3px] text-gray-800" fw={600}>
-                Authentication
-              </Text>
-              <Flex className="text-gray-400 " align="center" gap={5}>
-                <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs" className="truncate w-full">
-                  https://www.knowledgehut.com/blog/web-development/authentication-method-node
-                </Text>
-              </Flex>
-              <Flex gap={10} align="center" className="text-xs">
-                <Text c="dimmed" fw={600}>
-                  Date Added:
-                </Text>
-                <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                  March 20, 2023, 5:20 PM
-                </Text>
-              </Flex>
-              <Text c="dimmed" fz="xs" fs="italic">
-                recently added
-              </Text>
-            </Card>
-          </Card.Section>
-        </Card>
-      </Link>
-
-      <Link
-        to="hello"
-        className="no-underline lg:w-[295px]  md:w-[295px] w-full"
-      >
-        <Card shadow="sm" radius="md" withBorder>
-          <Card.Section>
-            <Image
-              src="https://res.cloudinary.com/hevo/image/upload/c_scale,w_607,h_341/f_auto,q_auto/v1644403814/hevo-learn/springboot_MongoDB_configuration_mongodb.jpg?_i=AA"
-              height={100}
-              alt="React"
-            />
-          </Card.Section>
-          <Card.Section p={13} pb={18}>
-            <div>
-              <Text weight={600}>MongoDB</Text>
-
-              <Text c="dimmed" fz="sm">
-                No SQL important links, etc
-              </Text>
-              <Flex gap={10} align="center" className="text-sm">
-                <Text c="dimmed" fw={600}>
-                  Bookmarks:
-                </Text>
-                <Text>8 links</Text>
-              </Flex>
-              <Flex className="py-2" gap={5} wrap="wrap">
-                <Badge color="blue" variant="light" className="normal-case">
-                  Database
-                </Badge>
-                <Badge color="green" variant="light" className="normal-case">
-                  Web Development
-                </Badge>
-              </Flex>
-            </div>
-            <Card
-              px={10}
-              py={6}
-              mt={10}
-              withBorder
-              radius={10}
-              className="cursor-pointer hover:bg-gray-50 transition-all"
-            >
-              <Text className="text-[12.3px] text-gray-800" fw={600}>
-                Learning Mongoose
-              </Text>
-              <Flex className="text-gray-400" align="center" gap={5}>
-                <RxLink2 size={14} />
-                <Text c="dimmed" fz="xs" className="truncate w-full">
-                  https://mongoosejs.com/docs/
-                </Text>
-              </Flex>
-              <Flex gap={10} align="center" className="text-xs">
-                <Text c="dimmed" fw={600}>
-                  Date Added:
-                </Text>
-                <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                  March 19, 2023, 5: 20 PM
-                </Text>
-              </Flex>
-              <Text c="dimmed" fz="xs" fs="italic">
-                recently added
-              </Text>
-            </Card>
-          </Card.Section>
-        </Card>
-      </Link>
+                <Flex gap={10} align="center" className="text-sm">
+                  <Text c="dimmed" fw={600}>
+                    Bookmarks:
+                  </Text>
+                  <Text>{bookmarks.length} links</Text>
+                </Flex>
+                <Flex className="py-2" gap={5} wrap="wrap">
+                  {bookmark.labels.map((label) => (
+                    <Badge color="pink" variant="light" className="normal-case">
+                      {label}
+                    </Badge>
+                  ))}
+                </Flex>
+              </div>
+              {/* {bookmark.map((link) => (
+                <Card
+                  px={10}
+                  py={6}
+                  mt={10}
+                  withBorder
+                  radius={10}
+                  className="cursor-pointer hover:bg-gray-50 transition-all"
+                >
+                  <Text className="text-[12.3px] text-gray-800" fw={600}>
+                    {link.name}
+                  </Text>
+                  <Flex className="text-gray-400" align="center" gap={5}>
+                    <RxLink2 size={14} />
+                    <Text c="dimmed" fz="xs" className="truncate w-full">
+                      {link.link}
+                    </Text>
+                  </Flex>
+                  <Flex gap={10} align="center" className="text-xs">
+                    <Text c="dimmed" fw={600}>
+                      Date Added:
+                    </Text>
+                    <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
+                      {link.date}
+                    </Text>
+                  </Flex>
+                  <Text c="dimmed" fz="xs" fs="italic">
+                    recently added
+                  </Text>
+                </Card>
+              ))} */}
+            </Card.Section>
+          </Card>
+        </Link>
+      ))}
     </Flex>
   );
 };

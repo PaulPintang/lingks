@@ -8,40 +8,31 @@ export interface LinksInterface {
 }
 
 export interface BookmarkInterface {
+  id?: string;
   title: string | null;
   description: string | null;
   banner: string | null;
   labels: string[];
   links: LinksInterface[];
+}
+
+export interface StateInterface {
+  bookmarks: BookmarkInterface[];
   status?: "idle" | "pending" | "succeeded" | "failed";
   error?: string | null;
 }
 
-const initialState: BookmarkInterface = {
-  title: "",
-  description: "",
-  banner: "",
-  labels: [],
-  links: [
-    {
-      name: "",
-      link: "",
-      date: "",
-    },
-  ],
+const initialState: StateInterface = {
+  bookmarks: [],
 };
 
-export const getBookmarks = createAsyncThunk(
-  "user/bookmarks/get",
-  async (token: string) => {
-    try {
-      const response = handleGetBookmarks(token);
-      return response;
-    } catch (error) {
-      return error;
-    }
+export const getBookmarks = createAsyncThunk("user/bookmarks/get", async () => {
+  try {
+    return await handleGetBookmarks();
+  } catch (error) {
+    return error;
   }
-);
+});
 
 export const addBookmark = createAsyncThunk(
   "user/bookmarks/add",
@@ -70,6 +61,8 @@ export const bookmarkSlice = createSlice({
       })
       .addCase(getBookmarks.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.bookmarks = [...action.payload];
+        console.log(action.payload);
       })
       .addCase(getBookmarks.rejected, (state) => {
         state.status = "failed";
@@ -79,7 +72,7 @@ export const bookmarkSlice = createSlice({
       })
       .addCase(addBookmark.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload.data);
+        console.log("New Bookmark:", action.payload.title);
       })
       .addCase(addBookmark.rejected, (state) => {
         state.status = "failed";

@@ -3,16 +3,25 @@ import { BookmarkInterface } from "./bookmarkSlice";
 
 const token = localStorage.getItem("token");
 
-export const handleGetBookmarks = (token: string) => {};
+const header = {
+  headers: {
+    "auth-token": token,
+  },
+};
 
-export const handleAddBookmark = (bookmark: BookmarkInterface) => {
+export const handleGetBookmarks = async () => {
   try {
-    const response = axios.post("api/bookmark/add", bookmark, {
-      headers: {
-        "auth-token": token,
-      },
-    });
-    return response;
+    const bookmarks = await axios.get("api/bookmark", header);
+    return bookmarks.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const handleAddBookmark = async (bookmark: BookmarkInterface) => {
+  try {
+    const response = await axios.post("api/bookmark/add", bookmark, header);
+    return response.data;
   } catch (error) {
     return error;
   }

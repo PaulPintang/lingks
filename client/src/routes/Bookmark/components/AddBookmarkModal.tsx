@@ -16,7 +16,10 @@ import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
-import { addBookmark } from "../../../features/bookmarks/bookmarkSlice";
+import {
+  addBookmark,
+  getBookmarks,
+} from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../features/bookmarks/bookmarkSlice";
 import { AiFillCloseCircle } from "react-icons/ai";
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
@@ -31,6 +34,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const [description, setDescription] = useState<string | null>(null);
   const [links, setLinks] = useState<LinksInterface[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
+
   // links
   const [linkName, setLinkName] = useState<string | null>(null);
   const [link, setLink] = useState<string | null>(null);
@@ -56,6 +60,16 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
     setAdded(`${format.date}, ${format.time}`);
   }, [add]);
 
+  const onClose = () => {
+    setTitle(null);
+    setDescription("");
+    setLabels([]);
+    setLinks([]);
+    setAdd(false);
+    setSaved(false);
+    close();
+  };
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const bookmark = {
@@ -66,10 +80,10 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
       links,
     };
 
-    console.log(bookmark.labels);
-    dispatch(addBookmark(bookmark));
-
-    setLabels([]);
+    dispatch(addBookmark(bookmark)).then(() => {
+      onClose();
+      dispatch(getBookmarks());
+    });
   };
 
   const handleAddLinks = () => {
@@ -88,7 +102,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   };
 
   return (
-    <Modal opened={opened} onClose={close} title="Add bookmark" size="sm">
+    <Modal opened={opened} onClose={onClose} title="Add bookmark" size="sm">
       <form onSubmit={onSubmit}>
         {saved ? (
           <>
@@ -267,7 +281,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               onChange={(e) => setDescription(e.target.value)}
             />
             <Flex gap={10} pt={10}>
-              <Button variant="light" color="gray" fullWidth>
+              <Button onClick={onClose} variant="light" color="gray" fullWidth>
                 Cancel
               </Button>
               <Button type="button" onClick={() => setSaved(true)} fullWidth>
