@@ -32,7 +32,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.getItem("token") && navigate("/me/bookmarks");
+    localStorage.getItem("token") && navigate("bookmarks");
   }, [status]);
 
   const onSubmit = async (e: React.FormEvent) => {

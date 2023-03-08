@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { handleAddBookmark, handleGetBookmarks } from "./bookmarkService";
+import {
+  handleAddBookmark,
+  handleDropBookmark,
+  handleGetBookmarks,
+} from "./bookmarkService";
 
 export interface LinksInterface {
   name: string | null;
@@ -26,19 +30,33 @@ const initialState: StateInterface = {
   bookmarks: [],
 };
 
-export const getBookmarks = createAsyncThunk("user/bookmarks/get", async () => {
-  try {
-    return await handleGetBookmarks();
-  } catch (error) {
-    return error;
+export const getBookmarks = createAsyncThunk(
+  "/bookmarks/get",
+  async (token: string) => {
+    try {
+      return await handleGetBookmarks(token);
+    } catch (error) {
+      return error;
+    }
   }
-});
+);
 
 export const addBookmark = createAsyncThunk(
-  "user/bookmarks/add",
-  async (bookmark: BookmarkInterface, thunkAPI) => {
+  "/bookmarks/add",
+  async (bookmark: BookmarkInterface) => {
     try {
       return await handleAddBookmark(bookmark);
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const dropBookmark = createAsyncThunk(
+  "user/bookmark/drop",
+  async (id: string) => {
+    try {
+      return await handleDropBookmark(id);
     } catch (error) {
       return error;
     }
@@ -62,7 +80,6 @@ export const bookmarkSlice = createSlice({
       .addCase(getBookmarks.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.bookmarks = [...action.payload];
-        console.log(action.payload);
       })
       .addCase(getBookmarks.rejected, (state) => {
         state.status = "failed";
@@ -75,6 +92,15 @@ export const bookmarkSlice = createSlice({
         console.log("New Bookmark:", action.payload.title);
       })
       .addCase(addBookmark.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(dropBookmark.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(dropBookmark.fulfilled, (state, action) => {
+        state.status = "succeeded";
+      })
+      .addCase(dropBookmark.rejected, (state) => {
         state.status = "failed";
       });
   },

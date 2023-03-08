@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
-    path: "/me",
+    path: "/bookmarks",
     element: (
       <Protected>
         <RootLayout />
@@ -51,11 +51,11 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "bookmarks",
+        path: "/bookmarks",
         element: <Bookmarks />,
       },
       {
-        path: "/:id",
+        path: ":id",
         element: <BookmarkView />,
       },
     ],

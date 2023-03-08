@@ -36,8 +36,8 @@ const BookmarkView = () => {
   return (
     <Grid py="md">
       <Grid.Col className="bg-red- 300" lg={4} md={4} sm={5}>
-        {bookmark.map((bookmark) => (
-          <Card className="lg:w-[295px] md:w-[295px] w-full">
+        {bookmark.map((bookmark, index) => (
+          <Card key={index} className="lg:w-[295px] md:w-[295px] w-full">
             <Card.Section>
               <Image src={bookmark.banner} height={100} alt="React" />
             </Card.Section>
@@ -72,8 +72,13 @@ const BookmarkView = () => {
                   <Text>{bookmark.links.length} links</Text>
                 </Flex>
                 <Flex className="py-2" gap={5} wrap="wrap">
-                  {bookmark.labels.map((label) => (
-                    <Badge color="pink" variant="light" className="normal-case">
+                  {bookmark.labels.map((label, index) => (
+                    <Badge
+                      key={index}
+                      color="pink"
+                      variant="light"
+                      className="normal-case"
+                    >
                       {label}
                     </Badge>
                   ))}
@@ -106,8 +111,9 @@ const BookmarkView = () => {
           </ActionIcon>
         </Flex>
         <Flex className="w-full" wrap="wrap" justify="space-between" gap={5}>
-          {bookmark[0].links.map((link) => (
+          {bookmark[0]?.links.map((link, index) => (
             <Card
+              key={index}
               px={10}
               py={6}
               mt={10}

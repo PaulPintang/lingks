@@ -36,7 +36,7 @@ const ResetPassword = () => {
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
-    localStorage.getItem("token") && navigate("/me/bookmarks");
+    localStorage.getItem("token") && navigate("bookmarks");
   }, []);
 
   useEffect(() => {

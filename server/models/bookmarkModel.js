@@ -7,11 +7,9 @@ const bookmarkSchema = mongoose.Schema({
   },
   title: {
     type: String,
-    required: [true, "Please add title"],
   },
   description: {
     type: String,
-    required: [true, "Please add title description"],
   },
   banner: {
     type: String,

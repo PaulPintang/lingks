@@ -18,18 +18,15 @@ const Bookmarks = () => {
   );
 
   useEffect(() => {
-    dispatch(getBookmarks());
-    console.log("rendered");
+    dispatch(getBookmarks(localStorage.getItem("token")!));
   }, []);
-
-  console.log("yeah", bookmarks);
 
   return (
     <Flex gap={20} py="md" className="w-full" wrap="wrap">
       {bookmarks.map((bookmark) => (
         <Link
           key={bookmark._id}
-          to={`../bookmarks/${bookmark._id}`}
+          to={`${bookmark._id}`}
           className="no-underline lg:w-[295px] md:w-[295px]  w-full"
         >
           <Card shadow="sm" radius="md" withBorder>
@@ -49,8 +46,13 @@ const Bookmarks = () => {
                   <Text>{bookmark.links.length} links</Text>
                 </Flex>
                 <Flex className="py-2" gap={5} wrap="wrap">
-                  {bookmark.labels.map((label) => (
-                    <Badge color="pink" variant="light" className="normal-case">
+                  {bookmark.labels.map((label, index) => (
+                    <Badge
+                      key={index}
+                      color="pink"
+                      variant="light"
+                      className="normal-case"
+                    >
                       {label}
                     </Badge>
                   ))}

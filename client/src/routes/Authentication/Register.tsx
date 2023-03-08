@@ -28,7 +28,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.getItem("token") && navigate("/me/bookmarks");
+    localStorage.getItem("token") && navigate("bookmarks");
     return () => {
       dispatch(reset());
     };

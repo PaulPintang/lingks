@@ -60,16 +60,7 @@ const RootLayout = () => {
         overlayOpacity={1}
       />
       <Header />
-      {/* <Flex align="center" gap={20}>
-        <Link to="/me/bookmarks">
-          <ActionIcon variant="transparent">
-            <AiOutlineArrowLeft size={18} />
-          </ActionIcon>
-        </Link>
-        <Title order={1}>React js Bookmark</Title>
-      </Flex> */}
       <Title order={1}>Your Bookmarks</Title>
-
       <main className="h-[calc(100vh-170px)]">
         <Outlet />
       </main>

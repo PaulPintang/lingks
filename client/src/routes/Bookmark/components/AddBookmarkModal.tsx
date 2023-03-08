@@ -82,7 +82,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
 
     dispatch(addBookmark(bookmark)).then(() => {
       onClose();
-      dispatch(getBookmarks());
+      dispatch(getBookmarks(localStorage.getItem("token")!));
     });
   };
 
