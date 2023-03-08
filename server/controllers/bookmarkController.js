@@ -13,6 +13,7 @@ const addBookmark = async (req, res, next) => {
   const { title, description, banner, labels, links } = req.body;
   try {
     const bookmark = await Bookmark.create({
+      user: req.user._id,
       title,
       description,
       banner,

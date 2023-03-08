@@ -18,7 +18,6 @@ interface User extends UserInterface {
   user: UserProfile | null;
   status?: "idle" | "pending" | "succeeded" | "failed";
   error?: string | null;
-  token: string;
 }
 
 const initialState: User = {
@@ -27,7 +26,6 @@ const initialState: User = {
   password: "",
   status: "idle",
   error: "",
-  token: "",
 };
 
 export const login = createAsyncThunk(

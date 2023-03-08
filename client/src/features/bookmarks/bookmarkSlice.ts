@@ -15,7 +15,6 @@ export interface BookmarkInterface {
   links: LinksInterface[];
   status?: "idle" | "pending" | "succeeded" | "failed";
   error?: string | null;
-  token?: string;
 }
 
 const initialState: BookmarkInterface = {
@@ -46,10 +45,9 @@ export const getBookmarks = createAsyncThunk(
 
 export const addBookmark = createAsyncThunk(
   "user/bookmarks/add",
-  async (bookmark: BookmarkInterface) => {
+  async (bookmark: BookmarkInterface, thunkAPI) => {
     try {
-      const response = handleAddBookmark(bookmark);
-      return response;
+      return await handleAddBookmark(bookmark);
     } catch (error) {
       return error;
     }
@@ -81,7 +79,7 @@ export const bookmarkSlice = createSlice({
       })
       .addCase(addBookmark.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action);
+        console.log(action.payload.data);
       })
       .addCase(addBookmark.rejected, (state) => {
         state.status = "failed";

@@ -9,7 +9,7 @@ const {
 const { Protected } = require("../middleware/authMiddleware");
 
 router.get("/", Protected, getBookmark);
-router.post("/add", addBookmark);
+router.post("/add", Protected, addBookmark);
 router
   .route("/:id")
   .put(Protected, updateBookmark)
