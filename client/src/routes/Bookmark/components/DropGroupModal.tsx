@@ -26,11 +26,7 @@ const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
   const { id } = useParams();
 
   const onDrop = () => {
-    dispatch(dropBookmark(id!)).then(() => {
-      dispatch(getBookmarks(localStorage.getItem("token")!)).then(() =>
-        navigate("/bookmarks")
-      );
-    });
+    dispatch(dropBookmark(id!)).then(() => navigate("/bookmarks"));
   };
 
   return (

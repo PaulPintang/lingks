@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   handleAddBookmark,
+  handleAddLink,
   handleDropBookmark,
   handleGetBookmarks,
+  handleUpdateBookmark,
 } from "./bookmarkService";
 
 export interface LinksInterface {
@@ -63,6 +65,27 @@ export const dropBookmark = createAsyncThunk(
   }
 );
 
+// ? not donee
+export const addLink = createAsyncThunk(
+  "user/addlink",
+  async (data: object) => {
+    try {
+      return await handleAddLink(data);
+    } catch (error) {}
+  }
+);
+
+export const updateBookmark = createAsyncThunk(
+  "/bookmark/update",
+  async (data: any) => {
+    try {
+      return await handleUpdateBookmark(data);
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 export const bookmarkSlice = createSlice({
   name: "bookmark",
   initialState,
@@ -89,7 +112,7 @@ export const bookmarkSlice = createSlice({
       })
       .addCase(addBookmark.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log("New Bookmark:", action.payload.title);
+        state.bookmarks.push(action.payload);
       })
       .addCase(addBookmark.rejected, (state) => {
         state.status = "failed";
@@ -99,8 +122,34 @@ export const bookmarkSlice = createSlice({
       })
       .addCase(dropBookmark.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.bookmarks = state.bookmarks.filter(
+          (bm) => bm._id !== action.payload.DELETED._id
+        );
       })
       .addCase(dropBookmark.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(addLink.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(addLink.fulfilled, (state, action) => {
+        state.status = "succeeded";
+      })
+      .addCase(addLink.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(updateBookmark.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(updateBookmark.fulfilled, (state, action) => {
+        // ! need to refactor, remove the fetch and update only the state bookmark
+        state.status = "succeeded";
+        // const updated = state.bookmarks.map((bm) =>
+        //   bm._id === action.payload._id ? action.payload : bm
+        // );
+        // state.bookmarks = [...updated];
+      })
+      .addCase(updateBookmark.rejected, (state) => {
         state.status = "failed";
       });
   },
