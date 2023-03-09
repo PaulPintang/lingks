@@ -69,3 +69,12 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+#b-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+#b-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #8d929d;
+  border-radius: 10px;
+}
