@@ -102,8 +102,14 @@ const BookmarkView = () => {
                     {bookmark.labels.map((label, index) => (
                       <Badge
                         key={index}
-                        color="pink"
-                        variant="light"
+                        color={
+                          index === 0
+                            ? "teal"
+                            : index === 1
+                            ? "indigo"
+                            : "orange"
+                        }
+                        variant="filled"
                         className="normal-case"
                       >
                         {label}
@@ -116,7 +122,7 @@ const BookmarkView = () => {
           ))}
         </Grid.Col>
         <Grid.Col lg={8} md={8} sm={7} className="bg-red -500 w-full">
-          <Flex className="sticky lg:top-[156px] md:top-[165px] top-[110px] pb-4 bg-white z-10">
+          <Flex className="sticky lg:top-[156px] md:top-[150px] top-[110px] pb-4 bg-white z-10">
             <Flex align="center" gap={10} className="w-full">
               <Input
                 size="sm"

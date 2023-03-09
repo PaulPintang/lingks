@@ -53,8 +53,14 @@ const Bookmarks = () => {
                     {bookmark.labels.map((label, index) => (
                       <Badge
                         key={index}
-                        color="pink"
-                        variant="light"
+                        color={
+                          index === 0
+                            ? "teal"
+                            : index === 1
+                            ? "indigo"
+                            : "orange"
+                        }
+                        variant="filled"
                         className="normal-case"
                       >
                         {label}
