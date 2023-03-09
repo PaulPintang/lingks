@@ -1,6 +1,15 @@
 import React, { useEffect } from "react";
 import { RxLink2 } from "react-icons/rx";
-import { Flex, Card, Text, Group, Image, Badge, Title } from "@mantine/core";
+import {
+  Flex,
+  Card,
+  Text,
+  Group,
+  Image,
+  Badge,
+  Title,
+  Skeleton,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";

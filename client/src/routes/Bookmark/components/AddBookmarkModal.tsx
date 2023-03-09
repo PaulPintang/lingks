@@ -274,8 +274,13 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               >
                 Return
               </Button>
-              <Button type="submit" onClick={() => setSaved(true)} fullWidth>
-                {status === "pending" ? "loading" : "Save"}
+              <Button
+                type="submit"
+                onClick={() => setSaved(true)}
+                fullWidth
+                loading={status === "pending" && true}
+              >
+                Save
               </Button>
             </Flex>
           </>
@@ -353,7 +358,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                 Cancel
               </Button>
               <Button type="button" onClick={() => setSaved(true)} fullWidth>
-                Confirm
+                Continue
               </Button>
             </Flex>
           </div>

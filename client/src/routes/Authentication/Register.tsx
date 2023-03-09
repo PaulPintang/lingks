@@ -90,8 +90,13 @@ const Register = () => {
                 dispatch(reset());
               }}
             />
-            <Button type="submit" size="md" variant="outline" fullWidth>
-              {status === "pending" ? "Signing up..." : "Sign up"}
+            <Button
+              type="submit"
+              size="md"
+              fullWidth
+              loading={status === "pending" && true}
+            >
+              Sign up
             </Button>
             <div className="flex text-sm justify-center gap-1 text-gray-700">
               <Text fw={500}>Have an account?</Text>

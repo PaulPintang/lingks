@@ -11,6 +11,7 @@ import {
   Button,
   ActionIcon,
   Title,
+  Skeleton,
 } from "@mantine/core";
 import { BiSearchAlt } from "react-icons/bi";
 import { RxLink2 } from "react-icons/rx";
@@ -42,7 +43,6 @@ const BookmarkView = () => {
     dispatch(getBookmarks(localStorage.getItem("token")!));
   }, []);
 
-  const redugh = "#570a0a";
   return (
     <>
       <Flex
@@ -68,7 +68,7 @@ const BookmarkView = () => {
                 <Image src={bookmark.banner} height={100} alt="Banner img" />
               </Card.Section>
               <Card.Section p={13}>
-                <div>
+                <div className="space-y-2">
                   <Flex justify="space-between" align="center">
                     <Text weight={600}>{bookmark.title}</Text>
                     <Flex gap={5}>

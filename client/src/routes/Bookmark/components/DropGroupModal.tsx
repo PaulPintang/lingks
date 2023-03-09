@@ -38,8 +38,7 @@ const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
       withCloseButton={false}
     >
       <div className="space-y-2">
-        {id}
-        <Title order={5}>Drop bookmark</Title>
+        <Title order={4}>Drop bookmark</Title>
         <Text c="dimmed" fz="sm">
           Are you sure you want to drop this bookmark? This action cannot be
           undone.
@@ -48,8 +47,13 @@ const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
           <Button onClick={close} variant="light" color="gray" fullWidth>
             Cancel
           </Button>
-          <Button onClick={onDrop} color="red" fullWidth>
-            {status === "pending" ? "Dropping..." : "Drop"}
+          <Button
+            onClick={onDrop}
+            color="red"
+            fullWidth
+            loading={status === "pending" && true}
+          >
+            Drop
           </Button>
         </Flex>
       </div>

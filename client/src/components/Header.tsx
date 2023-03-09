@@ -15,10 +15,15 @@ const Header = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.user);
   const [opened, { open, close }] = useDisclosure(false);
+  const [status, setStatus] = useState(false);
 
   const onLogout = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    setStatus(true);
+    setTimeout(() => {
+      setStatus(false);
+      navigate("/");
+    }, 3000);
   };
   return (
     <Flex
@@ -32,7 +37,7 @@ const Header = () => {
           <span className="hidden lg:flex md:flex ">Add bookmark</span>
           <span className="flex lg:hidden md:hidden">Add</span>
         </Button>
-        <ActionIcon onClick={onLogout}>
+        <ActionIcon onClick={onLogout} loading={status}>
           <MdLogout className="text-gray-400" />
         </ActionIcon>
         {user?.image ? (

@@ -165,8 +165,13 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
 
         {links.length !== 0 && showAdded && !add && (
           <Flex justify="flex-end">
-            <Button onClick={onConfirm} mt={10} className="block mt-5">
-              {status === "pending" ? "loading" : "Confirm"}
+            <Button
+              onClick={onConfirm}
+              mt={10}
+              className="block mt-5"
+              loading={status === "pending" && true}
+            >
+              Confirm
             </Button>
           </Flex>
         )}

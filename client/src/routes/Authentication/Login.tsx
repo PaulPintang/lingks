@@ -75,8 +75,13 @@ const Login = () => {
               }}
               error={error?.toLowerCase().includes("password") && error}
             />
-            <Button type="submit" size="md" variant="outline" fullWidth>
-              {status === "pending" ? "Signing in..." : "Sign in"}
+            <Button
+              type="submit"
+              size="md"
+              fullWidth
+              loading={status === "pending" && true}
+            >
+              Sign in
             </Button>
             <div className="text-gray-700">
               <div className="flex text-sm justify-center gap-1 ">

@@ -74,6 +74,7 @@ const Recover = () => {
               fullWidth
               mb={10}
               disabled={email.length >= 12 ? false : true}
+              loading={status === "pending" && true}
             >
               {status === "pending" ? "Sending..." : "Send"}
             </Button>

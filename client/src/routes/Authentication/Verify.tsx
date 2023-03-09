@@ -80,6 +80,7 @@ const Verify = () => {
               fullWidth
               mb={7}
               disabled={OTP!?.toString().length >= 6 ? false : true}
+              loading={status === "pending" && true}
             >
               {status === "pending" ? "Verifying..." : "Continue"}
             </Button>

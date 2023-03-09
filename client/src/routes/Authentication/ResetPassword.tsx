@@ -103,8 +103,9 @@ const ResetPassword = () => {
               fullWidth
               disabled={password.length < 6}
               mb={7}
+              loading={status === "pending" && true}
             >
-              {status === "pending" ? "Updating" : "Confirm"}
+              {status === "pending" ? "Updating" : "Change password"}
             </Button>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>

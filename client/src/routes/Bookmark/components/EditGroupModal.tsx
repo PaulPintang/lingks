@@ -140,8 +140,13 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           <Button onClick={close} variant="light" color="gray" fullWidth>
             Cancel
           </Button>
-          <Button type="submit" fullWidth>
-            {status === "pending" ? "Updating" : "Confirm"}
+          <Button
+            type="submit"
+            color="teal"
+            fullWidth
+            loading={status === "pending" && true}
+          >
+            Update
           </Button>
         </Flex>
       </form>
