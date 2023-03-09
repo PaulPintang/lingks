@@ -45,6 +45,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
 
   const onClose = () => {
     // setLabels([]);
+    setBanner(bookmark[0]?.banner);
     setCreate(false);
     close();
   };

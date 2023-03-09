@@ -13,7 +13,7 @@ import {
   Title,
   Skeleton,
 } from "@mantine/core";
-import { BiSearchAlt } from "react-icons/bi";
+import { CiSearch } from "react-icons/ci";
 import { RxLink2 } from "react-icons/rx";
 import { AiOutlinePlus } from "react-icons/ai";
 import AddLinksModal from "./AddLinksModal";
@@ -36,6 +36,7 @@ const BookmarkView = () => {
   const [dropGroup, dropGroupHandlers] = useDisclosure(false);
   const [editLink, editLinkHandlers] = useDisclosure(false);
   const [index, setIndex] = useState<number>(0);
+  const [query, setQuery] = useState<string>("");
 
   const bookmark = bookmarks.filter((bm) => bm._id === id);
 
@@ -43,6 +44,11 @@ const BookmarkView = () => {
     dispatch(getBookmarks(localStorage.getItem("token")!));
   }, []);
 
+  const links = bookmark[0].links.filter((link) => {
+    return link.name?.toLowerCase().includes(query.toLowerCase());
+  });
+
+  const onSearch = () => {};
   return (
     <>
       <Flex
@@ -117,26 +123,41 @@ const BookmarkView = () => {
           ))}
         </Grid.Col>
         <Grid.Col lg={8} md={8} sm={7} className="bg-red -500 w-full">
-          <Flex className="sticky lg:top-[156px] md:top-[150px] top-[110px] pb-4 bg-white z-10">
-            <Flex align="center" gap={10} className="w-full">
-              <Input
-                size="sm"
-                className="lg:w-[240px] md:w-[240px] w-full"
-                placeholder="Search your bookmark..."
-              />
-              <Button color="blue" size="sm">
+          <Flex
+            justify="space-between"
+            className="sticky lg:top-[156px] md:top-[150px] top-[110px] pb-4 bg-white z-10"
+          >
+            <Input
+              icon={<CiSearch />}
+              size="sm"
+              className="lg:w-[240px] md:w-[240px] w-full"
+              placeholder="Search your link..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            {/* <Button color="blue" size="sm" onClick={onSearch}>
                 Search
+              </Button> */}
+            <div>
+              <Button
+                onClick={open}
+                color="blue"
+                size="sm"
+                variant="gradient"
+                gradient={{ from: "indigo", to: "cyan" }}
+                className="lg:flex md:flex hidden"
+              >
+                Add links
               </Button>
-            </Flex>
-
-            <ActionIcon
-              onClick={open}
-              className="lg:static md:static bg-green-500 hover:bg-green-400 transition-all fixed bottom-10 right-4 z-10"
-              variant="filled"
-              size="lg"
-            >
-              <AiOutlinePlus />
-            </ActionIcon>
+              <ActionIcon
+                onClick={open}
+                className="lg:hidden md:hidden bg-green-500 hover:bg-green-400 transition-all fixed bottom-8 right-4 z-10"
+                variant="filled"
+                size="lg"
+              >
+                <AiOutlinePlus />
+              </ActionIcon>
+            </div>
           </Flex>
           <Flex
             className="w-full"
@@ -145,7 +166,7 @@ const BookmarkView = () => {
             justify="space-between"
             gap={5}
           >
-            {bookmark[0]?.links.map((link, index) => (
+            {links.map((link, index) => (
               <Card
                 key={index}
                 px={10}
