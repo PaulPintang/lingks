@@ -60,8 +60,7 @@ const RootLayout = () => {
         overlayOpacity={1}
       />
       <Header />
-      <Title order={1}>Your Bookmarks</Title>
-      <main className="h-[calc(100vh-170px)]">
+      <main className="h-[calc(1 00vh-170px)] pb-5">
         <Outlet />
       </main>
       {/* <Footer /> */}

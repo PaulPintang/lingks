@@ -21,9 +21,13 @@ const Header = () => {
     navigate("/");
   };
   return (
-    <Flex justify="space-between" align="center" className="h-[100px]">
+    <Flex
+      justify="space-between"
+      align="center"
+      className="lg:h-[100px] md:h-[100px] h-16 sticky top-0 z-10 bg-white"
+    >
       <Logo />
-      <Flex justify="space-between" align="center" gap={15}>
+      <Flex justify="space-between" align="center" gap={12}>
         <Button size="xs" onClick={open}>
           <span className="hidden lg:flex md:flex">Add bookmark</span>
           <span className="flex lg:hidden md:hidden">Add</span>
