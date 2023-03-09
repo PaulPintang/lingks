@@ -64,7 +64,7 @@ const RootLayout = () => {
       <main className="h-[calc(100vh-170px)]">
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </Container>
   );
 };
