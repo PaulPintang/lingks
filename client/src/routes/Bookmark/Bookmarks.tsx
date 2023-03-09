@@ -46,8 +46,8 @@ const Bookmarks = () => {
               <Card.Section>
                 <Image src={bookmark.banner} height={100} alt="React" />
               </Card.Section>
-              <Card.Section p={13} pb={18}>
-                <div>
+              <Card.Section p={15} className="h-[190px]">
+                <div className="space-y-1">
                   <Text weight={600}>{bookmark.title}</Text>
                   <Text c="dimmed" fz="sm" className="line-clamp-2">
                     {bookmark.description}
@@ -58,7 +58,7 @@ const Bookmarks = () => {
                     </Text>
                     <Text>{bookmark.links.length} links</Text>
                   </Flex>
-                  <Flex className="py-2" gap={5} wrap="wrap">
+                  <Flex className="py-2" gap={8} wrap="wrap">
                     {bookmark.labels.map((label, index) => (
                       <Badge
                         key={index}

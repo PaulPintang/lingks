@@ -84,7 +84,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
     const updated = labels.filter((item) => {
       return current.includes(item.label);
     });
-    setLabels([...updated]);
+    // setLabels([...updated]);
   };
 
   const onCreate = (query: string) => {

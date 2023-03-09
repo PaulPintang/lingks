@@ -68,13 +68,13 @@ const BookmarkView = () => {
           {bookmark.map((bookmark, index) => (
             <Card
               key={index}
-              className="lg:w-[295px] md:w-[295px] w-full lg:fixed md:fixed"
+              className="lg:w-[295px] md:w-[2955px] w-full lg:fixed md:fixed"
             >
               <Card.Section>
                 <Image src={bookmark.banner} height={100} alt="Banner img" />
               </Card.Section>
-              <Card.Section p={13}>
-                <div className="space-y-2">
+              <Card.Section p={15}>
+                <div className="space-y-1">
                   <Flex justify="space-between" align="center">
                     <Text weight={600}>{bookmark.title}</Text>
                     <Flex gap={5}>
@@ -105,7 +105,7 @@ const BookmarkView = () => {
                     </Text>
                     <Text>{bookmark.links.length} links</Text>
                   </Flex>
-                  <Flex className="py-2" gap={5} wrap="wrap">
+                  <Flex className="py-2" gap={8} wrap="wrap">
                     {bookmark.labels.map((label, index) => (
                       <Badge
                         key={index}
