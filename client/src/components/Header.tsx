@@ -14,6 +14,7 @@ import Logo from "./Logo";
 const Header = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.user);
+  const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
   const [status, setStatus] = useState(false);
 
@@ -33,10 +34,12 @@ const Header = () => {
     >
       <Logo />
       <Flex justify="space-between" align="center" gap={12}>
-        <Button size="xs" onClick={open}>
-          <span className="hidden lg:flex md:flex ">Add bookmark</span>
-          <span className="flex lg:hidden md:hidden">Add</span>
-        </Button>
+        {bookmarks.length !== 0 && (
+          <Button size="xs" onClick={open}>
+            <span className="hidden lg:flex md:flex ">Add bookmark</span>
+            <span className="flex lg:hidden md:hidden">Add</span>
+          </Button>
+        )}
         <ActionIcon onClick={onLogout} loading={status}>
           <MdLogout className="text-gray-400" />
         </ActionIcon>

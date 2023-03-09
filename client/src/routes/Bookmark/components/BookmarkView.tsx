@@ -174,7 +174,7 @@ const BookmarkView = () => {
                 py={6}
                 withBorder
                 radius={10}
-                className="lg:w-[298px] md:w-[298px] w-full cursor-pointer hover:bg-gray-100 transition-all"
+                className="lg:w-[298px] md:w-[298px] w-full cursor-pointer hover:bg-gray-50 hover:shadow-md transition-all"
               >
                 <Flex justify="space-between" align="center">
                   <Text
