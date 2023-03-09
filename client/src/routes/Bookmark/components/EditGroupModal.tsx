@@ -121,10 +121,10 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
         <MultiSelect
           label="Labels"
           data={labels.map((label) => label.label)}
-          placeholder="Add 3 labels or less"
+          placeholder="Add 4 labels or less"
           searchable
           creatable
-          maxSelectedValues={3}
+          maxSelectedValues={4}
           defaultValue={labels.map((label) => label.label)}
           onChange={(values) => onChange(values)}
           getCreateLabel={(query) => `+ Create ${query}`}

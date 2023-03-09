@@ -288,6 +288,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
           <div className="space-y-2">
             <Image src={banner} height={100} alt="Banner img" />
             <TextInput
+              icon={<RxLink2 size="1rem" />}
               placeholder="Paste link here"
               label="Banner (Image link)"
               className="space-y-1"
@@ -303,10 +304,10 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
             <MultiSelect
               label="Labels"
               data={labels.map((label) => label.label)}
-              placeholder="Add 3 labels or less"
+              placeholder="Add 4 labels or less"
               searchable
               creatable
-              maxSelectedValues={3}
+              maxSelectedValues={4}
               onChange={(values) => console.log("values", values)}
               getCreateLabel={(query) => `+ Create ${query}`}
               onCreate={(query) => {

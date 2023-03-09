@@ -12,6 +12,7 @@ import {
   ActionIcon,
   Title,
   Skeleton,
+  Highlight,
 } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { RxLink2 } from "react-icons/rx";
@@ -73,8 +74,8 @@ const BookmarkView = () => {
               <Card.Section>
                 <Image src={bookmark.banner} height={100} alt="Banner img" />
               </Card.Section>
-              <Card.Section p={15}>
-                <div className="space-y-1">
+              <Card.Section p={13}>
+                <div className="space-y-2">
                   <Flex justify="space-between" align="center">
                     <Text weight={600}>{bookmark.title}</Text>
                     <Flex gap={5}>
@@ -105,7 +106,7 @@ const BookmarkView = () => {
                     </Text>
                     <Text>{bookmark.links.length} links</Text>
                   </Flex>
-                  <Flex className="py-2" gap={8} wrap="wrap">
+                  <Flex className="py-2 pr-2" gap={8} wrap="wrap">
                     {bookmark.labels.map((label, index) => (
                       <Badge
                         key={index}
@@ -180,7 +181,9 @@ const BookmarkView = () => {
                     className="lg:text-[12.3px] text-sm text-gray-800"
                     fw={600}
                   >
-                    {link.name}
+                    <Highlight highlightColor="cyan" highlight={query}>
+                      {link.name!}
+                    </Highlight>
                   </Text>
                   <ActionIcon
                     onClick={() => {
