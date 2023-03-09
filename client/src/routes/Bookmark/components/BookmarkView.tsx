@@ -187,50 +187,6 @@ const BookmarkView = () => {
                 </Flex>
               </Card>
             ))}
-
-            {bookmark[0]?.links.map((link, index) => (
-              <Card
-                key={index}
-                px={10}
-                py={6}
-                withBorder
-                radius={10}
-                className="lg:w-[298px] md:w-[298px] w-full cursor-pointer hover:bg-gray-100 transition-all"
-              >
-                <Flex justify="space-between" align="center">
-                  <Text
-                    className="lg:text-[12.3px] text-sm text-gray-800"
-                    fw={600}
-                  >
-                    {link.name}
-                  </Text>
-                  <ActionIcon
-                    onClick={() => {
-                      setIndex(index);
-                      editLinkHandlers.open();
-                    }}
-                    color="gray"
-                    variant="light"
-                  >
-                    <BiEdit />
-                  </ActionIcon>
-                </Flex>
-                <Flex className="text-gray-400" align="center" gap={5}>
-                  <RxLink2 size={14} />
-                  <Text c="dimmed" fz="xs" className="truncate w-full">
-                    {link.link}
-                  </Text>
-                </Flex>
-                <Flex gap={10} align="center" className="text-xs">
-                  <Text c="dimmed" fw={600}>
-                    Date Added:
-                  </Text>
-                  <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                    {link.date}
-                  </Text>
-                </Flex>
-              </Card>
-            ))}
           </Flex>
         </Grid.Col>
         <AddLinksModal opened={opened} close={close} />

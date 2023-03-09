@@ -154,8 +154,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
             <Flex justify="flex-end" pt={10}>
               <Button
                 onClick={onAdd}
-                size="xs"
-                className="bg-green-500 hover:bg-green-600 transition-all"
+                className="bg-green-500 hover:bg-green-600 transition-all mt-3"
                 disabled={name === null && link === null && true}
               >
                 Add link
@@ -164,14 +163,13 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
           </>
         )}
 
-        <Button
-          onClick={onConfirm}
-          mt={10}
-          className="block mt-5"
-          disabled={links.length === 0 && true}
-        >
-          {status === "pending" ? "loading" : "Confirm"}
-        </Button>
+        {links.length !== 0 && showAdded && !add && (
+          <Flex justify="flex-end">
+            <Button onClick={onConfirm} mt={10} className="block mt-5">
+              {status === "pending" ? "loading" : "Confirm"}
+            </Button>
+          </Flex>
+        )}
       </>
     </Modal>
   );

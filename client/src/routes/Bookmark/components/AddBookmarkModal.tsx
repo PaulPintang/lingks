@@ -10,6 +10,7 @@ import {
   TextInput,
   Textarea,
   Button,
+  ActionIcon,
   MultiSelect,
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
@@ -21,7 +22,7 @@ import {
   getBookmarks,
 } from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../features/bookmarks/bookmarkSlice";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const { status } = useSelector((state: RootState) => state.bookmark);
@@ -126,9 +127,13 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       <Text>{links.length}</Text>
                     </Flex>
                     {!add && links.length === 0 && (
-                      <Button onClick={() => setAdd(true)} size="xs">
-                        + Add
-                      </Button>
+                      <ActionIcon
+                        onClick={() => setAdd(true)}
+                        variant="gradient"
+                        color="gray"
+                      >
+                        <AiOutlinePlus />
+                      </ActionIcon>
                     )}
                   </Flex>
                 </div>
@@ -214,20 +219,20 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       value={link!}
                       onChange={(e) => setLink(e.target.value)}
                     />
-                    <Flex justify="flex-end" pt={10}>
+                    <Flex justify="flex-end" pt={15}>
                       <Button
                         onClick={handleAddLinks}
-                        size="xs"
-                        className="bg-green-400 hover:bg-green-500"
+                        className="bg-green-500 hover:bg-green-600 transition-all"
+                        disabled={linkName === null && link === null && true}
                       >
-                        Add link
+                        Add
                       </Button>
                     </Flex>
                   </>
                 )}
               </Card.Section>
             </Card>
-            <Flex gap={10} pt={30}>
+            <Flex gap={10} pt={20}>
               <Button
                 onClick={() => setSaved(false)}
                 variant="light"
