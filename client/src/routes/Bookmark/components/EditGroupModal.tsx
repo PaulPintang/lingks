@@ -41,9 +41,11 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
     bookmark[0]?.description!
   );
   const [labels, setLabels] = useState<colorInterface[]>(bookmark[0].labels);
+  const [create, setCreate] = useState(true);
 
   const onClose = () => {
     // setLabels([]);
+    setCreate(false);
     close();
   };
 
@@ -56,7 +58,6 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
       banner,
       labels,
     };
-    // ! need to refactor, remove the fetch and update only the state bookmark
     dispatch(updateBookmark(bookmark)).then(() =>
       dispatch(getBookmarks(localStorage.getItem("token")!)).then(() =>
         onClose()
@@ -78,15 +79,26 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
   ];
 
   const onChange = (current: string[]) => {
-    setLabels([
+    console.log("on change run");
+    const updated = labels.filter((item) => {
+      return current.includes(item.label);
+    });
+    setLabels([...updated]);
+  };
+
+  const onCreate = (query: string) => {
+    console.log("on create run");
+    setLabels((prev) => [
+      ...prev,
       {
-        label: current[0],
+        label: query,
         color: colors[Math.floor(Math.random() * colors.length)],
       },
     ]);
+    return query;
   };
 
-  console.log(labels);
+  console.log("STATE", labels);
   return (
     <Modal opened={opened} onClose={onClose} title="Edit bookmark" size="sm">
       <form onSubmit={onSubmit} className="space-y-2">
@@ -115,17 +127,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           defaultValue={labels.map((label) => label.label)}
           onChange={(values) => onChange(values)}
           getCreateLabel={(query) => `+ Create ${query}`}
-          onCreate={(query) => {
-            const item = query;
-            setLabels((prev) => [
-              ...prev,
-              {
-                label: item,
-                color: colors[Math.floor(Math.random() * colors.length)],
-              },
-            ]);
-            return item;
-          }}
+          onCreate={(query) => onCreate(query)}
         />
 
         <Textarea
