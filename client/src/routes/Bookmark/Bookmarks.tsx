@@ -31,7 +31,7 @@ const Bookmarks = () => {
           <Link
             key={bookmark._id}
             to={`${bookmark._id}`}
-            className="no-underline lg:w-[295px] md:w-[295px]  w-full"
+            className="no-underline lg:w-[295px] md:w-[295px] w-full active:opacity-90 transition-all"
           >
             <Card shadow="sm" radius="md" withBorder>
               <Card.Section>

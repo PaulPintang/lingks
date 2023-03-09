@@ -37,8 +37,6 @@ const EditLinkModal = ({ opened, close, index }: Props) => {
     close();
   };
 
-  console.log("name", name);
-
   const onSubmit = () => {};
 
   return (

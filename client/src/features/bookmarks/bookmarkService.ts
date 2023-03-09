@@ -52,11 +52,11 @@ export const handleAddLink = async (data: any) => {
 };
 
 export const handleUpdateBookmark = async (data: any) => {
-  const { id, title, description, banner } = data;
+  const { id, title, description, banner, labels } = data;
   try {
     const response = await axios.put(
       `api/bookmark/${id}`,
-      { title, description, banner }
+      { title, description, banner, labels }
       // {
       //   headers: {
       //     "auth-token": localStorage.getItem("token"),

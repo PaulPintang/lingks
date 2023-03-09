@@ -1,5 +1,13 @@
-import React, { useState } from "react";
-import { Image, TextInput, Textarea, Button, Flex, Modal } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import {
+  Image,
+  TextInput,
+  Textarea,
+  Button,
+  Flex,
+  Modal,
+  MultiSelect,
+} from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,13 +28,17 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
   );
   const bookmark = bookmarks.filter((bm) => bm._id === id);
 
-  const [banner, setBanner] = useState<string | null>(
-    "https://images.unsplash.com/photo-1531256379416-9f000e90aacc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-  );
+  const [banner, setBanner] = useState<string | null>(bookmark[0]?.banner);
   const [title, setTitle] = useState<string>(bookmark[0]?.title!);
   const [description, setDescription] = useState<string>(
     bookmark[0]?.description!
   );
+  const [labels, setLabels] = useState<string[]>(bookmark[0].labels);
+
+  const onClose = () => {
+    // setLabels([]);
+    close();
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,15 +47,18 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
       title,
       description,
       banner,
+      labels,
     };
     // ! need to refactor, remove the fetch and update only the state bookmark
     dispatch(updateBookmark(bookmark)).then(() =>
-      dispatch(getBookmarks(localStorage.getItem("token")!)).then(() => close())
+      dispatch(getBookmarks(localStorage.getItem("token")!)).then(() =>
+        onClose()
+      )
     );
   };
 
   return (
-    <Modal opened={opened} onClose={close} title="Edit bookmark" size="sm">
+    <Modal opened={opened} onClose={onClose} title="Edit bookmark" size="sm">
       <form onSubmit={onSubmit} className="space-y-2">
         <Image src={banner} height={100} />
         <TextInput
@@ -59,6 +74,22 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           className="space-y-1"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+        />
+        <MultiSelect
+          label="Labels"
+          data={labels}
+          placeholder="Add 3 labels or less"
+          searchable
+          creatable
+          onChange={(values) => setLabels(values)}
+          maxSelectedValues={3}
+          defaultValue={labels}
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => {
+            const item = query;
+            setLabels((prev) => [...prev, item]);
+            return item;
+          }}
         />
         <Textarea
           placeholder="Description"

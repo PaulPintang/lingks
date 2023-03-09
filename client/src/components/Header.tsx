@@ -29,7 +29,7 @@ const Header = () => {
       <Logo />
       <Flex justify="space-between" align="center" gap={12}>
         <Button size="xs" onClick={open}>
-          <span className="hidden lg:flex md:flex">Add bookmark</span>
+          <span className="hidden lg:flex md:flex ">Add bookmark</span>
           <span className="flex lg:hidden md:hidden">Add</span>
         </Button>
         <ActionIcon onClick={onLogout}>
