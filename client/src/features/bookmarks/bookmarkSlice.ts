@@ -13,12 +13,17 @@ export interface LinksInterface {
   date: string | null;
 }
 
+interface colorInterface {
+  label: string;
+  color: string;
+}
+
 export interface BookmarkInterface {
   _id?: string;
   title: string | null;
   description: string | null;
   banner: string | null;
-  labels: string[];
+  labels: colorInterface[];
   links: LinksInterface[];
 }
 

@@ -12,6 +12,7 @@ import {
   Button,
   ActionIcon,
   MultiSelect,
+  ColorPicker,
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
@@ -23,6 +24,12 @@ import {
 } from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../features/bookmarks/bookmarkSlice";
 import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
+
+interface colorInterface {
+  label: string;
+  color: string;
+}
+
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const { status } = useSelector((state: RootState) => state.bookmark);
@@ -34,7 +41,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [links, setLinks] = useState<LinksInterface[]>([]);
-  const [labels, setLabels] = useState<string[]>([]);
+  const [labels, setLabels] = useState<colorInterface[]>([]);
 
   // links
   const [linkName, setLinkName] = useState<string | null>(null);
@@ -98,6 +105,32 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
     setLink(null);
     setLinkName(null);
   };
+
+  const colors = [
+    "#fa5252",
+    "#e64980",
+    "#be4bdb",
+    "#7950f2",
+    "#4c6ef5",
+    "#228be6",
+    "#15aabf",
+    "#12b886",
+    "#40c057",
+    "#fab005",
+  ];
+
+  // const [select, setSelect] = useState<string>("");
+  // const [colors, setColors] = useState<string[]>([]);
+
+  // useEffect(() => {
+  //   select && setColors([...colors, select]);
+
+  //   labelss.forEach((item, index) => {
+  //     item.color = colors[index];
+  //   });
+  // }, [select]);
+
+  // console.log("labelss", labelss);
 
   return (
     <Modal opened={opened} onClose={onClose} title="Add bookmark" size="sm">
@@ -264,18 +297,51 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
             />
             <MultiSelect
               label="Labels"
-              data={labels}
+              data={labels.map((label) => label.label)}
               placeholder="Add 3 labels or less"
               searchable
               creatable
               maxSelectedValues={3}
+              onChange={(values) => console.log("values", values)}
               getCreateLabel={(query) => `+ Create ${query}`}
               onCreate={(query) => {
                 const item = query;
-                setLabels((prev) => [...prev, item]);
+                setLabels((prev) => [
+                  ...prev,
+                  {
+                    label: item,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                  },
+                ]);
                 return item;
               }}
             />
+            {/* <Flex align="center" justify="space-between">
+              <Text size="xs" pt={4} c="dimmed">
+                Select 3 label colors:
+              </Text>
+
+              <ColorPicker
+                withPicker={false}
+                swatchesPerRow={10}
+                format="hex"
+                value={select}
+                onChange={setSelect}
+                swatches={colors}
+              />
+            </Flex> */}
+            {/* <Flex gap={7}>
+              {labelss.map((label, index) => (
+                <Badge
+                  key={index}
+                  style={{ background: label.color }}
+                  variant="filled"
+                  className="normal-case"
+                >
+                  {label.label}
+                </Badge>
+              ))}
+            </Flex> */}
             <Textarea
               placeholder="Description"
               label="Description"

@@ -42,6 +42,7 @@ const BookmarkView = () => {
     dispatch(getBookmarks(localStorage.getItem("token")!));
   }, []);
 
+  const redugh = "#570a0a";
   return (
     <>
       <Flex
@@ -102,17 +103,11 @@ const BookmarkView = () => {
                     {bookmark.labels.map((label, index) => (
                       <Badge
                         key={index}
-                        color={
-                          index === 0
-                            ? "teal"
-                            : index === 1
-                            ? "indigo"
-                            : "orange"
-                        }
+                        style={{ background: label.color }}
                         variant="filled"
                         className="normal-case"
                       >
-                        {label}
+                        {label.label}
                       </Badge>
                     ))}
                   </Flex>

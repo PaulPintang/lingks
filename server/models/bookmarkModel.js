@@ -16,7 +16,7 @@ const bookmarkSchema = mongoose.Schema({
   },
   labels: [
     {
-      type: String,
+      type: Object,
     },
   ],
   links: [
