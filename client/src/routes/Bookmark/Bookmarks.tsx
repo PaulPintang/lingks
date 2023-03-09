@@ -49,7 +49,7 @@ const Bookmarks = () => {
               <Card.Section p={13} pb={18}>
                 <div>
                   <Text weight={600}>{bookmark.title}</Text>
-                  <Text c="dimmed" fz="sm">
+                  <Text c="dimmed" fz="sm" className="line-clamp-2">
                     {bookmark.description}
                   </Text>
                   <Flex gap={10} align="center" className="text-sm">
