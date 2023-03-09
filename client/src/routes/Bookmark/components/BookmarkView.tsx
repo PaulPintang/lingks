@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import {
   Grid,
@@ -20,18 +20,25 @@ import DropGroupModal from "./DropGroupModal";
 import EditLinkModal from "./EditLinkModal";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../app/store";
+import { getBookmarks } from "../../../features/bookmarks/bookmarkSlice";
 
 const BookmarkView = () => {
   const { id } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
   const [editGroup, editGroupHandlers] = useDisclosure(false);
   const [dropGroup, dropGroupHandlers] = useDisclosure(false);
   const [editLink, editLinkHandlers] = useDisclosure(false);
+  const [index, setIndex] = useState<number>(0);
 
   const bookmark = bookmarks.filter((bm) => bm._id === id);
+
+  useEffect(() => {
+    dispatch(getBookmarks(localStorage.getItem("token")!));
+  }, []);
 
   return (
     <Grid py="md">
@@ -54,7 +61,9 @@ const BookmarkView = () => {
                       <BiTrash />
                     </ActionIcon>
                     <ActionIcon
-                      onClick={() => editGroupHandlers.open()}
+                      onClick={() => {
+                        editGroupHandlers.open();
+                      }}
                       color="green"
                       variant="light"
                     >
@@ -129,7 +138,10 @@ const BookmarkView = () => {
                   {link.name}
                 </Text>
                 <ActionIcon
-                  onClick={() => editLinkHandlers.open()}
+                  onClick={() => {
+                    setIndex(index);
+                    editLinkHandlers.open();
+                  }}
                   color="gray"
                   variant="light"
                 >
@@ -157,7 +169,11 @@ const BookmarkView = () => {
       <AddLinksModal opened={opened} close={close} />
       <EditGroupModal opened={editGroup} close={editGroupHandlers.close} />
       <DropGroupModal opened={dropGroup} close={dropGroupHandlers.close} />
-      <EditLinkModal opened={editLink} close={editLinkHandlers.close} />
+      <EditLinkModal
+        opened={editLink}
+        close={editLinkHandlers.close}
+        index={index}
+      />
     </Grid>
   );
 };
