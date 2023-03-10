@@ -44,10 +44,11 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
     setViewImg(null);
   };
 
+  const onUpdate = () => {};
   return (
     <section className="space-y-2">
       {opened ? (
-        <div className="w-[210px]">
+        <form className="w-[210px]" onSubmit={onUpdate}>
           <Flex align="center" gap={10} pb={18}>
             <BiArrowBack
               onClick={toggle}
@@ -70,7 +71,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
               Update
             </Button>
           </Flex>
-        </div>
+        </form>
       ) : (
         <>
           <Flex align="center" gap={13}>
