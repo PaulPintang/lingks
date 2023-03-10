@@ -27,7 +27,6 @@ const Header = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [popover, popoverHandlers] = useDisclosure(false);
   const [deleteMe, deleteHandlers] = useDisclosure(false);
-  const [editProfile, editHandlers] = useDisclosure(false);
   const [status, setStatus] = useState(false);
 
   const onLogout = () => {
@@ -77,7 +76,6 @@ const Header = () => {
             <ProfileView
               closePopover={popoverHandlers.close}
               deletePrompt={deleteHandlers.open}
-              editPrompt={editHandlers.open}
             />
           </Popover.Dropdown>
         </Popover>
