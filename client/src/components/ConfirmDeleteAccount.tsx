@@ -13,10 +13,8 @@ import { ModalPropsInterface } from "../routes/Bookmark/Bookmarks";
 import { MdLockOutline } from "react-icons/md";
 
 const ConfirmDeleteAccount = ({ opened, close }: ModalPropsInterface) => {
-  const password = useRef<HTMLInputElement>(null);
-  const onDelete = () => {
-    console.log(password.current?.value);
-  };
+  const [type, setType] = useState("");
+  const onDelete = () => {};
 
   return (
     <Modal
@@ -29,15 +27,29 @@ const ConfirmDeleteAccount = ({ opened, close }: ModalPropsInterface) => {
       <div className="space-y-2">
         <Title order={4}>Delete account</Title>
         <Text c="dimmed" fz="sm">
-          To delete your account please confirm your password,
+          Are you sure you want to delete your account? This action cannot be
+          undone.
         </Text>
-        <TextInput size="sm" placeholder="Password" ref={password} />
+        <Text fz="sm" fw={700}>
+          Type "delete" to confirm your action
+        </Text>
+        <TextInput
+          size="sm"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          autoFocus
+        />
         <Flex gap={10} pt={10}>
           <Button onClick={close} variant="light" color="gray" fullWidth>
             Cancel
           </Button>
-          <Button onClick={onDelete} color="red" fullWidth>
-            Delete
+          <Button
+            onClick={onDelete}
+            color="red"
+            fullWidth
+            disabled={type !== "delete" && true}
+          >
+            Delete account
           </Button>
         </Flex>
       </div>
