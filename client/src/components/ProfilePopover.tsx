@@ -8,6 +8,8 @@ import {
   Collapse,
   TextInput,
   Center,
+  Modal,
+  Avatar as Picture,
 } from "@mantine/core";
 import { UserInterface } from "../features/auth/authService";
 import { useSelector } from "react-redux";
@@ -17,6 +19,8 @@ import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { useDisclosure } from "@mantine/hooks";
 import { BiArrowBack } from "react-icons/bi";
 import { MdOutlineCake } from "react-icons/md";
+import Avatar from "react-avatar-edit";
+import ProfilePicture from "./ProfilePicture";
 
 interface Props {
   deletePrompt: () => void;
@@ -24,11 +28,21 @@ interface Props {
 }
 
 const ProfileView = ({ deletePrompt, closePopover }: Props) => {
+  const [viewImg, setViewImg] = useState<string | null>(null);
   const [opened, { toggle }] = useDisclosure(false);
+  const [picture, pictureHandlers] = useDisclosure(false);
   const { user } = useSelector((state: RootState) => state.user);
 
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
+
+  const onCrop = (view: string) => {
+    setViewImg(view);
+  };
+
+  const onClose = () => {
+    setViewImg(null);
+  };
 
   return (
     <section className="space-y-2">
@@ -42,15 +56,12 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
             <Text size="xs">Edit Profile</Text>
           </Flex>
           <Center>
-            <ActionIcon radius="lg" size={120} variant="transparent">
-              {user?.image ? (
-                <img src={user?.image} alt="" />
-              ) : (
-                <div className="rounded-full">
-                  <img src={profile} alt="" />
-                </div>
-              )}
-            </ActionIcon>
+            <Picture
+              radius={100}
+              size={140}
+              src={viewImg || user?.image || profile}
+              onClick={pictureHandlers.open}
+            />
           </Center>
           <TextInput label="Name" value={name} size="xs" spellCheck="false" />
           <TextInput label="Email" value={email} size="xs" spellCheck="false" />
@@ -119,6 +130,15 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
           </Flex>
         </div>
       )}
+      <Modal
+        opened={picture}
+        onClose={pictureHandlers.close}
+        size="xs"
+        centered
+        withCloseButton={false}
+      >
+        <Avatar onClose={onClose} onCrop={onCrop} width="100%" height={295} />
+      </Modal>
     </section>
   );
 };
