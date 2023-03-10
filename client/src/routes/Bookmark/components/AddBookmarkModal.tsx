@@ -243,6 +243,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       className="space-y-1"
                       value={linkName!}
                       onChange={(e) => setLinkName(e.target.value)}
+                      spellCheck="false"
                     />
                     <TextInput
                       placeholder="Paste link here"
@@ -251,6 +252,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       icon={<RxLink2 size="1rem" />}
                       value={link!}
                       onChange={(e) => setLink(e.target.value)}
+                      spellCheck="false"
                     />
                     <Flex justify="flex-end" pt={15}>
                       <Button
@@ -293,6 +295,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               label="Banner (Image link)"
               className="space-y-1"
               onChange={(e) => setBanner(e.target.value)}
+              spellCheck="false"
             />
             <TextInput
               placeholder="Bookmark name"
@@ -300,6 +303,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               className="space-y-1"
               value={title!}
               onChange={(e) => setTitle(e.target.value)}
+              spellCheck="false"
             />
             <MultiSelect
               label="Labels"
@@ -353,6 +357,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               label="Description"
               value={description!}
               onChange={(e) => setDescription(e.target.value)}
+              spellCheck="false"
             />
             <Flex gap={10} pt={10}>
               <Button onClick={onClose} variant="light" color="gray" fullWidth>

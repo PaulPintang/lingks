@@ -18,8 +18,8 @@ import { CiSearch } from "react-icons/ci";
 import { RxLink2 } from "react-icons/rx";
 import { AiOutlinePlus } from "react-icons/ai";
 import AddLinksModal from "./AddLinksModal";
-import EditGroupModal from "./EditGroupModal";
-import DropGroupModal from "./DropGroupModal";
+import EditGroupModal from "./EditBookmarkModal";
+import DropGroupModal from "./DropBookmarkModal";
 import EditLinkModal from "./EditLinkModal";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { useParams, Link } from "react-router-dom";
@@ -135,6 +135,7 @@ const BookmarkView = () => {
               placeholder="Search your link..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              spellCheck="false"
             />
             <div>
               <Button

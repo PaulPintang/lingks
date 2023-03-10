@@ -16,6 +16,7 @@ import profile from "../assets/user.png";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { useDisclosure } from "@mantine/hooks";
 import { BiArrowBack } from "react-icons/bi";
+import { MdOutlineCake } from "react-icons/md";
 
 interface Props {
   deletePrompt: () => void;
@@ -78,13 +79,9 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
               </Text>
             </div>
           </Flex>
+
           <Flex gap={10}>
-            <Button
-              onClick={toggle}
-              size="xs"
-              color="gray"
-              variant={opened ? "light" : "white"}
-            >
+            <Button onClick={toggle} size="xs" color="gray" variant="light">
               Edit profile
             </Button>
             <Button
@@ -103,16 +100,24 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
       )}
 
       {!opened && (
-        <Flex gap={10}>
-          <Text c="dimmed" size="xs">
-            Bookmarks:
-            <span className="text-gray-700"> 2</span>
-          </Text>
-          <Text c="dimmed" size="xs">
-            Links:
-            <span className="text-gray-700"> 28</span>
-          </Text>
-        </Flex>
+        <div>
+          <Flex gap={10}>
+            <Text c="dimmed" size="xs">
+              Bookmarks:
+              <span className="text-gray-700"> 2</span>
+            </Text>
+            <Text c="dimmed" size="xs">
+              Links:
+              <span className="text-gray-700"> 28</span>
+            </Text>
+          </Flex>
+          <Flex align="center" gap={8}>
+            <MdOutlineCake className="text-gray-500" />
+            <Text c="dimmed" size="xs" pt={4}>
+              Joined on March 1, 2023
+            </Text>
+          </Flex>
+        </div>
       )}
     </section>
   );

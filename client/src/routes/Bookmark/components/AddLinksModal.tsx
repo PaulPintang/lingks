@@ -142,6 +142,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
               className="space-y-1"
               value={name!}
               onChange={(e) => setName(e.target.value)}
+              spellCheck="false"
             />
             <TextInput
               placeholder="Paste link here"
@@ -150,6 +151,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
               icon={<RxLink2 size="1rem" />}
               value={link!}
               onChange={(e) => setLink(e.target.value)}
+              spellCheck="false"
             />
             <Flex justify="flex-end" pt={10}>
               <Button
