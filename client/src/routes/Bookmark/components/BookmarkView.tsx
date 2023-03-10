@@ -55,7 +55,7 @@ const BookmarkView = () => {
       <Flex
         align="center"
         gap="sm"
-        className=" sticky lg:top-[100px] md:top-[100px] top-[60px] z-10 bg-white pb-3"
+        className=" sticky lg:top-[100px] md:top-[100px] top-[60px] z-[1] bg-white pb-3"
       >
         <Link to="/bookmarks">
           <ActionIcon>
@@ -126,7 +126,7 @@ const BookmarkView = () => {
         <Grid.Col lg={8} md={8} sm={7} className="bg-red -500 w-full">
           <Flex
             justify="space-between"
-            className="sticky lg:top-[156px] md:top-[150px] top-[110px] pb-4 bg-white z-10"
+            className="sticky lg:top-[156px] md:top-[150px] top-[110px] pb-4 bg-white z-[1]"
           >
             <Input
               icon={<CiSearch />}
@@ -136,9 +136,6 @@ const BookmarkView = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            {/* <Button color="blue" size="sm" onClick={onSearch}>
-                Search
-              </Button> */}
             <div>
               <Button
                 onClick={open}
