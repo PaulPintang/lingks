@@ -87,8 +87,8 @@ const deleteAccount = async (req, res, next) => {
     next(error);
   }
 };
-const uploadPicture = async (req, res, next) => {
-  const { image, _id } = req.body;
+const updateProfile = async (req, res, next) => {
+  const { name, email, image, _id } = req.body;
   try {
     // delete prev image to cloudinary
     if (image !== "") {
@@ -106,6 +106,8 @@ const uploadPicture = async (req, res, next) => {
     });
 
     const user = await User.findByIdAndUpdate(_id, {
+      name: name,
+      email: email,
       image: {
         public_id: result.public_id,
         url: result.secure_url,
@@ -195,5 +197,5 @@ module.exports = {
   verifyOTP,
   resetPassword,
   profile,
-  uploadPicture,
+  updateProfile,
 };

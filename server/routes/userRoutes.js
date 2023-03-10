@@ -7,7 +7,7 @@ const {
   profile,
   verifyOTP,
   resetPassword,
-  uploadPicture,
+  updateProfile,
   deleteAccount,
 } = require("../controllers/userController");
 const { Protected } = require("../middleware/authMiddleware");
@@ -20,6 +20,6 @@ router.get("/verify", verifyOTP);
 router.put("/reset", resetPassword);
 router.get("/me", Protected, profile);
 router.delete("/me/:id", Protected, deleteAccount);
-router.put("/upload", uploadPicture);
+router.put("/upload/:id", updateProfile);
 
 module.exports = router;
