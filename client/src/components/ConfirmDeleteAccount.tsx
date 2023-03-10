@@ -12,14 +12,21 @@ import {
 import { ModalPropsInterface } from "../routes/Bookmark/Bookmarks";
 import { MdLockOutline } from "react-icons/md";
 
-const ConfirmDeleteAccount = ({ opened, close }: ModalPropsInterface) => {
+interface Props extends ModalPropsInterface {
+  closePopover: () => void;
+}
+
+const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
   const [type, setType] = useState("");
   const onDelete = () => {};
 
   return (
     <Modal
-      opened={true}
-      onClose={close}
+      opened={opened}
+      onClose={() => {
+        close();
+        setType("");
+      }}
       size="xs"
       centered
       withCloseButton={false}

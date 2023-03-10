@@ -17,14 +17,17 @@ import { useDisclosure } from "@mantine/hooks";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import Logo from "./Logo";
-import ProfileView from "./ProfileView";
+import ProfileView from "./ProfilePopover";
+import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 
 const Header = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.user);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
-  const [show, handlers] = useDisclosure(false);
+  const [popover, popoverHandlers] = useDisclosure(false);
+  const [deleteMe, deleteHandlers] = useDisclosure(false);
+  const [editProfile, editHandlers] = useDisclosure(false);
   const [status, setStatus] = useState(false);
 
   const onLogout = () => {
@@ -53,10 +56,10 @@ const Header = () => {
         <ActionIcon onClick={onLogout} loading={status}>
           <MdLogout className="text-gray-400" />
         </ActionIcon>
-        <Popover position="bottom-end" opened={show}>
+        <Popover position="bottom-end" opened={popover}>
           <Popover.Target>
             <ActionIcon
-              onClick={handlers.toggle}
+              onClick={popoverHandlers.toggle}
               radius="lg"
               size={35}
               variant="transparent"
@@ -71,11 +74,20 @@ const Header = () => {
             </ActionIcon>
           </Popover.Target>
           <Popover.Dropdown>
-            <ProfileView />
+            <ProfileView
+              closePopover={popoverHandlers.close}
+              deletePrompt={deleteHandlers.open}
+              editPrompt={editHandlers.open}
+            />
           </Popover.Dropdown>
         </Popover>
       </Flex>
       <AddBookmarkModal opened={opened} close={close} />
+      <ConfirmDeleteAccount
+        opened={deleteMe}
+        close={deleteHandlers.close}
+        closePopover={popoverHandlers.close}
+      />
     </Flex>
   );
 };

@@ -5,9 +5,17 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import profile from "../assets/user.png";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
+import { useDisclosure } from "@mantine/hooks";
 
-const ProfileView = () => {
+interface Props {
+  deletePrompt: () => void;
+  editPrompt: () => void;
+  closePopover: () => void;
+}
+
+const ProfileView = ({ deletePrompt, editPrompt, closePopover }: Props) => {
   const { user } = useSelector((state: RootState) => state.user);
+
   return (
     <section className="space-y-2">
       <Flex align="center" gap={13}>
@@ -31,7 +39,15 @@ const ProfileView = () => {
         <Button size="xs" color="gray" variant="light">
           Edit profile
         </Button>
-        <Button size="xs" color="red" variant="white">
+        <Button
+          size="xs"
+          color="red"
+          variant="white"
+          onClick={() => {
+            deletePrompt();
+            closePopover();
+          }}
+        >
           Delete account
         </Button>
       </Flex>
@@ -45,7 +61,6 @@ const ProfileView = () => {
           <span className="text-gray-700"> 28</span>
         </Text>
       </Flex>
-      <ConfirmDeleteAccount />
     </section>
   );
 };
