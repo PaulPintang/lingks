@@ -53,7 +53,7 @@ const Header = () => {
         <ActionIcon onClick={onLogout} loading={status}>
           <MdLogout className="text-gray-400" />
         </ActionIcon>
-        <Popover width={220} position="bottom-end" withArrow opened={show}>
+        <Popover position="bottom-end" opened={show}>
           <Popover.Target>
             <ActionIcon
               onClick={handlers.toggle}
@@ -71,7 +71,7 @@ const Header = () => {
             </ActionIcon>
           </Popover.Target>
           <Popover.Dropdown>
-            <ProfileView user={user} />
+            <ProfileView />
           </Popover.Dropdown>
         </Popover>
       </Flex>
