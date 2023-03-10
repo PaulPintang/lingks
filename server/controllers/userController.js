@@ -56,7 +56,14 @@ const loginUser = async (req, res) => {
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SCRT, {
     expiresIn: "30d",
   });
-  res.header("auth-token", token).json({ token: token });
+  // res.header("auth-token", token).json({ token: token });
+  res.header("auth-token", token).json({
+    _id: user.id,
+    name: user.name,
+    email: user.email,
+    image: user.image.url,
+    token: token,
+  });
 };
 
 const deleteAccount = async (req, res, next) => {

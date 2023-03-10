@@ -1,8 +1,7 @@
 import axios from "axios";
+import { UserInterface } from "./authSlice";
 
-export interface UserInterface {
-  name?: string;
-  email: string;
+interface Props extends UserInterface {
   password: string;
 }
 
@@ -10,6 +9,7 @@ export const handleLogin = async (user: UserInterface) => {
   try {
     const res = await axios.post("/api/user/login", user);
     localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data));
     localStorage.removeItem("email");
     return res.data.token;
   } catch (err: any) {
@@ -34,7 +34,7 @@ export const handleLogout = () => {
 };
 
 export const handleChangePass = async (
-  data: UserInterface,
+  data: Props,
   setError: (val: string) => void
 ) => {
   try {
@@ -60,6 +60,21 @@ export const handleUserProfile = async (token: string) => {
     console.log(error);
   }
 };
+
+export const handleUpdateProfile = async (data: UserInterface) => {
+  const { _id, name, email, image } = data;
+  try {
+    const user = await axios.put(`/api/user/update${_id}`, {
+      name,
+      email,
+      image,
+    });
+    return user.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const handleError = (response: string) => {
   if (JSON.stringify(response).toLowerCase().includes("name")) {
     console.log("name error");

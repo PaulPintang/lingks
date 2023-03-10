@@ -5,25 +5,29 @@ import {
   handleRegister,
   handleLogout,
   handleUserProfile,
+  handleUpdateProfile,
 } from "./authService";
-import { UserInterface } from "./authService";
+// import { UserInterface } from "./authService";
 
-interface UserProfile {
+export interface UserInterface {
+  _id: string;
   name: string;
   email: string;
   image: string;
+  token: string;
 }
 
-interface User extends UserInterface {
-  user: UserProfile | null;
+interface StateInterface {
+  user: UserInterface | null;
   status?: "idle" | "pending" | "succeeded" | "failed";
   error?: string | null;
 }
 
-const initialState: User = {
-  user: null,
-  email: "",
-  password: "",
+// Get user from localStorage
+const user = JSON.parse(localStorage.getItem("user")!);
+
+const initialState: StateInterface = {
+  user: user ? user : null,
   status: "idle",
   error: "",
 };
@@ -32,10 +36,9 @@ export const login = createAsyncThunk(
   "/user/login",
   async (user: UserInterface) => {
     try {
-      // return token
-      const token = await handleLogin(user);
-      await handleUserProfile(token);
-      return token;
+      const res = await handleLogin(user);
+      await handleUserProfile(res.token);
+      return res;
     } catch (err: any) {
       return err.response.data.error;
     }
@@ -67,9 +70,16 @@ export const profile = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await handleLogout();
-});
+export const update = createAsyncThunk(
+  "/user/login",
+  async (user: UserInterface) => {
+    try {
+      return await handleUpdateProfile(user);
+    } catch (err: any) {
+      return err.response.data.error;
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "user",
