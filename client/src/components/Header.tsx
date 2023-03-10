@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Flex, Center, Title, Button, ActionIcon } from "@mantine/core";
+import {
+  Flex,
+  Center,
+  Title,
+  Button,
+  ActionIcon,
+  Popover,
+} from "@mantine/core";
 import { GiBookmarklet } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -10,12 +17,14 @@ import { useDisclosure } from "@mantine/hooks";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import Logo from "./Logo";
+import ProfileView from "./ProfileView";
 
 const Header = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.user);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
+  const [show, handlers] = useDisclosure(false);
   const [status, setStatus] = useState(false);
 
   const onLogout = () => {
@@ -26,6 +35,7 @@ const Header = () => {
       navigate("/");
     }, 3000);
   };
+
   return (
     <Flex
       justify="space-between"
@@ -43,13 +53,27 @@ const Header = () => {
         <ActionIcon onClick={onLogout} loading={status}>
           <MdLogout className="text-gray-400" />
         </ActionIcon>
-        {user?.image ? (
-          <img src={user?.image} alt="" />
-        ) : (
-          <div className="rounded-full w-9">
-            <img src={profile} alt="" />
-          </div>
-        )}
+        <Popover width={220} position="bottom-end" withArrow opened={show}>
+          <Popover.Target>
+            <ActionIcon
+              onClick={handlers.toggle}
+              radius="lg"
+              size={35}
+              variant="transparent"
+            >
+              {user?.image ? (
+                <img src={user?.image} alt="" />
+              ) : (
+                <div className="rounded-full">
+                  <img src={profile} alt="" />
+                </div>
+              )}
+            </ActionIcon>
+          </Popover.Target>
+          <Popover.Dropdown>
+            <ProfileView user={user} />
+          </Popover.Dropdown>
+        </Popover>
       </Flex>
       <AddBookmarkModal opened={opened} close={close} />
     </Flex>
