@@ -12,7 +12,7 @@ import bookmark from "../assets/bookmark.png";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import { profile } from "../features/auth/authSlice";
+// import { profile } from "../features/auth/authSlice";
 import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
 
 interface Props {

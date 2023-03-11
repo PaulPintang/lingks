@@ -8,7 +8,6 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 // Routes
 import Login from "./routes/Authentication/Login";
-import Profile from "./routes/Profile";
 import Register from "./routes/Authentication/Register";
 import Recover from "./routes/Authentication/Recover";
 import Verify from "./routes/Authentication/Verify";
