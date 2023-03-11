@@ -11,6 +11,8 @@ import {
   Skeleton,
   Button,
   Center,
+  LoadingOverlay,
+  Loader,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,14 +44,14 @@ const Bookmarks = () => {
 
   return (
     <>
-      {bookmarks.length !== 0 && (
+      {bookmarks?.length !== 0 && (
         <div className="sticky lg:top-[100px] md:top-[100px] top-[60px] z-[1] bg-white pb-3">
           <Title order={1}>Bookmarks</Title>
         </div>
       )}
       <Flex gap={20} className="w-full" wrap="wrap">
-        {bookmarks.length ? (
-          bookmarks.map((bookmark) => (
+        {bookmarks?.length ? (
+          bookmarks?.map((bookmark) => (
             <Link
               key={bookmark._id}
               to={`${bookmark._id}`}
@@ -69,7 +71,10 @@ const Bookmarks = () => {
                       <Text c="dimmed" fw={600}>
                         Links:
                       </Text>
-                      <Text>{bookmark.links?.length} links</Text>
+                      <Text>
+                        {bookmark.links?.length}{" "}
+                        {bookmark.links?.length! >= 2 && "links"}
+                      </Text>
                     </Flex>
                     <Flex className="py-2" gap={8} wrap="wrap">
                       {bookmark.labels?.map((label, index) => (

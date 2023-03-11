@@ -126,7 +126,12 @@ const updateProfile = async (req, res, next) => {
       email,
       new: true,
     });
-    res.json(user);
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      image: user.image.url,
+    });
   } catch (error) {
     next(error);
   }
@@ -195,7 +200,7 @@ const profile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     const { name, email, image, _id } = user;
-    res.send({ name, email, image: image.url, _id });
+    res.json({ name, email, image: image.url, _id });
   } catch (error) {
     next(error);
   }

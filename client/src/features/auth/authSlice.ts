@@ -5,10 +5,13 @@ import {
   handleLogin,
   handleRegister,
   handleLogout,
-  handleUserProfile,
-  handleUpdateProfile,
+  // handleUserProfile,
+  // handleUpdateProfile,
 } from "./authService";
+
+import { handleUserProfile } from "../profile/profileService";
 // import { UserInterface } from "./authService";
+import { profile } from "../profile/profileSlice";
 
 export interface UserInterface {
   _id?: string;
@@ -26,7 +29,6 @@ interface StateInterface {
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem("user")!);
-console.log(user);
 
 const initialState: StateInterface = {
   user: user ? user : null,
@@ -61,32 +63,19 @@ export const register = createAsyncThunk(
   }
 );
 
-export const profile = createAsyncThunk(
-  "user/profile",
-  async (token: string) => {
-    try {
-      // return token
-      const res = await handleUserProfile(token);
-      return res;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
-export const update = createAsyncThunk<
-  // Return type of the payload creator
-  UserInterface,
-  // First argument to the payload creator
-  UserInterface,
-  { state: StateInterface }
->("/user/login", async (user, thunkAPI) => {
-  try {
-    return await handleUpdateProfile(user, thunkAPI.getState().user?.token!);
-  } catch (err: any) {
-    return err.response.data.error;
-  }
-});
+// export const profile = createAsyncThunk<
+//   UserInterface,
+//   undefined,
+//   { state: RootState }
+// >("user/profile", async (_, thunkAPI) => {
+//   try {
+//     // return token
+//     const res = await handleUserProfile(thunkAPI.getState().user.user?.token!);
+//     return res;
+//   } catch (error) {
+//     return error;
+//   }
+// });
 
 export const logout = createAsyncThunk("user/logout", async () => {
   await handleLogout();
@@ -143,11 +132,12 @@ export const authSlice = createSlice({
       })
       .addCase(profile.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.user = action.payload;
+        // state.user = action.payload;
       })
       .addCase(profile.rejected, (state) => {
         state.status = "failed";
       })
+
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
       });

@@ -1,7 +1,19 @@
-import React from "react";
-import { Center, Flex, Title, Text, Button } from "@mantine/core";
+import React, { useEffect } from "react";
+import {
+  Center,
+  Flex,
+  Title,
+  Text,
+  Button,
+  Loader,
+  LoadingOverlay,
+} from "@mantine/core";
 import bookmark from "../assets/bookmark.png";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../app/store";
+import { profile } from "../features/auth/authSlice";
+import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
 
 interface Props {
   open: () => void;

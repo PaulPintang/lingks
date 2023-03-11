@@ -32,7 +32,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    user?.token && navigate("bookmarks");
+    user && navigate("bookmarks");
   }, [status]);
 
   const onSubmit = async (e: React.FormEvent) => {

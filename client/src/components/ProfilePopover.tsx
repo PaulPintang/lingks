@@ -13,14 +13,17 @@ import {
 } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import profile from "../assets/user.png";
+import userimg from "../assets/user.png";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { useDisclosure } from "@mantine/hooks";
 import { BiArrowBack } from "react-icons/bi";
 import { MdOutlineCake } from "react-icons/md";
 import Avatar from "react-avatar-edit";
 import ProfilePicture from "./ProfilePicture";
-import { update } from "../features/auth/authSlice";
+// import { update } from "../features/auth/authSlice";
+import { update } from "../features/profile/profileSlice";
+import { profile } from "../features/profile/profileSlice";
+// import { profile } from "../features/auth/authSlice";
 
 interface Props {
   deletePrompt: () => void;
@@ -32,7 +35,8 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
   const [viewImg, setViewImg] = useState<string | null>(null);
   const [opened, { toggle }] = useDisclosure(false);
   const [picture, pictureHandlers] = useDisclosure(false);
-  const { user } = useSelector((state: RootState) => state.user);
+  // const { user } = useSelector((state: RootState) => state.user);
+  const { user, status } = useSelector((state: RootState) => state.profile);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
 
   const [name, setName] = useState(user?.name);
@@ -46,13 +50,19 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
     setViewImg(null);
   };
 
-  const onUpdate = (e: FormEvent) => {
+  const onUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(update({ name, email }));
+    const user = {
+      name,
+      email,
+    };
+    dispatch(update(user)).then(() => {
+      profile();
+      toggle();
+    });
   };
 
   const length = bookmarks.map((bm) => bm.links?.length);
-
   let total = 0;
   length.forEach((item) => (total += item!));
 
@@ -71,7 +81,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
             <Picture
               radius={100}
               size={140}
-              src={viewImg || user?.image || profile}
+              src={viewImg || user?.image || userimg}
               onClick={pictureHandlers.open}
             />
           </Center>
@@ -90,7 +100,12 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Flex justify="end" pt={15}>
-            <Button size="xs" color="teal" type="submit">
+            <Button
+              size="xs"
+              color="teal"
+              type="submit"
+              loading={status === "pending" && true}
+            >
               Update
             </Button>
           </Flex>
@@ -103,7 +118,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
                 <img src={user?.image} alt="" />
               ) : (
                 <div className="rounded-full">
-                  <img src={profile} alt="" />
+                  <img src={userimg} alt="" />
                 </div>
               )}
             </ActionIcon>

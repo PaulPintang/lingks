@@ -28,7 +28,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    user?.token && navigate("bookmarks");
+    user && navigate("bookmarks");
     return () => {
       dispatch(reset());
     };

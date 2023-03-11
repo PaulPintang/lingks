@@ -26,7 +26,7 @@ import { useNavigate, Link } from "react-router-dom";
 import avatar from "../assets/user.png";
 import { AppDispatch, RootState } from "../app/store";
 import { useSelector, useDispatch } from "react-redux";
-import { profile } from "../features/auth/authSlice";
+import { profile } from "../features/profile/profileSlice";
 import Header from "../components/Header";
 import userimg from "../assets/user.png";
 import { BiSearchAlt } from "react-icons/bi";
@@ -35,6 +35,7 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
 
 const RootLayout = () => {
   const [opened, setOpened] = useState<boolean>(false);
@@ -42,26 +43,26 @@ const RootLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user } = useSelector((state: RootState) => state.user);
-  const { status } = useSelector((state: RootState) => state.bookmark);
+  const { user, status } = useSelector((state: RootState) => state.user);
+  // const { status } = useSelector((state: RootState) => state.bookmark);
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     dispatch(profile(user?.token!));
-  //   };
+  useEffect(() => {
+    const fetchUser = async () => {
+      dispatch(profile());
+    };
 
-  //   fetchUser().catch((error) => console.log(error));
-  // }, []);
+    fetchUser().catch((error) => console.log(error));
+  }, []);
 
   return (
     <Container>
-      {/* <LoadingOverlay
-        visible={status !== "succeeded" && true}
-        loader={<Loader variant="bars" />}
-        overlayOpacity={1}
-      /> */}
       <Header />
       <main className="h-[calc(1 00vh-170px)] pb-5">
+        <LoadingOverlay
+          visible={status === "pending" && true}
+          loader={<Loader variant="bars" />}
+          overlayOpacity={1}
+        />
         <Outlet />
       </main>
       {/* <Footer /> */}

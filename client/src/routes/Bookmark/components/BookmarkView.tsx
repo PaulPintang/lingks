@@ -41,15 +41,10 @@ const BookmarkView = () => {
 
   const bookmark = bookmarks.filter((bm) => bm._id === id);
 
-  // useEffect(() => {
-  //   dispatch(getBookmarks(localStorage.getItem("token")!));
-  // }, []);
-
-  const links = bookmark[0].links.filter((link) => {
+  const links = bookmark[0].links?.filter((link) => {
     return link.name?.toLowerCase().includes(query.toLowerCase());
   });
 
-  const onSearch = () => {};
   return (
     <>
       <Flex
@@ -104,10 +99,10 @@ const BookmarkView = () => {
                     <Text c="dimmed" fw={600}>
                       Bookmarks:
                     </Text>
-                    <Text>{bookmark.links.length} links</Text>
+                    <Text>{bookmark.links?.length} links</Text>
                   </Flex>
                   <Flex className="py-2 pr-2" gap={8} wrap="wrap">
-                    {bookmark.labels.map((label, index) => (
+                    {bookmark.labels?.map((label, index) => (
                       <Badge
                         key={index}
                         style={{ background: label.color }}
@@ -165,7 +160,7 @@ const BookmarkView = () => {
             justify="space-between"
             gap={5}
           >
-            {links.map((link, index) => (
+            {links?.map((link, index) => (
               <Card
                 key={index}
                 px={10}

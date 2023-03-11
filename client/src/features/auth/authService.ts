@@ -8,10 +8,8 @@ interface Props extends UserInterface {
 export const handleLogin = async (user: UserInterface) => {
   try {
     const res = await axios.post("/api/user/login", user);
-    // localStorage.setItem("token", res.data.token);
-    localStorage.setItem("user", JSON.stringify(res.data));
     localStorage.removeItem("email");
-    // console.log(res.data);
+    localStorage.setItem("user", JSON.stringify(res.data));
     return res.data;
   } catch (err: any) {
     const err_msg = err.response.data.error;
@@ -49,43 +47,44 @@ export const handleChangePass = async (
   }
 };
 
-export const handleUserProfile = async (token: string) => {
-  try {
-    const user = await axios.get("/api/user/me", {
-      headers: {
-        "auth-token": token,
-      },
-    });
-    return user.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const handleUserProfile = async (token: string) => {
+//   try {
+//     const user = await axios.get("/api/user/me", {
+//       headers: {
+//         "auth-token": token,
+//       },
+//     });
+//     localStorage.setItem("user", JSON.stringify({ ...user.data, token }));
+//     return user.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-export const handleUpdateProfile = async (
-  data: UserInterface,
-  token: string
-) => {
-  const { _id, name, email, image } = data;
-  console.log(token);
-  try {
-    const user = await axios.put(
-      "/api/user/update",
-      {
-        name,
-        email,
-      },
-      {
-        headers: {
-          "auth-token": token,
-        },
-      }
-    );
-    return user.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const handleUpdateProfile = async (
+//   data: UserInterface,
+//   token: string
+// ) => {
+//   const { name, email, image } = data;
+//   try {
+//     const user = await axios.put(
+//       "/api/user/update",
+//       {
+//         name,
+//         email,
+//       },
+//       {
+//         headers: {
+//           "auth-token": token,
+//         },
+//       }
+//     );
+//     localStorage.setItem("user", JSON.stringify({ ...user.data, token }));
+//     return user.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const handleError = (response: string) => {
   if (JSON.stringify(response).toLowerCase().includes("name")) {
