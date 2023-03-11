@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Flex,
   Center,
@@ -11,7 +11,7 @@ import { GiBookmarklet } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import profile from "../assets/user.png";
+import userimg from "../assets/user.png";
 import AddBookmarkModal from "../routes/Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -20,6 +20,7 @@ import Logo from "./Logo";
 import ProfileView from "./ProfilePopover";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { logout } from "../features/auth/authSlice";
+import { profile } from "../features/profile/profileSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -39,6 +40,10 @@ const Header = () => {
       dispatch(logout()).then(() => navigate("/"));
     }, 2000);
   };
+
+  useEffect(() => {
+    dispatch(profile());
+  }, []);
 
   return (
     <Flex
@@ -69,7 +74,7 @@ const Header = () => {
                 <img src={user?.image} alt="" />
               ) : (
                 <div className="rounded-full">
-                  <img src={profile} alt="" />
+                  <img src={userimg} alt="" />
                 </div>
               )}
             </ActionIcon>

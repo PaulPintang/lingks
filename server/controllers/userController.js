@@ -67,20 +67,20 @@ const loginUser = async (req, res) => {
 };
 
 const deleteAccount = async (req, res, next) => {
-  if (req.user._id !== req.params.userId) {
-    return res.send("Something went wrong!");
-  }
+  // if (req.user._id !== req.params.userId) {
+  //   return res.send("Something went wrong!");
+  // }
 
   // res.send("deleted");
   try {
-    const current = await User.findById(req.params.userId);
+    const current = await User.findById(req.user._id);
 
     const ImgId = current.image.public_id;
 
     if (ImgId) {
       await cloudinary.uploader.destroy(ImgId);
     }
-    const user = await User.findByIdAndDelete(req.params.userId);
+    const user = await User.findByIdAndDelete(req.user._id);
 
     res.json({ success: true, deletedUser: user._id });
   } catch (error) {

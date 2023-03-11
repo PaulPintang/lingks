@@ -41,3 +41,17 @@ export const handleUserProfile = async (token: string) => {
     console.log(error);
   }
 };
+
+export const handleDeleteProfile = async (token: string) => {
+  try {
+    const user = await axios.delete("/api/user/delete", {
+      headers: {
+        "auth-token": token,
+      },
+    });
+    localStorage.removeItem("user");
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};

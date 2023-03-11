@@ -19,7 +19,7 @@ router.post("/recover", generateOTP);
 router.get("/verify", verifyOTP);
 router.put("/reset", resetPassword);
 router.get("/me", Protected, profile);
-router.delete("/me/:id", Protected, deleteAccount);
+router.delete("/delete", Protected, deleteAccount);
 router.put("/update", Protected, updateProfile);
 
 module.exports = router;

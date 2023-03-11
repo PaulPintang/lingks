@@ -11,14 +11,24 @@ import {
 } from "@mantine/core";
 import { ModalPropsInterface } from "../routes/Bookmark/Bookmarks";
 import { MdLockOutline } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../app/store";
+import { deleteAcc } from "../features/profile/profileSlice";
+import { useNavigate } from "react-router-dom";
 
 interface Props extends ModalPropsInterface {
   closePopover: () => void;
 }
 
 const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const [type, setType] = useState("");
-  const onDelete = () => {};
+  const { status } = useSelector((state: RootState) => state.profile);
+
+  const onDelete = () => {
+    dispatch(deleteAcc()).then(() => navigate("/"));
+  };
 
   return (
     <Modal
@@ -55,6 +65,7 @@ const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
             color="red"
             fullWidth
             disabled={type !== "delete" && true}
+            loading={status === "pending" && true}
           >
             Delete account
           </Button>

@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { UserInterface } from "../auth/authSlice";
-import { handleUpdateProfile, handleUserProfile } from "./profileService";
+import {
+  handleUpdateProfile,
+  handleUserProfile,
+  handleDeleteProfile,
+} from "./profileService";
 
 interface ProfileInterface {
   user: UserInterface | null;
@@ -47,6 +51,21 @@ export const update = createAsyncThunk<
   }
 });
 
+export const deleteAcc = createAsyncThunk<
+  UserInterface,
+  undefined,
+  { state: RootState }
+>("user/delete", async (_, thunkAPI) => {
+  try {
+    const res = await handleDeleteProfile(
+      thunkAPI.getState().user.user?.token!
+    );
+    return res;
+  } catch (error) {
+    return error;
+  }
+});
+
 export const profileSlice = createSlice({
   name: "profile",
   initialState,
@@ -76,6 +95,16 @@ export const profileSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(update.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(deleteAcc.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(deleteAcc.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = null;
+      })
+      .addCase(deleteAcc.rejected, (state) => {
         state.status = "failed";
       });
   },

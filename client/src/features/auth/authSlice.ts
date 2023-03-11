@@ -12,6 +12,7 @@ import {
 import { handleUserProfile } from "../profile/profileService";
 // import { UserInterface } from "./authService";
 import { profile } from "../profile/profileSlice";
+import { deleteAcc } from "../profile/profileSlice";
 
 export interface UserInterface {
   _id?: string;
@@ -135,6 +136,14 @@ export const authSlice = createSlice({
         // state.user = action.payload;
       })
       .addCase(profile.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(deleteAcc.pending, (state) => {})
+      .addCase(deleteAcc.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = null;
+      })
+      .addCase(deleteAcc.rejected, (state) => {
         state.status = "failed";
       })
 
