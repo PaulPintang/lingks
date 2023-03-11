@@ -47,22 +47,18 @@ const RootLayout = () => {
   // const { status } = useSelector((state: RootState) => state.bookmark);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      dispatch(profile());
-    };
-
-    fetchUser().catch((error) => console.log(error));
+    dispatch(profile());
   }, []);
 
   return (
     <Container>
+      <LoadingOverlay
+        visible={status === "pending" && true}
+        loader={<Loader variant="bars" />}
+        overlayOpacity={1}
+      />
       <Header />
       <main className="h-[calc(1 00vh-170px)] pb-5">
-        <LoadingOverlay
-          visible={status === "pending" && true}
-          loader={<Loader variant="bars" />}
-          overlayOpacity={1}
-        />
         <Outlet />
       </main>
       {/* <Footer /> */}

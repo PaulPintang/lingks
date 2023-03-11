@@ -28,7 +28,6 @@ export const profile = createAsyncThunk<
   { state: RootState }
 >("user/profile", async (_, thunkAPI) => {
   try {
-    // return token
     const res = await handleUserProfile(thunkAPI.getState().user.user?.token!);
     return res;
   } catch (error) {
@@ -77,16 +76,16 @@ export const profileSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      //   .addCase(profile.pending, (state) => {
-      //     state.status = "pending";
-      //   })
-      //   .addCase(profile.fulfilled, (state, action) => {
-      //     state.status = "succeeded";
-      //     // state.user = action.payload;
-      //   })
-      //   .addCase(profile.rejected, (state) => {
-      //     state.status = "failed";
-      //   })
+      .addCase(profile.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(profile.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        // state.user = action.payload;
+      })
+      .addCase(profile.rejected, (state) => {
+        state.status = "failed";
+      })
       .addCase(update.pending, (state) => {
         state.status = "pending";
       })
