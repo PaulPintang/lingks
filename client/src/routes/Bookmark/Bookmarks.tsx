@@ -67,7 +67,7 @@ const Bookmarks = () => {
                     </Text>
                     <Flex gap={10} align="center" className="text-sm">
                       <Text c="dimmed" fw={600}>
-                        Bookmarks:
+                        Links:
                       </Text>
                       <Text>{bookmark.links?.length} links</Text>
                     </Flex>

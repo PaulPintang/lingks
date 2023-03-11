@@ -11,7 +11,6 @@ import {
   Modal,
   Avatar as Picture,
 } from "@mantine/core";
-import { UserInterface } from "../features/auth/authService";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import profile from "../assets/user.png";
@@ -34,6 +33,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
   const [opened, { toggle }] = useDisclosure(false);
   const [picture, pictureHandlers] = useDisclosure(false);
   const { user } = useSelector((state: RootState) => state.user);
+  const { bookmarks } = useSelector((state: RootState) => state.bookmark);
 
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
@@ -50,6 +50,11 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
     e.preventDefault();
     dispatch(update({ name, email }));
   };
+
+  const length = bookmarks.map((bm) => bm.links?.length);
+
+  let total = 0;
+  length.forEach((item) => (total += item!));
 
   return (
     <section className="space-y-2">
@@ -93,7 +98,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
       ) : (
         <>
           <Flex align="center" gap={13}>
-            <ActionIcon radius="lg" size={40} variant="transparent">
+            <ActionIcon radius="lg" size={45} variant="transparent">
               {user?.image ? (
                 <img src={user?.image} alt="" />
               ) : (
@@ -102,7 +107,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
                 </div>
               )}
             </ActionIcon>
-            <div className="-space-y-1">
+            <div className="-space-y-[3px]">
               <Text size="sm">{user?.name}</Text>
               <Text size="sm" c="dimmed" fz="xs">
                 {user?.email}
@@ -134,11 +139,11 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
           <Flex gap={10}>
             <Text c="dimmed" size="xs">
               Bookmarks:
-              <span className="text-gray-700"> 2</span>
+              <span className="text-gray-700"> {bookmarks.length}</span>
             </Text>
             <Text c="dimmed" size="xs">
-              Links:
-              <span className="text-gray-700"> 28</span>
+              Total links:
+              <span className="text-gray-700"> {total}</span>
             </Text>
           </Flex>
           <Flex align="center" gap={8}>
