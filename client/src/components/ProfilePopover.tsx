@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import {
   Popover,
   Button,
@@ -10,6 +10,7 @@ import {
   Center,
   Modal,
   Avatar as Picture,
+  Alert,
 } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
@@ -32,22 +33,27 @@ interface Props {
 
 const ProfileView = ({ deletePrompt, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [viewImg, setViewImg] = useState<string | null>(null);
   const [opened, { toggle }] = useDisclosure(false);
   const [picture, pictureHandlers] = useDisclosure(false);
   // const { user } = useSelector((state: RootState) => state.user);
   const { user, status } = useSelector((state: RootState) => state.profile);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
 
+  const [viewImg, setViewImg] = useState<string | null>(null);
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
+  const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    setViewImg(user?.image!);
+  }, []);
 
   const onCrop = (view: string) => {
     setViewImg(view);
   };
 
   const onClose = () => {
-    setViewImg(null);
+    setViewImg("");
   };
 
   const onUpdate = (e: React.FormEvent) => {
@@ -55,12 +61,17 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
     const user = {
       name,
       email,
+      image: viewImg,
     };
-    dispatch(update(user)).then(() => {
-      profile();
-      toggle();
-    });
+    dispatch(update(user))
+      .then(() => {
+        profile();
+        toggle();
+      })
+      .catch((err) => setError(true));
   };
+
+  console.log(viewImg);
 
   const length = bookmarks.map((bm) => bm.links?.length);
   let total = 0;
@@ -99,6 +110,11 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
             spellCheck="false"
             onChange={(e) => setEmail(e.target.value)}
           />
+          {error && (
+            <Alert color="red" mt={10}>
+              <small>Something went wrong! Try to change your image</small>
+            </Alert>
+          )}
           <Flex justify="end" pt={15}>
             <Button
               size="xs"
@@ -114,13 +130,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
         <>
           <Flex align="center" gap={13}>
             <ActionIcon radius="lg" size={45} variant="transparent">
-              {user?.image ? (
-                <img src={user?.image} alt="" />
-              ) : (
-                <div className="rounded-full">
-                  <img src={userimg} alt="" />
-                </div>
-              )}
+              <img src={user?.image || userimg} alt="" />
             </ActionIcon>
             <div className="-space-y-[3px]">
               <Text size="sm">{user?.name}</Text>
@@ -177,6 +187,17 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
         withCloseButton={false}
       >
         <Avatar onClose={onClose} onCrop={onCrop} width="100%" height={295} />
+        <Flex justify="flex-end">
+          <Button
+            size="sm"
+            mt={13}
+            onClick={() => {
+              pictureHandlers.close();
+            }}
+          >
+            Done
+          </Button>
+        </Flex>
       </Modal>
     </section>
   );

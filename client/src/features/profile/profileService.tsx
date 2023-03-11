@@ -12,6 +12,7 @@ export const handleUpdateProfile = async (
       {
         name,
         email,
+        image,
       },
       {
         headers: {
@@ -19,6 +20,7 @@ export const handleUpdateProfile = async (
         },
       }
     );
+    // console.log(user.data);
     localStorage.setItem("user", JSON.stringify({ ...user.data, token }));
     return user.data;
   } catch (error) {

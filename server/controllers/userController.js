@@ -61,7 +61,7 @@ const loginUser = async (req, res) => {
     _id: user.id,
     name: user.name,
     email: user.email,
-    image: user.image.url,
+    image: user.image,
     token: token,
   });
 };
@@ -90,48 +90,55 @@ const deleteAccount = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   const { name, email, image } = req.body;
-  // try {
-  // delete prev image to cloudinary
-  // if (image !== "") {
-  //   const current = await User.findById(_id);
-
-  //   const ImgId = current.image.public_id;
-
-  //   if (ImgId) {
-  //     await cloudinary.uploader.destroy(ImgId);
-  //   }
-  // }
-
-  // const result = await cloudinary.uploader.upload(image, {
-  //   folder: "pictures",
-  // });
-
-  //   const user = await User.findByIdAndUpdate(req.user._id, req.body, {
-  //     name,
-  //     email,
-  //     image: {
-  //       public_id: result.public_id,
-  //       url: result.secure_url,
-  //     },
-  //   });
-
-  //   res.json(user);
-  // } catch (error) {
-  //   next(error);
-  // }
-
   try {
-    const user = await User.findByIdAndUpdate(req.user._id, req.body, {
-      name,
-      email,
-      new: true,
-    });
-    res.json({
-      _id: user.id,
-      name: user.name,
-      email: user.email,
-      image: user.image.url,
-    });
+    if (image.includes("base64")) {
+      const current = await User.findById(req.user._id);
+
+      const ImgId = current.image.public_id;
+
+      if (ImgId) {
+        await cloudinary.uploader.destroy(ImgId);
+      }
+
+      const result = await cloudinary.uploader.upload(image, {
+        folder: "pictures",
+      });
+
+      const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+          name,
+          email,
+          image: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        },
+        { new: true }
+      );
+
+      res.json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        image: user.image.url,
+      });
+    } else {
+      const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+          name,
+          email,
+        },
+        { new: true }
+      );
+      res.json({
+        _id: req.user._id,
+        name: user.name,
+        email: user.email,
+        image: user.image.url,
+      });
+    }
   } catch (error) {
     next(error);
   }

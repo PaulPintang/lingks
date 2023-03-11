@@ -24,12 +24,14 @@ import { logout } from "../features/auth/authSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.profile);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
   const [popover, popoverHandlers] = useDisclosure(false);
   const [deleteMe, deleteHandlers] = useDisclosure(false);
   const [status, setStatus] = useState(false);
+
+  // const [viewImg, setViewImg] = useState<string | null>(null);
 
   const onLogout = () => {
     setStatus(true);
@@ -60,7 +62,7 @@ const Header = () => {
             <ActionIcon
               onClick={popoverHandlers.toggle}
               radius="lg"
-              size={35}
+              size={40}
               variant="transparent"
             >
               {user?.image ? (
@@ -76,6 +78,8 @@ const Header = () => {
             <ProfileView
               closePopover={popoverHandlers.close}
               deletePrompt={deleteHandlers.open}
+              // setViewImg={setViewImg}
+              // viewImg={viewImg}
             />
           </Popover.Dropdown>
         </Popover>
