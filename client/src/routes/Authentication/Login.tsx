@@ -31,9 +31,9 @@ const Login = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   user?.token && navigate("bookmarks");
-  // }, [status]);
+  useEffect(() => {
+    user?.token && navigate("bookmarks");
+  }, [status]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

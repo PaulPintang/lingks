@@ -31,7 +31,7 @@ export const handleRegister = async (newUser: UserInterface) => {
 };
 
 export const handleLogout = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
 
 export const handleChangePass = async (

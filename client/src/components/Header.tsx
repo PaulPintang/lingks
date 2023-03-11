@@ -9,8 +9,8 @@ import {
 } from "@mantine/core";
 import { GiBookmarklet } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../app/store";
 import profile from "../assets/user.png";
 import AddBookmarkModal from "../routes/Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
@@ -19,9 +19,11 @@ import { MdLogout } from "react-icons/md";
 import Logo from "./Logo";
 import ProfileView from "./ProfilePopover";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
+import { logout } from "../features/auth/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.user);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
@@ -30,12 +32,10 @@ const Header = () => {
   const [status, setStatus] = useState(false);
 
   const onLogout = () => {
-    localStorage.removeItem("user");
     setStatus(true);
     setTimeout(() => {
-      setStatus(false);
-      navigate("/");
-    }, 3000);
+      dispatch(logout()).then(() => navigate("/"));
+    }, 2000);
   };
 
   return (

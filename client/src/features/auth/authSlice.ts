@@ -88,6 +88,10 @@ export const update = createAsyncThunk<
   }
 });
 
+export const logout = createAsyncThunk("user/logout", async () => {
+  await handleLogout();
+});
+
 export const authSlice = createSlice({
   name: "user",
   initialState,
@@ -143,6 +147,9 @@ export const authSlice = createSlice({
       })
       .addCase(profile.rejected, (state) => {
         state.status = "failed";
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
       });
   },
 });
