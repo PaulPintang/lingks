@@ -42,23 +42,24 @@ const RootLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { status, user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { status } = useSelector((state: RootState) => state.bookmark);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      dispatch(profile(localStorage.getItem("token")!));
-    };
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     dispatch(profile(user?.token!));
+  //   };
 
-    fetchUser().catch((error) => console.log(error));
-  }, []);
+  //   fetchUser().catch((error) => console.log(error));
+  // }, []);
 
   return (
     <Container>
-      <LoadingOverlay
+      {/* <LoadingOverlay
         visible={status !== "succeeded" && true}
         loader={<Loader variant="bars" />}
         overlayOpacity={1}
-      />
+      /> */}
       <Header />
       <main className="h-[calc(1 00vh-170px)] pb-5">
         <Outlet />

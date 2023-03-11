@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {
   Popover,
   Button,
@@ -12,8 +12,8 @@ import {
   Avatar as Picture,
 } from "@mantine/core";
 import { UserInterface } from "../features/auth/authService";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../app/store";
 import profile from "../assets/user.png";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { useDisclosure } from "@mantine/hooks";
@@ -21,6 +21,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { MdOutlineCake } from "react-icons/md";
 import Avatar from "react-avatar-edit";
 import ProfilePicture from "./ProfilePicture";
+import { update } from "../features/auth/authSlice";
 
 interface Props {
   deletePrompt: () => void;
@@ -28,6 +29,7 @@ interface Props {
 }
 
 const ProfileView = ({ deletePrompt, closePopover }: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
   const [viewImg, setViewImg] = useState<string | null>(null);
   const [opened, { toggle }] = useDisclosure(false);
   const [picture, pictureHandlers] = useDisclosure(false);
@@ -44,7 +46,11 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
     setViewImg(null);
   };
 
-  const onUpdate = () => {};
+  const onUpdate = (e: FormEvent) => {
+    e.preventDefault();
+    dispatch(update({ name, email }));
+  };
+
   return (
     <section className="space-y-2">
       {opened ? (
@@ -64,10 +70,22 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
               onClick={pictureHandlers.open}
             />
           </Center>
-          <TextInput label="Name" value={name} size="xs" spellCheck="false" />
-          <TextInput label="Email" value={email} size="xs" spellCheck="false" />
+          <TextInput
+            label="Name"
+            value={name}
+            size="xs"
+            spellCheck="false"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextInput
+            label="Email"
+            value={email}
+            size="xs"
+            spellCheck="false"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <Flex justify="end" pt={15}>
-            <Button size="xs" color="teal">
+            <Button size="xs" color="teal" type="submit">
               Update
             </Button>
           </Flex>

@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 import {
-  BookmarkInterface,
   getBookmarks,
   updateBookmark,
 } from "../../../features/bookmarks/bookmarkSlice";
@@ -35,17 +34,17 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
   );
   const bookmark = bookmarks.filter((bm) => bm._id === id);
 
-  const [banner, setBanner] = useState<string | null>(bookmark[0]?.banner);
+  const [banner, setBanner] = useState<string | null>(bookmark[0]?.banner!);
   const [title, setTitle] = useState<string>(bookmark[0]?.title!);
   const [description, setDescription] = useState<string>(
     bookmark[0]?.description!
   );
-  const [labels, setLabels] = useState<colorInterface[]>(bookmark[0].labels);
+  const [labels, setLabels] = useState<colorInterface[]>(bookmark[0].labels!);
   const [create, setCreate] = useState(true);
 
   const onClose = () => {
     // setLabels([]);
-    setBanner(bookmark[0]?.banner);
+    setBanner(bookmark[0]?.banner!);
     setCreate(false);
     close();
   };
@@ -60,9 +59,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
       labels,
     };
     dispatch(updateBookmark(bookmark)).then(() =>
-      dispatch(getBookmarks(localStorage.getItem("token")!)).then(() =>
-        onClose()
-      )
+      dispatch(getBookmarks()).then(() => onClose())
     );
   };
 
@@ -110,6 +107,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           className="space-y-1"
           icon={<RxLink2 size="1rem" />}
           onChange={(e) => setBanner(e.target.value)}
+          spellCheck="false"
         />
         <TextInput
           placeholder="Bookmark name"
@@ -117,6 +115,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           className="space-y-1"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          spellCheck="false"
         />
         <MultiSelect
           label="Labels"
@@ -136,6 +135,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           label="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          spellCheck="false"
         />
         <Flex gap={10} pt={10}>
           <Button onClick={close} variant="light" color="gray" fullWidth>

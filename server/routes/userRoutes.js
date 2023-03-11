@@ -20,6 +20,6 @@ router.get("/verify", verifyOTP);
 router.put("/reset", resetPassword);
 router.get("/me", Protected, profile);
 router.delete("/me/:id", Protected, deleteAccount);
-router.put("/upload/:id", updateProfile);
+router.put("/update", Protected, updateProfile);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 import {
   handleAddBookmark,
   handleAddLink,
@@ -20,11 +21,11 @@ interface colorInterface {
 
 export interface BookmarkInterface {
   _id?: string;
-  title: string | null;
-  description: string | null;
-  banner: string | null;
-  labels: colorInterface[];
-  links: LinksInterface[];
+  title?: string | null;
+  description?: string | null;
+  banner?: string | null;
+  labels?: colorInterface[];
+  links?: LinksInterface[];
 }
 
 export interface StateInterface {
@@ -37,59 +38,59 @@ const initialState: StateInterface = {
   bookmarks: [],
 };
 
-export const getBookmarks = createAsyncThunk(
-  "/bookmarks/get",
-  async (token: string) => {
-    try {
-      return await handleGetBookmarks(token);
-    } catch (error) {
-      return error;
-    }
+export const getBookmarks = createAsyncThunk<
+  BookmarkInterface[],
+  undefined,
+  { state: RootState }
+>("/bookmarks/get", async (_, thunkAPI) => {
+  try {
+    return await handleGetBookmarks(thunkAPI.getState().user.user?.token!);
+  } catch (error) {
+    return error;
   }
-);
+});
 
-export const addBookmark = createAsyncThunk(
-  "/bookmarks/add",
-  async (bookmark: BookmarkInterface) => {
-    try {
-      return await handleAddBookmark(bookmark);
-    } catch (error) {
-      return error;
-    }
+export const addBookmark = createAsyncThunk<
+  BookmarkInterface,
+  BookmarkInterface,
+  { state: RootState }
+>("/bookmarks/add", async (bookmark: BookmarkInterface, thunkAPI) => {
+  try {
+    return await handleAddBookmark(
+      bookmark,
+      thunkAPI.getState().user.user?.token!
+    );
+  } catch (error) {
+    return error;
   }
-);
+});
 
-export const dropBookmark = createAsyncThunk(
-  "user/bookmark/drop",
-  async (id: string) => {
-    try {
-      return await handleDropBookmark(id);
-    } catch (error) {
-      return error;
-    }
+export const dropBookmark = createAsyncThunk<
+  BookmarkInterface,
+  string,
+  { state: RootState }
+>("user/bookmark/drop", async (id, thunkAPI) => {
+  try {
+    return await handleDropBookmark(id, thunkAPI.getState().user.user?.token!);
+  } catch (error) {
+    return error;
   }
-);
+});
 
-// ? not donee
-export const addLink = createAsyncThunk(
-  "user/addlink",
-  async (data: object) => {
-    try {
-      return await handleAddLink(data);
-    } catch (error) {}
+export const updateBookmark = createAsyncThunk<
+  BookmarkInterface,
+  BookmarkInterface,
+  { state: RootState }
+>("/bookmark/update", async (bookmark, thunkAPI) => {
+  try {
+    return await handleUpdateBookmark(
+      bookmark,
+      thunkAPI.getState().user.user?.token!
+    );
+  } catch (error) {
+    return error;
   }
-);
-
-export const updateBookmark = createAsyncThunk(
-  "/bookmark/update",
-  async (data: any) => {
-    try {
-      return await handleUpdateBookmark(data);
-    } catch (error) {
-      return error;
-    }
-  }
-);
+});
 
 export const bookmarkSlice = createSlice({
   name: "bookmark",
@@ -128,19 +129,10 @@ export const bookmarkSlice = createSlice({
       .addCase(dropBookmark.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.bookmarks = state.bookmarks.filter(
-          (bm) => bm._id !== action.payload.DELETED._id
+          (bm) => bm._id !== action.payload._id
         );
       })
       .addCase(dropBookmark.rejected, (state) => {
-        state.status = "failed";
-      })
-      .addCase(addLink.pending, (state) => {
-        state.status = "pending";
-      })
-      .addCase(addLink.fulfilled, (state, action) => {
-        state.status = "succeeded";
-      })
-      .addCase(addLink.rejected, (state) => {
         state.status = "failed";
       })
       .addCase(updateBookmark.pending, (state) => {

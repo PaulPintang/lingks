@@ -30,7 +30,7 @@ const Header = () => {
   const [status, setStatus] = useState(false);
 
   const onLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setStatus(true);
     setTimeout(() => {
       setStatus(false);

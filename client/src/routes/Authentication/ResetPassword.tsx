@@ -33,10 +33,11 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const { status } = useSelector((state: RootState) => state.recover);
+  const { user } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
-    localStorage.getItem("token") && navigate("bookmarks");
+    user?.token && navigate("bookmarks");
   }, []);
 
   useEffect(() => {

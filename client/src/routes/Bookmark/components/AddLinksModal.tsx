@@ -14,7 +14,6 @@ import {
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import {
-  addLink,
   getBookmarks,
   LinksInterface,
 } from "../../../features/bookmarks/bookmarkSlice";
@@ -23,11 +22,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 
+import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const { status, bookmarks } = useSelector(
     (state: RootState) => state.bookmark
   );
+  const { user } = useSelector((state: RootState) => state.user);
   const { id } = useParams();
   const bookmark = bookmarks.filter((bm) => bm._id === id);
 
@@ -76,14 +77,17 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
     setLink(null);
   };
 
-  const onConfirm = () => {
-    dispatch(addLink({ links: [...bookmark[0].links, ...links], id })).then(
-      () =>
-        dispatch(getBookmarks(localStorage.getItem("token")!)).then(() =>
-          onClose()
-        )
+  const onConfirm = (e: React.FormEvent) => {
+    e.preventDefault();
+    const addedLinks = {
+      id,
+      links: [...bookmark[0].links!, ...links],
+    };
+    dispatch(updateBookmark(addedLinks)).then(() =>
+      dispatch(getBookmarks()).then(() => onClose())
     );
   };
+
   return (
     <Modal opened={opened} onClose={onClose} title="Add link" size="sm">
       <>

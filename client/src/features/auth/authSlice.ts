@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 import {
   handleError,
   handleLogin,
@@ -10,11 +11,11 @@ import {
 // import { UserInterface } from "./authService";
 
 export interface UserInterface {
-  _id: string;
-  name: string;
-  email: string;
-  image: string;
-  token: string;
+  _id?: string;
+  name?: string;
+  email?: string;
+  image?: string;
+  token?: string;
 }
 
 interface StateInterface {
@@ -25,6 +26,7 @@ interface StateInterface {
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem("user")!);
+console.log(user);
 
 const initialState: StateInterface = {
   user: user ? user : null,
@@ -32,18 +34,20 @@ const initialState: StateInterface = {
   error: "",
 };
 
-export const login = createAsyncThunk(
-  "/user/login",
-  async (user: UserInterface) => {
-    try {
-      const res = await handleLogin(user);
-      await handleUserProfile(res.token);
-      return res;
-    } catch (err: any) {
-      return err.response.data.error;
-    }
+export const login = createAsyncThunk<
+  // Return type of the payload creator
+  UserInterface,
+  // First argument to the payload creator
+  UserInterface
+>("/user/login", async (user) => {
+  try {
+    const res = await handleLogin(user);
+    await handleUserProfile(res.token);
+    return res;
+  } catch (err: any) {
+    return err.response.data.error;
   }
-);
+});
 
 export const register = createAsyncThunk(
   "/user/register",
@@ -70,16 +74,19 @@ export const profile = createAsyncThunk(
   }
 );
 
-export const update = createAsyncThunk(
-  "/user/login",
-  async (user: UserInterface) => {
-    try {
-      return await handleUpdateProfile(user);
-    } catch (err: any) {
-      return err.response.data.error;
-    }
+export const update = createAsyncThunk<
+  // Return type of the payload creator
+  UserInterface,
+  // First argument to the payload creator
+  UserInterface,
+  { state: StateInterface }
+>("/user/login", async (user, thunkAPI) => {
+  try {
+    return await handleUpdateProfile(user, thunkAPI.getState().user?.token!);
+  } catch (err: any) {
+    return err.response.data.error;
   }
-);
+});
 
 export const authSlice = createSlice({
   name: "user",
@@ -96,14 +103,16 @@ export const authSlice = createSlice({
         state.status = "pending";
       })
       .addCase(login.fulfilled, (state, action) => {
-        const error = handleError(action.payload);
+        // const error = handleError(action.payload);
 
-        if (error) {
-          state.error = error;
-          state.status = "idle";
-          return;
-        }
+        // if (error) {
+        //   state.error = error;
+        //   state.status = "idle";
+        //   return;
+        // }
         state.status = "succeeded";
+        // console.log("payload", action.payload)
+        state.user = action.payload;
       })
       .addCase(login.rejected, (state) => {
         state.status = "failed";

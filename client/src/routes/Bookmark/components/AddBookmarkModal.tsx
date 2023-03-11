@@ -24,6 +24,7 @@ import {
 } from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../features/bookmarks/bookmarkSlice";
 import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 interface colorInterface {
   label: string;
@@ -32,6 +33,7 @@ interface colorInterface {
 
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { status } = useSelector((state: RootState) => state.bookmark);
 
   // bookmark
@@ -88,7 +90,10 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
       links,
     };
 
-    dispatch(addBookmark(bookmark)).then(() => onClose());
+    dispatch(addBookmark(bookmark)).then(() => {
+      navigate("/bookmarks");
+      onClose();
+    });
   };
 
   const handleAddLinks = () => {
@@ -143,19 +148,26 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               </Card.Section>
               <Card.Section p={13}>
                 <div>
-                  <Flex justify="space-between" align="center">
-                    <Text weight={600}>React Js</Text>
-                    <Badge color="pink" variant="light">
-                      Front-end
-                    </Badge>
-                  </Flex>
+                  <Text weight={600}>{title}</Text>
                   <Text c="dimmed" fz="sm">
-                    My important links related to React
+                    {description}
                   </Text>
+                  <Flex className="py-2" gap={8} wrap="wrap">
+                    {labels?.map((label, index) => (
+                      <Badge
+                        key={index}
+                        style={{ background: label.color }}
+                        variant="filled"
+                        className="normal-case"
+                      >
+                        {label.label}
+                      </Badge>
+                    ))}
+                  </Flex>
                   <Flex justify="space-between">
                     <Flex gap={10} align="center" className="text-sm">
                       <Text c="dimmed" fw={600}>
-                        Bookmarks:
+                        Links:
                       </Text>
                       <Text>{links.length}</Text>
                     </Flex>
@@ -238,8 +250,8 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                 {add && (
                   <>
                     <TextInput
-                      placeholder="Bookmark"
-                      label="Bookmark Name"
+                      placeholder="Name"
+                      label="Name"
                       className="space-y-1"
                       value={linkName!}
                       onChange={(e) => setLinkName(e.target.value)}
@@ -247,7 +259,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                     />
                     <TextInput
                       placeholder="Paste link here"
-                      label="Bookmark link"
+                      label="Link"
                       className="space-y-1"
                       icon={<RxLink2 size="1rem" />}
                       value={link!}
@@ -363,7 +375,14 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               <Button onClick={onClose} variant="light" color="gray" fullWidth>
                 Cancel
               </Button>
-              <Button type="button" onClick={() => setSaved(true)} fullWidth>
+              <Button
+                type="button"
+                onClick={() => setSaved(true)}
+                fullWidth
+                disabled={
+                  title?.length === 0 || (description?.length === 0 && true)
+                }
+              >
                 Continue
               </Button>
             </Flex>

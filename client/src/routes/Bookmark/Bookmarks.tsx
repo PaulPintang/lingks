@@ -29,6 +29,7 @@ export interface ModalPropsInterface {
 
 const Bookmarks = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch<AppDispatch>();
   const { bookmarks, status } = useSelector(
@@ -36,13 +37,13 @@ const Bookmarks = () => {
   );
 
   useEffect(() => {
-    dispatch(getBookmarks(localStorage.getItem("token")!));
+    dispatch(getBookmarks());
   }, []);
 
   return (
     <>
       {bookmarks.length !== 0 && (
-        <div className="sticky lg:top-[100px] md:top-[100px] top-[60px] z-10 bg-white pb-3">
+        <div className="sticky lg:top-[100px] md:top-[100px] top-[60px] z-[1] bg-white pb-3">
           <Title order={1}>Bookmarks</Title>
         </div>
       )}
@@ -68,10 +69,10 @@ const Bookmarks = () => {
                       <Text c="dimmed" fw={600}>
                         Bookmarks:
                       </Text>
-                      <Text>{bookmark.links.length} links</Text>
+                      <Text>{bookmark.links?.length} links</Text>
                     </Flex>
                     <Flex className="py-2" gap={8} wrap="wrap">
-                      {bookmark.labels.map((label, index) => (
+                      {bookmark.labels?.map((label, index) => (
                         <Badge
                           key={index}
                           style={{ background: label.color }}

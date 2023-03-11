@@ -35,7 +35,7 @@ const registerUser = async (req, res, next) => {
         url: "",
       },
     });
-    res.json({ user: user._id });
+    res.json({ user: user._id, email: user.email });
   } catch (error) {
     next(error);
   }
@@ -87,34 +87,46 @@ const deleteAccount = async (req, res, next) => {
     next(error);
   }
 };
+
 const updateProfile = async (req, res, next) => {
-  const { name, email, image, _id } = req.body;
+  const { name, email, image } = req.body;
+  // try {
+  // delete prev image to cloudinary
+  // if (image !== "") {
+  //   const current = await User.findById(_id);
+
+  //   const ImgId = current.image.public_id;
+
+  //   if (ImgId) {
+  //     await cloudinary.uploader.destroy(ImgId);
+  //   }
+  // }
+
+  // const result = await cloudinary.uploader.upload(image, {
+  //   folder: "pictures",
+  // });
+
+  //   const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+  //     name,
+  //     email,
+  //     image: {
+  //       public_id: result.public_id,
+  //       url: result.secure_url,
+  //     },
+  //   });
+
+  //   res.json(user);
+  // } catch (error) {
+  //   next(error);
+  // }
+
   try {
-    // delete prev image to cloudinary
-    if (image !== "") {
-      const current = await User.findById(_id);
-
-      const ImgId = current.image.public_id;
-
-      if (ImgId) {
-        await cloudinary.uploader.destroy(ImgId);
-      }
-    }
-
-    const result = await cloudinary.uploader.upload(image, {
-      folder: "pictures",
+    const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+      name,
+      email,
+      new: true,
     });
-
-    const user = await User.findByIdAndUpdate(_id, {
-      name: name,
-      email: email,
-      image: {
-        public_id: result.public_id,
-        url: result.secure_url,
-      },
-    });
-
-    res.status(201).send(user);
+    res.json(user);
   } catch (error) {
     next(error);
   }

@@ -22,13 +22,13 @@ const Register = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { status, error } = useSelector((state: RootState) => state.user);
+  const { user, status, error } = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.getItem("token") && navigate("bookmarks");
+    user?.token && navigate("bookmarks");
     return () => {
       dispatch(reset());
     };

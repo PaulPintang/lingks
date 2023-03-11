@@ -14,11 +14,14 @@ export const handleGetBookmarks = async (token: string) => {
   }
 };
 
-export const handleAddBookmark = async (bookmark: BookmarkInterface) => {
+export const handleAddBookmark = async (
+  bookmark: BookmarkInterface,
+  token: string
+) => {
   try {
     const response = await axios.post("api/bookmark/add", bookmark, {
       headers: {
-        "auth-token": localStorage.getItem("token"),
+        "auth-token": token,
       },
     });
     return response.data;
@@ -27,11 +30,11 @@ export const handleAddBookmark = async (bookmark: BookmarkInterface) => {
   }
 };
 
-export const handleDropBookmark = async (id: string) => {
+export const handleDropBookmark = async (id: string, token: string) => {
   try {
     const response = await axios.delete(`api/bookmark/${id}`, {
       headers: {
-        "auth-token": localStorage.getItem("token"),
+        "auth-token": token,
       },
     });
     return response.data;
@@ -41,29 +44,36 @@ export const handleDropBookmark = async (id: string) => {
 };
 
 // ? NOT DONE
-export const handleAddLink = async (data: any) => {
-  const { id, links } = data;
+export const handleAddLink = async (link: any, token: any) => {
+  const { id, links } = link;
   try {
-    const response = await axios.put(`api/bookmark/${id}`, { links });
+    const response = await axios.put(
+      `api/bookmark/${id}`,
+      { links },
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error;
   }
 };
 
-export const handleUpdateBookmark = async (data: any) => {
-  const { id, title, description, banner, labels } = data;
+export const handleUpdateBookmark = async (bookmark: any, token: string) => {
+  const { id, title, description, banner, labels, links } = bookmark;
   try {
     const response = await axios.put(
       `api/bookmark/${id}`,
-      { title, description, banner, labels }
-      // {
-      //   headers: {
-      //     "auth-token": localStorage.getItem("token"),
-      //   },
-      // }
+      { title, description, banner, labels, links },
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
     );
-    // console.log(response.data);
     return response.data;
   } catch (error) {
     return error;

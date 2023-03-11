@@ -41,9 +41,9 @@ const BookmarkView = () => {
 
   const bookmark = bookmarks.filter((bm) => bm._id === id);
 
-  useEffect(() => {
-    dispatch(getBookmarks(localStorage.getItem("token")!));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getBookmarks(localStorage.getItem("token")!));
+  // }, []);
 
   const links = bookmark[0].links.filter((link) => {
     return link.name?.toLowerCase().includes(query.toLowerCase());
@@ -165,96 +165,6 @@ const BookmarkView = () => {
             justify="space-between"
             gap={5}
           >
-            {links.map((link, index) => (
-              <Card
-                key={index}
-                px={10}
-                py={6}
-                withBorder
-                radius={10}
-                className="lg:w-[298px] md:w-[298px] w-full cursor-pointer hover:bg-gray-50 hover:shadow-md transition-all"
-              >
-                <Flex justify="space-between" align="center">
-                  <Text
-                    className="lg:text-[12.3px] text-sm text-gray-800"
-                    fw={600}
-                  >
-                    <Highlight highlightColor="cyan" highlight={query}>
-                      {link.name!}
-                    </Highlight>
-                  </Text>
-                  <ActionIcon
-                    onClick={() => {
-                      setIndex(index);
-                      editLinkHandlers.open();
-                    }}
-                    color="gray"
-                    variant="light"
-                  >
-                    <BiEdit />
-                  </ActionIcon>
-                </Flex>
-                <Flex className="text-gray-400" align="center" gap={5}>
-                  <RxLink2 size={14} />
-                  <Text c="dimmed" fz="xs" className="truncate w-full">
-                    {link.link}
-                  </Text>
-                </Flex>
-                <Flex gap={10} align="center" className="text-xs">
-                  <Text c="dimmed" fw={600}>
-                    Date Added:
-                  </Text>
-                  <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                    {link.date}
-                  </Text>
-                </Flex>
-              </Card>
-            ))}
-            {links.map((link, index) => (
-              <Card
-                key={index}
-                px={10}
-                py={6}
-                withBorder
-                radius={10}
-                className="lg:w-[298px] md:w-[298px] w-full cursor-pointer hover:bg-gray-50 hover:shadow-md transition-all"
-              >
-                <Flex justify="space-between" align="center">
-                  <Text
-                    className="lg:text-[12.3px] text-sm text-gray-800"
-                    fw={600}
-                  >
-                    <Highlight highlightColor="cyan" highlight={query}>
-                      {link.name!}
-                    </Highlight>
-                  </Text>
-                  <ActionIcon
-                    onClick={() => {
-                      setIndex(index);
-                      editLinkHandlers.open();
-                    }}
-                    color="gray"
-                    variant="light"
-                  >
-                    <BiEdit />
-                  </ActionIcon>
-                </Flex>
-                <Flex className="text-gray-400" align="center" gap={5}>
-                  <RxLink2 size={14} />
-                  <Text c="dimmed" fz="xs" className="truncate w-full">
-                    {link.link}
-                  </Text>
-                </Flex>
-                <Flex gap={10} align="center" className="text-xs">
-                  <Text c="dimmed" fw={600}>
-                    Date Added:
-                  </Text>
-                  <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                    {link.date}
-                  </Text>
-                </Flex>
-              </Card>
-            ))}
             {links.map((link, index) => (
               <Card
                 key={index}

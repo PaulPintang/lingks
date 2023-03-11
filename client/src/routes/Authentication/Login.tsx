@@ -20,7 +20,7 @@ import Logo from "../../components/Logo";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { status, error } = useSelector((state: RootState) => state.user);
+  const { user, status, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -31,9 +31,9 @@ const Login = () => {
     };
   }, []);
 
-  useEffect(() => {
-    localStorage.getItem("token") && navigate("bookmarks");
-  }, [status]);
+  // useEffect(() => {
+  //   user?.token && navigate("bookmarks");
+  // }, [status]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,12 +41,12 @@ const Login = () => {
       email,
       password,
     };
-    dispatch(login(user));
+    dispatch(login(user)).then(() => navigate("bookmarks"));
   };
 
   return (
     <Container className="w-full max-w-[340px] lg:ma-w-100px mx-auto">
-      <Loader />
+      {/* <Loader /> */}
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <Title order={1} className="text-[40px] text-gray-700 text-center">
