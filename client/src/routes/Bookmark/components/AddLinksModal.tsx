@@ -25,7 +25,7 @@ import { useParams } from "react-router-dom";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { status, bookmarks } = useSelector(
+  const { isLoading, bookmarks } = useSelector(
     (state: RootState) => state.bookmark
   );
   const { user } = useSelector((state: RootState) => state.user);
@@ -177,7 +177,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
               onClick={onConfirm}
               mt={10}
               className="block mt-5"
-              loading={status === "pending" && true}
+              loading={isLoading}
             >
               Confirm
             </Button>

@@ -22,11 +22,13 @@ import { useNavigate, useParams } from "react-router-dom";
 const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { status } = useSelector((state: RootState) => state.bookmark);
+  const { isLoading } = useSelector((state: RootState) => state.bookmark);
   const { id } = useParams();
 
   const onDrop = () => {
-    dispatch(dropBookmark(id!)).then(() => navigate("/bookmarks"));
+    dispatch(dropBookmark(id!))
+      .unwrap()
+      .then(() => navigate("/bookmarks"));
   };
 
   return (
@@ -47,12 +49,7 @@ const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
           <Button onClick={close} variant="light" color="gray" fullWidth>
             Cancel
           </Button>
-          <Button
-            onClick={onDrop}
-            color="red"
-            fullWidth
-            loading={status === "pending" && true}
-          >
+          <Button onClick={onDrop} color="red" fullWidth loading={isLoading}>
             Drop
           </Button>
         </Flex>

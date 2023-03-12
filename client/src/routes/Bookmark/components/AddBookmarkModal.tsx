@@ -34,7 +34,7 @@ interface colorInterface {
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { status } = useSelector((state: RootState) => state.bookmark);
+  const { isLoading } = useSelector((state: RootState) => state.bookmark);
 
   // bookmark
   const [banner, setBanner] = useState<string | null>(
@@ -292,7 +292,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                 type="submit"
                 onClick={() => setSaved(true)}
                 fullWidth
-                loading={status === "pending" && true}
+                loading={isLoading}
               >
                 Save
               </Button>

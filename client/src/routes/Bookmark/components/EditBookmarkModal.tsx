@@ -29,7 +29,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
 
-  const { status, bookmarks, bookmark } = useSelector(
+  const { isLoading, bookmarks, bookmark } = useSelector(
     (state: RootState) => state.bookmark
   );
   const [banner, setBanner] = useState<string | null>(bookmark[0]?.banner!);
@@ -139,12 +139,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           <Button onClick={close} variant="light" color="gray" fullWidth>
             Cancel
           </Button>
-          <Button
-            type="submit"
-            color="teal"
-            fullWidth
-            loading={status === "pending" && true}
-          >
+          <Button type="submit" color="teal" fullWidth loading={isLoading}>
             Update
           </Button>
         </Flex>
