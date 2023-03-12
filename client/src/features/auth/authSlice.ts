@@ -9,46 +9,48 @@ import {
   // handleUpdateProfile,
 } from "./authService";
 
-import { handleUserProfile } from "../profile/profileService";
-// import { UserInterface } from "./authService";
-import { profile } from "../profile/profileSlice";
-import { deleteAcc } from "../profile/profileSlice";
+// Get Profile
+// import { handleUserProfile } from "../profile/profileService";
+// import { profile } from "../profile/profileSlice";
+// import { deleteAcc } from "../profile/profileSlice";
+
+import {
+  handleUpdateProfile,
+  handleDeleteProfile,
+} from "../profile/profileService";
 
 export interface UserInterface {
-  _id?: string;
-  name?: string;
-  email?: string;
+  name?: string | null;
+  email: string | null;
   image?: string | null;
+  password?: string;
   token?: string;
 }
 
-interface StateInterface {
+interface InitialStateInterface {
   user: UserInterface | null;
   status?: "idle" | "pending" | "succeeded" | "failed";
   error?: string | null;
 }
 
-// Get user from localStorage
 const user = JSON.parse(localStorage.getItem("user")!);
 
-const initialState: StateInterface = {
+const initialState: InitialStateInterface = {
   user: user ? user : null,
   status: "idle",
   error: "",
 };
 
 export const login = createAsyncThunk<
-  // Return type of the payload creator
   UserInterface,
-  // First argument to the payload creator
-  UserInterface
->("/user/login", async (user) => {
+  UserInterface,
+  { rejectValue: string }
+>("/user/login", async (user, thunkAPI) => {
   try {
-    const res = await handleLogin(user);
-    await handleUserProfile(res.token);
-    return res;
+    return await handleLogin(user);
   } catch (err: any) {
-    return err.response.data.error;
+    const message = err.response.data.error;
+    return thunkAPI.rejectWithValue(message);
   }
 });
 
@@ -64,19 +66,35 @@ export const register = createAsyncThunk(
   }
 );
 
-// export const profile = createAsyncThunk<
-//   UserInterface,
-//   undefined,
-//   { state: RootState }
-// >("user/profile", async (_, thunkAPI) => {
-//   try {
-//     // return token
-//     const res = await handleUserProfile(thunkAPI.getState().user.user?.token!);
-//     return res;
-//   } catch (error) {
-//     return error;
-//   }
-// });
+export const update = createAsyncThunk<
+  UserInterface,
+  UserInterface,
+  { state: RootState }
+>("/user/update", async (user, thunkAPI) => {
+  try {
+    return await handleUpdateProfile(
+      user,
+      thunkAPI.getState().user.user?.token!
+    );
+  } catch (err: any) {
+    return err.response.data.error;
+  }
+});
+
+export const deleteAcc = createAsyncThunk<
+  string,
+  undefined,
+  { state: RootState }
+>("user/delete", async (_, thunkAPI) => {
+  try {
+    const res = await handleDeleteProfile(
+      thunkAPI.getState().user.user?.token!
+    );
+    return res;
+  } catch (error) {
+    return error;
+  }
+});
 
 export const logout = createAsyncThunk("user/logout", async () => {
   await handleLogout();
@@ -108,8 +126,9 @@ export const authSlice = createSlice({
         // console.log("payload", action.payload)
         state.user = action.payload;
       })
-      .addCase(login.rejected, (state) => {
+      .addCase(login.rejected, (state, action) => {
         state.status = "failed";
+        state.error = action.payload;
       })
       .addCase(register.pending, (state) => {
         state.status = "pending";
@@ -128,17 +147,19 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state) => {
         state.status = "failed";
       })
-      .addCase(profile.pending, (state) => {
+      .addCase(update.pending, (state) => {
         state.status = "pending";
       })
-      .addCase(profile.fulfilled, (state, action) => {
+      .addCase(update.fulfilled, (state, action) => {
         state.status = "succeeded";
-        // state.user = action.payload;
+        state.user = { ...action.payload, token: user.token };
       })
-      .addCase(profile.rejected, (state) => {
+      .addCase(update.rejected, (state) => {
         state.status = "failed";
       })
-      .addCase(deleteAcc.pending, (state) => {})
+      .addCase(deleteAcc.pending, (state) => {
+        state.status = "pending";
+      })
       .addCase(deleteAcc.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.user = null;
@@ -146,7 +167,6 @@ export const authSlice = createSlice({
       .addCase(deleteAcc.rejected, (state) => {
         state.status = "failed";
       })
-
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
       });

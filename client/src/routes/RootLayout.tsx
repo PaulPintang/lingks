@@ -26,7 +26,6 @@ import { useNavigate, Link } from "react-router-dom";
 import avatar from "../assets/user.png";
 import { AppDispatch, RootState } from "../app/store";
 import { useSelector, useDispatch } from "react-redux";
-import { profile } from "../features/profile/profileSlice";
 import Header from "../components/Header";
 import userimg from "../assets/user.png";
 import { BiSearchAlt } from "react-icons/bi";
@@ -44,16 +43,16 @@ const RootLayout = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { user, status } = useSelector((state: RootState) => state.user);
-  // const { status } = useSelector((state: RootState) => state.bookmark);
+  const { fetching } = useSelector((state: RootState) => state.bookmark);
 
-  useEffect(() => {
-    dispatch(profile());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(profile());
+  // }, []);
 
   return (
     <Container>
       <LoadingOverlay
-        visible={status === "pending" && true}
+        visible={fetching === "pending" && true}
         loader={<Loader variant="bars" />}
         overlayOpacity={1}
       />

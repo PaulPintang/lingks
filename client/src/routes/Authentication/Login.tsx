@@ -12,10 +12,11 @@ import {
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../../features/auth/authSlice";
+import { login, reset, UserInterface } from "../../features/auth/authSlice";
 import { AppDispatch, RootState } from "../../app/store";
 import Loader from "../../components/Loader";
 import Logo from "../../components/Logo";
+import { getBookmarks } from "../../features/bookmarks/bookmarkSlice";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -33,15 +34,21 @@ const Login = () => {
 
   useEffect(() => {
     user && navigate("bookmarks");
-  }, [status]);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = {
-      email,
-      password,
-    };
-    dispatch(login(user)).then(() => navigate("bookmarks"));
+    try {
+      const user = {
+        email,
+        password,
+      };
+      await dispatch(login(user))
+        .unwrap()
+        .then(() => {
+          navigate("bookmarks");
+        });
+    } catch (err) {}
   };
 
   return (

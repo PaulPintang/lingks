@@ -28,7 +28,7 @@ export const handleUpdateProfile = async (
   }
 };
 
-export const handleUserProfile = async (token: string) => {
+export const handleGetProfile = async (token: string) => {
   try {
     const user = await axios.get("/api/user/me", {
       headers: {
@@ -50,7 +50,7 @@ export const handleDeleteProfile = async (token: string) => {
       },
     });
     localStorage.removeItem("user");
-    return user;
+    return user.data;
   } catch (error) {
     console.log(error);
   }

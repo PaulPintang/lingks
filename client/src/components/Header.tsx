@@ -20,12 +20,11 @@ import Logo from "./Logo";
 import ProfileView from "./ProfilePopover";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { logout } from "../features/auth/authSlice";
-import { profile } from "../features/profile/profileSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.profile);
+  const { user } = useSelector((state: RootState) => state.user);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
   const [popover, popoverHandlers] = useDisclosure(false);
@@ -38,12 +37,12 @@ const Header = () => {
     setStatus(true);
     setTimeout(() => {
       dispatch(logout()).then(() => navigate("/"));
-    }, 2000);
+    }, 1000);
   };
 
-  useEffect(() => {
-    dispatch(profile());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(profile());
+  // }, []);
 
   return (
     <Flex
@@ -70,13 +69,7 @@ const Header = () => {
               size={40}
               variant="transparent"
             >
-              {user?.image ? (
-                <img src={user?.image} alt="" />
-              ) : (
-                <div className="rounded-full">
-                  <img src={userimg} alt="" />
-                </div>
-              )}
+              <img src={user?.image! || userimg} alt="" />
             </ActionIcon>
           </Popover.Target>
           <Popover.Dropdown>

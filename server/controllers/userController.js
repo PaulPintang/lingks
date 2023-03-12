@@ -58,10 +58,9 @@ const loginUser = async (req, res) => {
   });
   // res.header("auth-token", token).json({ token: token });
   res.header("auth-token", token).json({
-    _id: user.id,
     name: user.name,
     email: user.email,
-    image: user.image,
+    image: user.image.url,
     token: token,
   });
 };
@@ -82,7 +81,7 @@ const deleteAccount = async (req, res, next) => {
     }
     const user = await User.findByIdAndDelete(req.user._id);
 
-    res.json({ success: true, deletedUser: user._id });
+    res.json({ id: user._id });
   } catch (error) {
     next(error);
   }
@@ -118,7 +117,6 @@ const updateProfile = async (req, res, next) => {
       );
 
       res.json({
-        _id: user.id,
         name: user.name,
         email: user.email,
         image: user.image.url,
@@ -133,7 +131,6 @@ const updateProfile = async (req, res, next) => {
         { new: true }
       );
       res.json({
-        _id: req.user._id,
         name: user.name,
         email: user.email,
         image: user.image.url,

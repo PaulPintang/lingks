@@ -29,17 +29,15 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
 
-  const { status, bookmarks } = useSelector(
+  const { status, bookmarks, bookmark } = useSelector(
     (state: RootState) => state.bookmark
   );
-  const bookmark = bookmarks.filter((bm) => bm._id === id);
-
   const [banner, setBanner] = useState<string | null>(bookmark[0]?.banner!);
   const [title, setTitle] = useState<string>(bookmark[0]?.title!);
   const [description, setDescription] = useState<string>(
     bookmark[0]?.description!
   );
-  const [labels, setLabels] = useState<colorInterface[]>(bookmark[0].labels!);
+  const [labels, setLabels] = useState<colorInterface[]>(bookmark[0]?.labels!);
   const [create, setCreate] = useState(true);
 
   const onClose = () => {
@@ -96,7 +94,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
     return query;
   };
 
-  console.log("STATE", labels);
+  // console.log("STATE", labels);
   return (
     <Modal opened={opened} onClose={onClose} title="Edit bookmark" size="sm">
       <form onSubmit={onSubmit} className="space-y-2">
@@ -119,12 +117,12 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
         />
         <MultiSelect
           label="Labels"
-          data={labels.map((label) => label.label)}
+          data={labels?.map((label) => label.label)}
           placeholder="Add 4 labels or less"
           searchable
           creatable
           maxSelectedValues={4}
-          defaultValue={labels.map((label) => label.label)}
+          defaultValue={labels?.map((label) => label.label)}
           onChange={(values) => onChange(values)}
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => onCreate(query)}

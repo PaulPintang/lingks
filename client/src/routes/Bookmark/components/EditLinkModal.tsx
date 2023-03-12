@@ -14,7 +14,7 @@ import { BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
-import { addLink } from "../../../features/bookmarks/bookmarkSlice";
+// import { addLink } from "../../../features/bookmarks/bookmarkSlice";
 
 interface Props extends ModalPropsInterface {
   index: number;
@@ -23,13 +23,13 @@ interface Props extends ModalPropsInterface {
 const EditLinkModal = ({ opened, close, index }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { status, bookmarks } = useSelector(
+  const { status, bookmarks, bookmark } = useSelector(
     (state: RootState) => state.bookmark
   );
-  const bookmark = bookmarks.filter((bm) => bm._id === id);
-  const links = bookmark[0].links.filter((link, i) => i === index);
-  const [name, setName] = useState<string>(links[index]?.name!);
-  const [link, setLink] = useState<string>(links[index]?.link!);
+  // const bookmark = bookmarks.filter((bm) => bm._id === id);
+  const links = bookmark[0]?.links?.filter((link, i) => i === index);
+  const [name, setName] = useState<string>("");
+  const [link, setLink] = useState<string>("");
 
   const onClose = () => {
     setName("");

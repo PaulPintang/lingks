@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducers from "../features/auth/authSlice";
-import profileReducers from "../features/profile/profileSlice";
 import recoverReducers from "../features/recover/recoverSlice";
 import bookmarkReducers from "../features/bookmarks/bookmarkSlice";
 
 export const store = configureStore({
   reducer: {
     user: authReducers,
-    profile: profileReducers,
     recover: recoverReducers,
     bookmark: bookmarkReducers,
   },

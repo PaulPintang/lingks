@@ -21,10 +21,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { MdOutlineCake } from "react-icons/md";
 import Avatar from "react-avatar-edit";
 import ProfilePicture from "./ProfilePicture";
-// import { update } from "../features/auth/authSlice";
-import { update } from "../features/profile/profileSlice";
-import { profile } from "../features/profile/profileSlice";
-// import { profile } from "../features/auth/authSlice";
+import { update } from "../features/auth/authSlice";
 
 interface Props {
   deletePrompt: () => void;
@@ -35,17 +32,19 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const [opened, { toggle }] = useDisclosure(false);
   const [picture, pictureHandlers] = useDisclosure(false);
-  // const { user } = useSelector((state: RootState) => state.user);
-  const { user, status } = useSelector((state: RootState) => state.profile);
+  const { user, status } = useSelector((state: RootState) => state.user);
+  // const { user, status } = useSelector((state: RootState) => state.profile);
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
 
   const [viewImg, setViewImg] = useState<string | null>(null);
-  const [name, setName] = useState(user?.name);
-  const [email, setEmail] = useState(user?.email);
+  const [name, setName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     setViewImg(user?.image!);
+    setName(user?.name!);
+    setEmail(user?.email!);
   }, []);
 
   const onCrop = (view: string) => {
@@ -64,11 +63,8 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
       image: viewImg,
     };
     dispatch(update(user))
-      .then(() => {
-        profile();
-        toggle();
-      })
-      .catch((err) => setError(true));
+      .then(() => toggle())
+      .catch(() => setError(true));
   };
 
   console.log(viewImg);
@@ -98,14 +94,14 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
           </Center>
           <TextInput
             label="Name"
-            value={name}
+            value={name!}
             size="xs"
             spellCheck="false"
             onChange={(e) => setName(e.target.value)}
           />
           <TextInput
             label="Email"
-            value={email}
+            value={email!}
             size="xs"
             spellCheck="false"
             onChange={(e) => setEmail(e.target.value)}

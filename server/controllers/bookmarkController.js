@@ -51,9 +51,19 @@ const updateBookmark = async (req, res, next) => {
   }
 };
 
+const singleBookmark = async (req, res, next) => {
+  try {
+    const bookmark = await Bookmark.find({ _id: req.params.id });
+    res.json(bookmark);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getBookmark,
   addBookmark,
   deleteBookmark,
   updateBookmark,
+  singleBookmark,
 };

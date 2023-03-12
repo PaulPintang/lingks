@@ -83,9 +83,11 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
       id,
       links: [...bookmark[0].links!, ...links],
     };
-    dispatch(updateBookmark(addedLinks)).then(() =>
-      dispatch(getBookmarks()).then(() => onClose())
-    );
+    // dispatch(updateBookmark(addedLinks)).then(() =>
+    //   dispatch(getBookmarks()).then(() => onClose())
+    // );
+
+    dispatch(updateBookmark(addedLinks)).then(() => onClose());
   };
 
   return (

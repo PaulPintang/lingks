@@ -6,6 +6,7 @@ import {
   handleDropBookmark,
   handleGetBookmarks,
   handleUpdateBookmark,
+  handleSingleBookmark,
 } from "./bookmarkService";
 
 export interface LinksInterface {
@@ -30,12 +31,18 @@ export interface BookmarkInterface {
 
 export interface StateInterface {
   bookmarks: BookmarkInterface[];
+  bookmark: BookmarkInterface[];
   status?: "idle" | "pending" | "succeeded" | "failed";
+  fetching?: "idle" | "pending" | "succeeded" | "failed";
   error?: string | null;
 }
 
 const initialState: StateInterface = {
   bookmarks: [],
+  bookmark: [],
+  status: "idle",
+  fetching: "idle",
+  error: null,
 };
 
 export const getBookmarks = createAsyncThunk<
@@ -92,25 +99,58 @@ export const updateBookmark = createAsyncThunk<
   }
 });
 
+export const singleBookmark = createAsyncThunk<
+  BookmarkInterface[],
+  string,
+  { state: RootState }
+>("/bookmark", async (id, thunkAPI) => {
+  try {
+    return await handleSingleBookmark(
+      id,
+      thunkAPI.getState().user.user?.token!
+    );
+  } catch (error) {
+    return error;
+  }
+});
+
 export const bookmarkSlice = createSlice({
   name: "bookmark",
   initialState,
   reducers: {
     reset: (state) => {
       state.status = "idle";
+      state.fetching = "idle";
       state.error = null;
+      // state.bookmark = [];
     },
   },
   extraReducers(builder) {
     builder
       .addCase(getBookmarks.pending, (state) => {
         state.status = "pending";
+        if (state.bookmarks.length === 0) {
+          state.fetching = "pending";
+        }
       })
       .addCase(getBookmarks.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.fetching = "succeeded";
         state.bookmarks = [...action.payload];
       })
       .addCase(getBookmarks.rejected, (state) => {
+        state.status = "failed";
+        state.fetching = "failed";
+      })
+      .addCase(singleBookmark.pending, (state) => {
+        state.status = "pending";
+        // state.fetching = "pending";
+      })
+      .addCase(singleBookmark.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.bookmark = [...action.payload];
+      })
+      .addCase(singleBookmark.rejected, (state) => {
         state.status = "failed";
       })
       .addCase(addBookmark.pending, (state) => {
@@ -141,10 +181,11 @@ export const bookmarkSlice = createSlice({
       .addCase(updateBookmark.fulfilled, (state, action) => {
         // ! need to refactor, remove the fetch and update only the state bookmark
         state.status = "succeeded";
-        // const updated = state.bookmarks.map((bm) =>
-        //   bm._id === action.payload._id ? action.payload : bm
-        // );
-        // state.bookmarks = [...updated];
+        const updated = state.bookmarks.map((bm) =>
+          bm._id === action.payload._id ? action.payload : bm
+        );
+        state.bookmarks = [...updated];
+        console.log(action.payload);
       })
       .addCase(updateBookmark.rejected, (state) => {
         state.status = "failed";

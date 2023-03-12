@@ -79,3 +79,12 @@ export const handleUpdateBookmark = async (bookmark: any, token: string) => {
     return error;
   }
 };
+
+export const handleSingleBookmark = async (id: string, token: string) => {
+  const bookmark = await axios.get(`api/bookmark/${id}`, {
+    headers: {
+      "auth-token": token,
+    },
+  });
+  return bookmark.data;
+};
