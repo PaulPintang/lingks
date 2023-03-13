@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BookmarkInterface, LinksInterface } from "./bookmarkSlice";
+import { Bookmark, LinksInterface } from "./bookmarkSlice";
 
 export const handleGetBookmarks = async (token: string) => {
   try {
@@ -14,10 +14,7 @@ export const handleGetBookmarks = async (token: string) => {
   }
 };
 
-export const handleAddBookmark = async (
-  bookmark: BookmarkInterface,
-  token: string
-) => {
+export const handleAddBookmark = async (bookmark: Bookmark, token: string) => {
   try {
     const response = await axios.post("api/bookmark/add", bookmark, {
       headers: {
@@ -44,7 +41,7 @@ export const handleDropBookmark = async (id: string, token: string) => {
 };
 
 // ? NOT DONE
-export const handleAddLink = async (link: any, token: any) => {
+export const handleAddLink = async (link: any, token: string) => {
   const { id, links } = link;
   try {
     const response = await axios.put(
@@ -74,6 +71,7 @@ export const handleUpdateBookmark = async (bookmark: any, token: string) => {
         },
       }
     );
+    console.log(response);
     return response.data;
   } catch (error) {
     return error;

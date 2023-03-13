@@ -17,7 +17,9 @@ import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 import {
   getBookmarks,
+  Bookmark,
   updateBookmark,
+  singleBookmark,
 } from "../../../features/bookmarks/bookmarkSlice";
 
 interface colorInterface {
@@ -25,11 +27,15 @@ interface colorInterface {
   color: string;
 }
 
-const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
+interface Props extends ModalPropsInterface {
+  bookmark: Bookmark[];
+}
+
+const EditGroupModal = ({ opened, close, bookmark }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
 
-  const { isLoading, bookmarks, bookmark } = useSelector(
+  const { isLoading, bookmarks } = useSelector(
     (state: RootState) => state.bookmark
   );
   const [banner, setBanner] = useState<string | null>(bookmark[0]?.banner!);
@@ -37,11 +43,10 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
   const [description, setDescription] = useState<string>(
     bookmark[0]?.description!
   );
-  const [labels, setLabels] = useState<colorInterface[]>(bookmark[0]?.labels!);
+  const [labels, setLabels] = useState<colorInterface[]>([]);
   const [create, setCreate] = useState(true);
 
   const onClose = () => {
-    // setLabels([]);
     setBanner(bookmark[0]?.banner!);
     setCreate(false);
     close();
@@ -56,9 +61,7 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
       banner,
       labels,
     };
-    dispatch(updateBookmark(bookmark)).then(() =>
-      dispatch(getBookmarks()).then(() => onClose())
-    );
+    dispatch(updateBookmark(bookmark)).then(() => onClose());
   };
 
   const colors = [
@@ -94,7 +97,8 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
     return query;
   };
 
-  // console.log("STATE", labels);
+  // console.log("Labels", bookmark[0]?.labels);
+  // console.log("State labels", labels);
   return (
     <Modal opened={opened} onClose={onClose} title="Edit bookmark" size="sm">
       <form onSubmit={onSubmit} className="space-y-2">
@@ -115,18 +119,18 @@ const EditGroupModal = ({ opened, close }: ModalPropsInterface) => {
           onChange={(e) => setTitle(e.target.value)}
           spellCheck="false"
         />
-        <MultiSelect
+        {/* <MultiSelect
           label="Labels"
-          data={labels?.map((label) => label.label)}
+          data={labels.map((label) => label.label)}
           placeholder="Add 4 labels or less"
           searchable
           creatable
           maxSelectedValues={4}
-          defaultValue={labels?.map((label) => label.label)}
+          defaultValue={labels.map((label) => label.label)}
           onChange={(values) => onChange(values)}
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => onCreate(query)}
-        />
+        /> */}
 
         <Textarea
           placeholder="Description"

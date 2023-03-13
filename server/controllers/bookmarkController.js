@@ -38,13 +38,19 @@ const deleteBookmark = async (req, res, next) => {
 const updateBookmark = async (req, res, next) => {
   const { title, description, banner, labels, links } = req.body;
   try {
-    const bookmark = await Bookmark.findByIdAndUpdate(req.params.id, req.body, {
-      title,
-      description,
-      banner,
-      labels,
-      links,
-    });
+    const bookmark = await Bookmark.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        description,
+        banner,
+        labels,
+        links,
+      },
+      {
+        new: true,
+      }
+    );
     res.json(bookmark);
   } catch (error) {
     next(error);

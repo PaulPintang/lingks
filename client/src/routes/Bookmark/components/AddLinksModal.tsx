@@ -25,12 +25,12 @@ import { useParams } from "react-router-dom";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, bookmarks } = useSelector(
+  const { isLoading, bookmark } = useSelector(
     (state: RootState) => state.bookmark
   );
   const { user } = useSelector((state: RootState) => state.user);
   const { id } = useParams();
-  const bookmark = bookmarks.filter((bm) => bm._id === id);
+  // const bookmark = bookmarks.filter((bm) => bm._id === id);
 
   const [links, setLinks] = useState<LinksInterface[]>([]);
   const [name, setName] = useState<string | null>(null);
@@ -119,7 +119,6 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
                       Date Added:
                     </Text>
                     <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                      {/* March 05, 2023, 5: 20 PM */}
                       {link.date}
                     </Text>
                   </Flex>
@@ -143,8 +142,8 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
         {add && (
           <>
             <TextInput
-              placeholder="Bookmark"
-              label="Bookmark Name"
+              placeholder="Name"
+              label="Name"
               className="space-y-1"
               value={name!}
               onChange={(e) => setName(e.target.value)}
@@ -152,7 +151,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
             />
             <TextInput
               placeholder="Paste link here"
-              label="Bookmark link"
+              label="Link"
               className="space-y-1"
               icon={<RxLink2 size="1rem" />}
               value={link!}

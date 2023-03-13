@@ -14,20 +14,23 @@ import { BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
+import {
+  Bookmark,
+  updateBookmark,
+} from "../../../features/bookmarks/bookmarkSlice";
 // import { addLink } from "../../../features/bookmarks/bookmarkSlice";
 
 interface Props extends ModalPropsInterface {
   index: number;
+  bookmark: Bookmark[];
 }
 
-const EditLinkModal = ({ opened, close, index }: Props) => {
+const EditLinkModal = ({ opened, close, index, bookmark }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { status, bookmarks, bookmark } = useSelector(
-    (state: RootState) => state.bookmark
-  );
-  // const bookmark = bookmarks.filter((bm) => bm._id === id);
-  const links = bookmark[0]?.links?.filter((link, i) => i === index);
+  const { isLoading } = useSelector((state: RootState) => state.bookmark);
+  const toEdit = bookmark[0].links?.filter((_, i) => i === index);
+
   const [name, setName] = useState<string>("");
   const [link, setLink] = useState<string>("");
 
@@ -37,30 +40,46 @@ const EditLinkModal = ({ opened, close, index }: Props) => {
     close();
   };
 
-  const onSubmit = () => {};
+  const onDelete = () => {
+    const links = [...bookmark[0]?.links!];
+    links?.splice(index, 1);
+    const updated = {
+      id,
+      links,
+    };
+
+    dispatch(updateBookmark(updated))
+      .unwrap()
+      .then(() => onClose());
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
 
   return (
     <Modal opened={opened} onClose={onClose} title="Edit link" size="sm">
-      {index}
       <form onSubmit={onSubmit}>
         <ActionIcon
           color="red"
           variant="subtle"
           className="absolute top-5 right-12"
+          onClick={onDelete}
+          loading={isLoading}
         >
           <BiTrash />
         </ActionIcon>
         <div className="space-y-2">
           <TextInput
-            placeholder="Bookmark name"
-            label="Bookmark name"
+            placeholder="Name"
+            label="Name"
             className="space-y-1"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <TextInput
-            placeholder="Bookmark link"
-            label="Bookmark link"
+            placeholder="Link"
+            label="Link"
             icon={<RxLink2 size="1rem" />}
             value={link}
             onChange={(e) => setLink(e.target.value)}
@@ -69,8 +88,8 @@ const EditLinkModal = ({ opened, close, index }: Props) => {
             <Button onClick={close} variant="light" color="gray" fullWidth>
               Cancel
             </Button>
-            <Button fullWidth>
-              {status === "pending" ? "Updating" : "Confirm"}
+            <Button fullWidth loading={isLoading}>
+              {isLoading ? "Updating" : "Confirm"}
             </Button>
           </Flex>
         </div>

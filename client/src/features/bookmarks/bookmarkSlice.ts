@@ -179,10 +179,7 @@ export const bookmarkSlice = createSlice({
       })
       .addCase(updateBookmark.fulfilled, (state, action) => {
         state.isLoading = false;
-        const updated = state.bookmarks.map((bm) =>
-          bm._id === action.payload._id ? action.payload : bm
-        );
-        state.bookmarks = [...updated];
+        state.bookmark = [action.payload];
       })
       .addCase(updateBookmark.rejected, (state) => {
         state.isLoading = false;
