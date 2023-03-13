@@ -17,20 +17,18 @@ import { BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
-import {
-  Bookmark,
-  getBookmarks,
-  LinksInterface,
-  singleBookmark,
-  updateBookmark,
-} from "../../../features/bookmarks/bookmarkSlice";
+import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 // import { addLink } from "../../../features/bookmarks/bookmarkSlice";
+import {
+  BookmarkInterface,
+  LinksInterface,
+} from "../../../interfaces/bookmark.interface";
 import { AiOutlineCheck } from "react-icons/ai";
 import ToasterNotification from "../../../components/ToasterNotification";
 
 interface Props extends ModalPropsInterface {
   index: number;
-  bookmark: Bookmark[];
+  bookmark: BookmarkInterface[];
   links: LinksInterface[];
 }
 

@@ -16,10 +16,8 @@ import {
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
-import {
-  getBookmarks,
-  LinksInterface,
-} from "../../../features/bookmarks/bookmarkSlice";
+import { getBookmarks } from "../../../features/bookmarks/bookmarkSlice";
+import { LinksInterface } from "../../../interfaces/bookmark.interface";
 import { AiFillCloseCircle, AiOutlineCheck } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";

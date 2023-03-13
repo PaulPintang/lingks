@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { BookmarkInterface } from "../../interfaces/bookmark.interface";
 import { RootState } from "../../app/store";
 import {
   handleAddBookmark,
@@ -9,29 +10,9 @@ import {
   handleSingleBookmark,
 } from "./bookmarkService";
 
-export interface LinksInterface {
-  name: string | null;
-  link: string | null;
-  date: string | null;
-}
-
-interface colorInterface {
-  label: string;
-  color: string;
-}
-
-export interface Bookmark {
-  _id?: string;
-  title?: string | null;
-  description?: string | null;
-  banner?: string | null;
-  labels?: colorInterface[];
-  links?: LinksInterface[];
-}
-
 export interface BookmarkStateInterface {
-  bookmarks: Bookmark[];
-  bookmark: Bookmark[];
+  bookmarks: BookmarkInterface[];
+  bookmark: BookmarkInterface[];
   status?: "idle" | "pending" | "succeeded" | "failed";
   fetching?: "idle" | "pending" | "succeeded" | "failed";
   isLoading: boolean;
@@ -48,7 +29,7 @@ const initialState: BookmarkStateInterface = {
 };
 
 export const getBookmarks = createAsyncThunk<
-  Bookmark[],
+  BookmarkInterface[],
   undefined,
   { state: RootState }
 >("/bookmarks/get", async (_, thunkAPI) => {
@@ -60,10 +41,10 @@ export const getBookmarks = createAsyncThunk<
 });
 
 export const addBookmark = createAsyncThunk<
-  Bookmark,
-  Bookmark,
+  BookmarkInterface,
+  BookmarkInterface,
   { state: RootState }
->("/bookmarks/add", async (bookmark: Bookmark, thunkAPI) => {
+>("/bookmarks/add", async (bookmark: BookmarkInterface, thunkAPI) => {
   try {
     return await handleAddBookmark(
       bookmark,
@@ -75,7 +56,7 @@ export const addBookmark = createAsyncThunk<
 });
 
 export const dropBookmark = createAsyncThunk<
-  Bookmark,
+  BookmarkInterface,
   string,
   { state: RootState }
 >("user/bookmark/drop", async (id, thunkAPI) => {
@@ -87,8 +68,8 @@ export const dropBookmark = createAsyncThunk<
 });
 
 export const updateBookmark = createAsyncThunk<
-  Bookmark,
-  Bookmark,
+  BookmarkInterface,
+  BookmarkInterface,
   { state: RootState }
 >("/bookmark/update", async (bookmark, thunkAPI) => {
   try {
@@ -102,7 +83,7 @@ export const updateBookmark = createAsyncThunk<
 });
 
 export const singleBookmark = createAsyncThunk<
-  Bookmark[],
+  BookmarkInterface[],
   string,
   { state: RootState }
 >("/bookmark", async (id, thunkAPI) => {

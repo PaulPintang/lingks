@@ -17,10 +17,10 @@ import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 import {
   getBookmarks,
-  Bookmark,
   updateBookmark,
   singleBookmark,
 } from "../../../features/bookmarks/bookmarkSlice";
+import { BookmarkInterface } from "../../../interfaces/bookmark.interface";
 import ToasterNotification from "../../../components/ToasterNotification";
 
 interface colorInterface {
@@ -29,7 +29,7 @@ interface colorInterface {
 }
 
 interface Props extends ModalPropsInterface {
-  bookmark: Bookmark[];
+  bookmark: BookmarkInterface[];
 }
 
 const EditGroupModal = ({ opened, close, bookmark }: Props) => {

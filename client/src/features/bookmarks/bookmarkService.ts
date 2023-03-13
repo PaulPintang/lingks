@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Bookmark, LinksInterface } from "./bookmarkSlice";
+import { BookmarkInterface } from "../../interfaces/bookmark.interface";
 
 export const handleGetBookmarks = async (token: string) => {
   try {
@@ -14,7 +14,10 @@ export const handleGetBookmarks = async (token: string) => {
   }
 };
 
-export const handleAddBookmark = async (bookmark: Bookmark, token: string) => {
+export const handleAddBookmark = async (
+  bookmark: BookmarkInterface,
+  token: string
+) => {
   try {
     const response = await axios.post("api/bookmark/add", bookmark, {
       headers: {

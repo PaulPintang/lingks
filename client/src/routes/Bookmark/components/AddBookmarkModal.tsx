@@ -24,7 +24,7 @@ import {
   addBookmark,
   getBookmarks,
 } from "../../../features/bookmarks/bookmarkSlice";
-import { LinksInterface } from "../../../features/bookmarks/bookmarkSlice";
+import { LinksInterface } from "../../../interfaces/bookmark.interface";
 import {
   AiFillCloseCircle,
   AiOutlinePlus,
