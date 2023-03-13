@@ -43,7 +43,6 @@ const Recover = () => {
 
   return (
     <Container className="w-full max-w-[340px] lg:ma-w-100px mx-auto">
-      <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <form onSubmit={onSubmit} className="space-y-4">

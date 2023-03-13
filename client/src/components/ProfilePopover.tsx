@@ -75,7 +75,8 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
         toggle();
         const message = "Profile updated successfully";
         ToasterNotification(message);
-      });
+      })
+      .catch(() => setError(true));
   };
 
   const length = bookmarks.map((bm) => bm.links?.length);
@@ -101,6 +102,13 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
               onClick={pictureHandlers.open}
             />
           </Center>
+          {error && (
+            <Alert color="red" mt={18}>
+              <Text fz={12} className="text-gray-800">
+                Something went wrong. Image is too large
+              </Text>
+            </Alert>
+          )}
           <TextInput
             label="Name"
             value={name!}

@@ -64,7 +64,6 @@ const Register = () => {
 
   return (
     <Container className="w-full max-w-[340px] lg:ma-w-100px mx-auto">
-      <Loader />
       <Center className="w-full h-screen">
         <div className="space-y-10">
           <Title order={1} className="text-[40px] text-gray-700 text-center">

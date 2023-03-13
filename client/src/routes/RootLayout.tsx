@@ -13,7 +13,6 @@ import {
   Modal,
   Alert,
   LoadingOverlay,
-  Loader,
   Grid,
   Flex,
   Input,
@@ -38,46 +37,17 @@ import Footer from "../components/Footer";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
 import { AiOutlineCheck } from "react-icons/ai";
+import Loader from "../components/Loader";
 
 const RootLayout = () => {
-  const [opened, setOpened] = useState<boolean>(false);
-  const [viewImg, setViewImg] = useState<string | null>(null);
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { user } = useSelector((state: RootState) => state.auth);
-  const { status } = useSelector((state: RootState) => state.profile);
-  const { fetching, isLoading } = useSelector(
-    (state: RootState) => state.bookmark
-  );
-
-  // useEffect(() => {
-  //   dispatch(profile());
-  // }, []);
-
   return (
     <Container>
-      <LoadingOverlay
-        visible={status === "pending" && true}
-        loader={<Loader variant="bars" />}
-        overlayOpacity={1}
-      />
+      <Loader />
       <Header />
       <Toaster />
-
       <main className="h-[calc(1 00vh-170px)] pb-5">
         <Outlet />
       </main>
-      {/* {!isLoading && (
-        <Notification
-          icon={<AiOutlineCheck />}
-          title="Bookmark added successfully"
-          color="teal"
-          className="absolute bottom-3 right-[210px]"
-        >
-          <Text fz="xs">1 new bookmark added to your list</Text>
-        </Notification>
-      )} */}
       {/* <Footer /> */}
     </Container>
   );
