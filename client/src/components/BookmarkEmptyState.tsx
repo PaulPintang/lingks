@@ -31,13 +31,13 @@ const BookmarkEmptyState = ({ open }: Props) => {
         className="w-full"
       >
         <img src={bookmark} className="w-[430px]" alt="" />
-        <Title order={1}>
+        <Title order={1} className="text-center">
           {user
             ? "Start by creating a bookmark"
             : "Bring all your link together"}
         </Title>
         <Text
-          className="text-sm text-gray- text-center max-w-sm"
+          className=" text-gray- text-center max-w-sm"
           c="dimmed"
           fw={500}
           py={5}
@@ -47,7 +47,7 @@ const BookmarkEmptyState = ({ open }: Props) => {
             : "lingks is your bookmark for saving important topics, organizing your links, and making them easily accessible."}
         </Text>
         {user ? (
-          <Button onClick={open} leftIcon={<AiOutlinePlus />} mt={20}>
+          <Button onClick={open} leftIcon={<AiOutlinePlus />} size="md" mt={20}>
             Create bookmark
           </Button>
         ) : (

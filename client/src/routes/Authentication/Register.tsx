@@ -27,6 +27,9 @@ const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+  const today = new Date();
+  const [day, setDay] = useState<string>("");
+
   useEffect(() => {
     user && navigate("/bookmarks");
     return () => {
@@ -35,8 +38,16 @@ const Register = () => {
   }, []);
 
   useEffect(() => {
-    status === "succeeded" && navigate("/");
-  }, [status]);
+    const format = {
+      date: today.toDateString(),
+    };
+
+    setDay(`${format.date}`);
+  }, []);
+
+  // useEffect(() => {
+  //   status === "succeeded" && navigate("/login");
+  // }, [status]);
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -44,8 +55,11 @@ const Register = () => {
       name,
       email,
       password,
+      day,
     };
-    dispatch(register(newUser));
+    dispatch(register(newUser))
+      .unwrap()
+      .then(() => navigate("/login"));
   };
 
   return (

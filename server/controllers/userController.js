@@ -12,8 +12,9 @@ const sendEmail = require("../services/sendEmail");
 const cloudinary = require("../services/cloudinary");
 
 const registerUser = async (req, res, next) => {
+  const { name, email, password } = req.body;
   // VALIDATION
-  const { error } = registerValidation(req.body);
+  const { error } = registerValidation({ name, email, password });
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   const emailExist = await User.findOne({ email: req.body.email });
@@ -29,6 +30,7 @@ const registerUser = async (req, res, next) => {
     const user = await User.create({
       name: req.body.name,
       email: req.body.email,
+      day: req.body.day,
       password: hashedPassword,
       image: {
         public_id: "",
@@ -61,6 +63,7 @@ const loginUser = async (req, res) => {
     name: user.name,
     email: user.email,
     image: user.image.url,
+    day: user.day,
     token: token,
   });
 };

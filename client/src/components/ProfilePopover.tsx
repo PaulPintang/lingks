@@ -32,7 +32,7 @@ interface Props {
   closePopover: () => void;
 }
 
-const ProfileView = ({ deletePrompt, closePopover }: Props) => {
+const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const [opened, { toggle }] = useDisclosure(false);
   const [picture, pictureHandlers] = useDisclosure(false);
@@ -75,8 +75,6 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
       })
       .catch(() => setError(true));
   };
-
-  console.log(viewImg);
 
   const length = bookmarks.map((bm) => bm.links?.length);
   let total = 0;
@@ -179,7 +177,7 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
           <Flex align="center" gap={8}>
             <MdOutlineCake className="text-gray-500" />
             <Text c="dimmed" size="xs" pt={4}>
-              Joined on March 1, 2023
+              Joined on {user?.day}
             </Text>
           </Flex>
         </div>
@@ -208,4 +206,4 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
   );
 };
 
-export default ProfileView;
+export default ProfilePopover;

@@ -126,7 +126,7 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
           onChange={(e) => setTitle(e.target.value)}
           spellCheck="false"
         />
-        {/* <MultiSelect
+        <MultiSelect
           label="Labels"
           data={labels.map((label) => label.label)}
           placeholder="Add 4 labels or less"
@@ -137,7 +137,7 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
           onChange={(values) => onChange(values)}
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => onCreate(query)}
-        /> */}
+        />
 
         <Textarea
           placeholder="Description"
