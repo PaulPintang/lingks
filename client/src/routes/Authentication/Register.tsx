@@ -28,7 +28,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    user && navigate("bookmarks");
+    user && navigate("/bookmarks");
     return () => {
       dispatch(reset());
     };
@@ -101,7 +101,7 @@ const Register = () => {
             <div className="flex text-sm justify-center gap-1 text-gray-700">
               <Text fw={500}>Have an account?</Text>
               <Text fw={500}>
-                <Link to="/" className="no-underline text-blue-500">
+                <Link to="/login" className="no-underline text-blue-500">
                   Sign in
                 </Link>
               </Text>

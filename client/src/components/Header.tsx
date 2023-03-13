@@ -51,37 +51,56 @@ const Header = () => {
       className="lg:h-[100px] md:h-[100px] h-16 sticky top-0 z-10 bg-white"
     >
       <Logo />
-      <Flex justify="space-between" align="center" gap={12}>
-        {bookmarks.length !== 0 && (
-          <Button size="xs" onClick={open}>
-            <span className="hidden lg:flex md:flex ">Add bookmark</span>
-            <span className="flex lg:hidden md:hidden">Add</span>
-          </Button>
-        )}
-        <ActionIcon onClick={onLogout} loading={status}>
-          <MdLogout className="text-gray-400" />
-        </ActionIcon>
-        <Popover position="bottom-end" opened={popover}>
-          <Popover.Target>
-            <ActionIcon
-              onClick={popoverHandlers.toggle}
-              radius="lg"
-              size={40}
-              variant="transparent"
+      {user ? (
+        <Flex justify="space-between" align="center" gap={12}>
+          {bookmarks.length !== 0 && (
+            <Button size="xs" onClick={open}>
+              <span className="hidden lg:flex md:flex ">Add bookmark</span>
+              <span className="flex lg:hidden md:hidden">Add</span>
+            </Button>
+          )}
+          <ActionIcon onClick={onLogout} loading={status}>
+            <MdLogout className="text-gray-400" />
+          </ActionIcon>
+          <Popover position="bottom-end" opened={popover}>
+            <Popover.Target>
+              <ActionIcon
+                onClick={popoverHandlers.toggle}
+                radius="lg"
+                size={40}
+                variant="transparent"
+              >
+                <img src={user?.image! || userimg} alt="" />
+              </ActionIcon>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <ProfileView
+                closePopover={popoverHandlers.close}
+                deletePrompt={deleteHandlers.open}
+                // setViewImg={setViewImg}
+                // viewImg={viewImg}
+              />
+            </Popover.Dropdown>
+          </Popover>
+        </Flex>
+      ) : (
+        <Flex justify="space-between" align="center" gap={12}>
+          <Link to="/login">
+            <Button variant="white" color="gray">
+              Log in
+            </Button>
+          </Link>
+          <Link to="/register">
+            <Button
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan" }}
             >
-              <img src={user?.image! || userimg} alt="" />
-            </ActionIcon>
-          </Popover.Target>
-          <Popover.Dropdown>
-            <ProfileView
-              closePopover={popoverHandlers.close}
-              deletePrompt={deleteHandlers.open}
-              // setViewImg={setViewImg}
-              // viewImg={viewImg}
-            />
-          </Popover.Dropdown>
-        </Popover>
-      </Flex>
+              Sign up
+            </Button>
+          </Link>
+        </Flex>
+      )}
+
       <AddBookmarkModal opened={opened} close={close} />
       <ConfirmDeleteAccount
         opened={deleteMe}

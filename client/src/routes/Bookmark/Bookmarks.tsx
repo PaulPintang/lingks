@@ -65,7 +65,7 @@ const Bookmarks = () => {
               onClick={() =>
                 dispatch(singleBookmark(bookmark._id!))
                   .unwrap()
-                  .then(() => navigate(bookmark._id!))
+                  .then(() => navigate(`/bookmark/${bookmark._id!}`))
               }
               key={bookmark._id}
               className="no-underline lg:w-[295px] md:w-[295px] w-full active:opacity-70 transition-all cursor-pointer hover:shadow-xl border-3"
@@ -76,7 +76,8 @@ const Bookmarks = () => {
               <Card.Section>
                 <Image src={bookmark.banner} height={100} alt="React" />
               </Card.Section>
-              <Card.Section p={15} className="lg:h-[190px] md:h-[190px]">
+              {/* <Card.Section p={15} className="lg:h-[190px] md:h-[190px]"> */}
+              <Card.Section p={15}>
                 <div className="space-y-1">
                   <Text weight={600}>{bookmark.title}</Text>
                   <Text c="dimmed" fz="sm" className="line-clamp-2">
@@ -92,16 +93,22 @@ const Bookmarks = () => {
                     </Text>
                   </Flex>
                   <Flex className="py-2" gap={8} wrap="wrap">
-                    {bookmark.labels?.map((label, index) => (
-                      <Badge
-                        key={index}
-                        style={{ background: label.color }}
-                        variant="filled"
-                        className="normal-case"
-                      >
-                        {label.label}
-                      </Badge>
-                    ))}
+                    {bookmark.labels?.length === 0 ? (
+                      <Text fz="sm" fs="italic">
+                        No bookmark labels
+                      </Text>
+                    ) : (
+                      bookmark.labels?.map((label, index) => (
+                        <Badge
+                          key={index}
+                          style={{ background: label.color }}
+                          variant="filled"
+                          className="normal-case"
+                        >
+                          {label.label}
+                        </Badge>
+                      ))
+                    )}
                   </Flex>
                 </div>
               </Card.Section>

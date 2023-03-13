@@ -33,7 +33,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    user && navigate("bookmarks");
+    user && navigate("/bookmarks");
   }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -46,7 +46,7 @@ const Login = () => {
       await dispatch(login(user))
         .unwrap()
         .then(() => {
-          navigate("bookmarks");
+          navigate("/bookmarks");
         });
     } catch (err) {}
   };

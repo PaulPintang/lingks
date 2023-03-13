@@ -19,10 +19,16 @@ import { store } from "./app/store";
 import BookmarkView from "./routes/Bookmark/components/BookmarkView";
 import Bookmarks from "./routes/Bookmark/Bookmarks";
 import RootLayout from "./routes/RootLayout";
+import LandingPage from "./routes/LandingPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LandingPage />,
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/login",
     element: <Login />,
     errorElement: <NotFound />,
   },
@@ -43,7 +49,7 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
-    path: "/bookmarks",
+    path: "/",
     element: (
       <Protected>
         <RootLayout />
@@ -55,7 +61,7 @@ const router = createBrowserRouter([
         element: <Bookmarks />,
       },
       {
-        path: ":id",
+        path: "/bookmark/:id",
         element: <BookmarkView />,
       },
     ],

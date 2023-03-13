@@ -28,7 +28,7 @@ const Verify = () => {
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
-    user && navigate("bookmarks");
+    user && navigate("/bookmarks");
 
     return () => {
       dispatch(reset());
