@@ -1,4 +1,5 @@
 import React, { FormEvent, useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import {
   Popover,
   Button,
@@ -11,6 +12,7 @@ import {
   Modal,
   Avatar as Picture,
   Alert,
+  Paper,
 } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
@@ -22,6 +24,8 @@ import { MdOutlineCake } from "react-icons/md";
 import Avatar from "react-avatar-edit";
 import ProfilePicture from "./ProfilePicture";
 import { update } from "../features/auth/authSlice";
+import { AiOutlineCheck } from "react-icons/ai";
+import ToasterNotification from "./ToasterNotification";
 
 interface Props {
   deletePrompt: () => void;
@@ -63,7 +67,12 @@ const ProfileView = ({ deletePrompt, closePopover }: Props) => {
       image: viewImg,
     };
     dispatch(update(user))
-      .then(() => toggle())
+      .unwrap()
+      .then(() => {
+        toggle();
+        const message = "Profile updated successfully";
+        ToasterNotification(message);
+      })
       .catch(() => setError(true));
   };
 

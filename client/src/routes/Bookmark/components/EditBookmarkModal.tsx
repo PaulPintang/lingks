@@ -21,6 +21,7 @@ import {
   updateBookmark,
   singleBookmark,
 } from "../../../features/bookmarks/bookmarkSlice";
+import ToasterNotification from "../../../components/ToasterNotification";
 
 interface colorInterface {
   label: string;
@@ -61,7 +62,13 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
       banner,
       labels,
     };
-    dispatch(updateBookmark(bookmark)).then(() => onClose());
+    dispatch(updateBookmark(bookmark))
+      .unwrap()
+      .then(() => {
+        onClose();
+        const message = "Bookmark updated successfully";
+        ToasterNotification(message);
+      });
   };
 
   const colors = [

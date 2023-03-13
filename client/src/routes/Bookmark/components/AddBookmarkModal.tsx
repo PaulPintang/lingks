@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import {
   Modal,
   Grid,
@@ -13,6 +14,7 @@ import {
   ActionIcon,
   MultiSelect,
   ColorPicker,
+  Paper,
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
@@ -23,8 +25,13 @@ import {
   getBookmarks,
 } from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../features/bookmarks/bookmarkSlice";
-import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiFillCloseCircle,
+  AiOutlinePlus,
+  AiOutlineCheck,
+} from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import ToasterNotification from "../../../components/ToasterNotification";
 
 interface colorInterface {
   label: string;
@@ -90,10 +97,14 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
       links,
     };
 
-    dispatch(addBookmark(bookmark)).then(() => {
-      navigate("/bookmarks");
-      onClose();
-    });
+    dispatch(addBookmark(bookmark))
+      .unwrap()
+      .then(() => {
+        navigate("/bookmarks");
+        const message = "New bookmark added successfully!";
+        ToasterNotification(message);
+        onClose();
+      });
   };
 
   const handleAddLinks = () => {
@@ -136,6 +147,27 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   // }, [select]);
 
   // console.log("labelss", labelss);
+
+  // const notification = () => {
+  //   return (
+  //     <Paper shadow="xs" p="md">
+  //       <Flex gap={10}>
+  //         <div className="bg-green-400 rounded-full p-[5px]">
+  //           <AiOutlineCheck className="text-white text-xs" />
+  //         </div>
+  //         <Text fz="sm" className="text-gray-500">
+  //           1 new bookmark added to your list
+  //         </Text>
+  //       </Flex>
+  //     </Paper>
+  //   );
+  // };
+
+  // const notify = () =>
+  //   toast(notification(), {
+  //     duration: 2000,
+  //     className: "bg-none shadow-none",
+  //   });
 
   return (
     <Modal opened={opened} onClose={onClose} title="Add bookmark" size="sm">

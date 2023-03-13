@@ -13,6 +13,7 @@ import {
   Title,
   Skeleton,
   Highlight,
+  Notification,
 } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { RxLink2 } from "react-icons/rx";
@@ -31,6 +32,7 @@ import {
   singleBookmark,
 } from "../../../features/bookmarks/bookmarkSlice";
 import { BiArrowBack } from "react-icons/bi";
+import toast, { Toaster } from "react-hot-toast";
 
 const BookmarkView = () => {
   const { id } = useParams();
@@ -269,7 +271,9 @@ const BookmarkView = () => {
           close={editLinkHandlers.close}
           index={index}
           bookmark={bookmark}
+          links={links!}
         />
+        {/* Notification */}
       </Grid>
     </>
   );

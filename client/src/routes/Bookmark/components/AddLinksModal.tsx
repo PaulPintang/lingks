@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import {
   Modal,
   Grid,
@@ -10,6 +11,8 @@ import {
   TextInput,
   Textarea,
   Button,
+  Notification,
+  Paper,
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
@@ -17,12 +20,13 @@ import {
   getBookmarks,
   LinksInterface,
 } from "../../../features/bookmarks/bookmarkSlice";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiOutlineCheck } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
+import ToasterNotification from "../../../components/ToasterNotification";
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading, bookmark } = useSelector(
@@ -83,11 +87,16 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
       id,
       links: [...bookmark[0].links!, ...links],
     };
-    // dispatch(updateBookmark(addedLinks)).then(() =>
-    //   dispatch(getBookmarks()).then(() => onClose())
-    // );
 
-    dispatch(updateBookmark(addedLinks)).then(() => onClose());
+    dispatch(updateBookmark(addedLinks))
+      .unwrap()
+      .then(() => {
+        onClose();
+        const message = `${links.length} new ${
+          links.length > 1 ? "links" : "link"
+        } added to your list!`;
+        ToasterNotification(message);
+      });
   };
 
   return (

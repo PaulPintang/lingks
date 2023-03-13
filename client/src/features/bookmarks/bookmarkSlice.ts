@@ -125,7 +125,7 @@ export const bookmarkSlice = createSlice({
       state.fetching = "idle";
       state.error = null;
       state.isLoading = false;
-      // state.bookmark = [];
+      state.bookmark = [];
     },
   },
   extraReducers(builder) {

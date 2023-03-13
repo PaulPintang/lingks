@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { Toaster } from "react-hot-toast";
 import Avatar from "react-avatar-edit";
 import axios from "axios";
 import {
@@ -21,6 +22,7 @@ import {
   Group,
   Badge,
   ActionIcon,
+  Notification,
 } from "@mantine/core";
 import { useNavigate, Link } from "react-router-dom";
 import avatar from "../assets/user.png";
@@ -35,6 +37,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
+import { AiOutlineCheck } from "react-icons/ai";
 
 const RootLayout = () => {
   const [opened, setOpened] = useState<boolean>(false);
@@ -42,8 +45,10 @@ const RootLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, status } = useSelector((state: RootState) => state.user);
-  const { fetching } = useSelector((state: RootState) => state.bookmark);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { fetching, status, isLoading } = useSelector(
+    (state: RootState) => state.bookmark
+  );
 
   // useEffect(() => {
   //   dispatch(profile());
@@ -57,9 +62,21 @@ const RootLayout = () => {
         overlayOpacity={1}
       />
       <Header />
+      <Toaster />
+
       <main className="h-[calc(1 00vh-170px)] pb-5">
         <Outlet />
       </main>
+      {/* {!isLoading && (
+        <Notification
+          icon={<AiOutlineCheck />}
+          title="Bookmark added successfully"
+          color="teal"
+          className="absolute bottom-3 right-[210px]"
+        >
+          <Text fz="xs">1 new bookmark added to your list</Text>
+        </Notification>
+      )} */}
       {/* <Footer /> */}
     </Container>
   );

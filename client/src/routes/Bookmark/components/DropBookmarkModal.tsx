@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import {
   Image,
   TextInput,
@@ -8,6 +9,7 @@ import {
   Modal,
   Text,
   Title,
+  Paper,
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
@@ -19,6 +21,9 @@ import {
 } from "../../../features/bookmarks/bookmarkSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { AiOutlineCheck } from "react-icons/ai";
+import ToasterNotification from "../../../components/ToasterNotification";
+
 const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -28,7 +33,11 @@ const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
   const onDrop = () => {
     dispatch(dropBookmark(id!))
       .unwrap()
-      .then(() => navigate("/bookmarks"));
+      .then(() => {
+        navigate("/bookmarks");
+        const message = " Bookmark successfully deleted!";
+        ToasterNotification(message);
+      });
   };
 
   return (
