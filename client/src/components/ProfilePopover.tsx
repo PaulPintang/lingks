@@ -66,14 +66,11 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
       email,
       image: viewImg,
     };
-    dispatch(update(user))
-      .unwrap()
-      .then(() => {
-        toggle();
-        const message = "Profile updated successfully";
-        ToasterNotification(message);
-      })
-      .catch(() => setError(true));
+    dispatch(update(user)).then(() => {
+      toggle();
+      const message = "Profile updated successfully";
+      ToasterNotification(message);
+    });
   };
 
   const length = bookmarks.map((bm) => bm.links?.length);
@@ -113,11 +110,6 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
             spellCheck="false"
             onChange={(e) => setEmail(e.target.value)}
           />
-          {error && (
-            <Alert color="red" mt={10}>
-              <small>Something went wrong! Try to change your image</small>
-            </Alert>
-          )}
           <Flex justify="end" pt={15}>
             <Button
               size="xs"
