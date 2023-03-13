@@ -21,7 +21,7 @@ interface Props {
 }
 
 const BookmarkEmptyState = ({ open }: Props) => {
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.auth);
   return (
     <Center className="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-120px)] md:h-[calc(100vh-120px)]">
       <Flex

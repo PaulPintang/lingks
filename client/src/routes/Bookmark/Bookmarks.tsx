@@ -36,7 +36,7 @@ export interface ModalPropsInterface {
 const Bookmarks = () => {
   const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.auth);
   const { status } = useSelector((state: RootState) => state.bookmark);
 
   const dispatch = useDispatch<AppDispatch>();

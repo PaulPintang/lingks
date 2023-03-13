@@ -14,7 +14,9 @@ import { MdLockOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
-import { deleteAcc } from "../features/auth/authSlice";
+// import { deleteAcc } from "../features/auth/authSlice";
+import { deleteProfile } from "../features/profile/profileSlice";
+import { logout, reset } from "../features/auth/authSlice";
 interface Props extends ModalPropsInterface {
   closePopover: () => void;
 }
@@ -23,10 +25,15 @@ const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [type, setType] = useState("");
-  const { status } = useSelector((state: RootState) => state.user);
+  const { status } = useSelector((state: RootState) => state.auth);
 
   const onDelete = () => {
-    dispatch(deleteAcc()).then(() => navigate("/"));
+    dispatch(deleteProfile())
+      .unwrap()
+      .then(() => {
+        dispatch(logout());
+        navigate("/");
+      });
   };
 
   return (

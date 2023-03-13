@@ -45,8 +45,9 @@ const RootLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user } = useSelector((state: RootState) => state.user);
-  const { fetching, status, isLoading } = useSelector(
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { status } = useSelector((state: RootState) => state.profile);
+  const { fetching, isLoading } = useSelector(
     (state: RootState) => state.bookmark
   );
 
@@ -57,7 +58,7 @@ const RootLayout = () => {
   return (
     <Container>
       <LoadingOverlay
-        visible={fetching === "pending" && true}
+        visible={status === "pending" && true}
         loader={<Loader variant="bars" />}
         overlayOpacity={1}
       />

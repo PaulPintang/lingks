@@ -1,5 +1,6 @@
 import axios from "axios";
-import { UserInterface } from "./authSlice";
+// import { UserInterface } from "./authSlice";
+import { UserInterface } from "../../interfaces/user.interface";
 
 interface Props extends UserInterface {
   password: string;
@@ -8,7 +9,7 @@ interface Props extends UserInterface {
 export const handleLogin = async (user: UserInterface) => {
   const res = await axios.post("/api/user/login", user);
   localStorage.removeItem("email");
-  localStorage.setItem("user", JSON.stringify(res.data));
+  localStorage.setItem("user", JSON.stringify({ token: res.data.token }));
   return res.data;
 };
 

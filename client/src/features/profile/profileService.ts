@@ -1,4 +1,5 @@
-import { UserInterface } from "../auth/authSlice";
+// import { UserInterface } from "../auth/authSlice";/
+import { UserInterface } from "../../interfaces/user.interface";
 import axios from "axios";
 
 export const handleUpdateProfile = async (
@@ -35,7 +36,7 @@ export const handleGetProfile = async (token: string) => {
         "auth-token": token,
       },
     });
-    localStorage.setItem("user", JSON.stringify({ ...user.data, token }));
+    // localStorage.setItem("user", JSON.stringify({ ...user.data, token }));
     return user.data;
   } catch (error) {
     console.log(error);

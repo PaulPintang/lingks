@@ -48,11 +48,9 @@ const BookmarkView = () => {
   const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
-    dispatch(getBookmarks());
     dispatch(singleBookmark(id!));
     return () => {
       dispatch(reset());
-      console.log("reset");
     };
   }, []);
 

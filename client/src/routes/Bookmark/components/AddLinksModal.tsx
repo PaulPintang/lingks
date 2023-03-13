@@ -32,7 +32,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const { isLoading, bookmark } = useSelector(
     (state: RootState) => state.bookmark
   );
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.auth);
   const { id } = useParams();
   // const bookmark = bookmarks.filter((bm) => bm._id === id);
 

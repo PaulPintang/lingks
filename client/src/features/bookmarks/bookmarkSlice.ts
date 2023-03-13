@@ -53,7 +53,7 @@ export const getBookmarks = createAsyncThunk<
   { state: RootState }
 >("/bookmarks/get", async (_, thunkAPI) => {
   try {
-    return await handleGetBookmarks(thunkAPI.getState().user.user?.token!);
+    return await handleGetBookmarks(thunkAPI.getState().auth.user?.token!);
   } catch (error) {
     return error;
   }
@@ -67,7 +67,7 @@ export const addBookmark = createAsyncThunk<
   try {
     return await handleAddBookmark(
       bookmark,
-      thunkAPI.getState().user.user?.token!
+      thunkAPI.getState().auth.user?.token!
     );
   } catch (error) {
     return error;
@@ -80,7 +80,7 @@ export const dropBookmark = createAsyncThunk<
   { state: RootState }
 >("user/bookmark/drop", async (id, thunkAPI) => {
   try {
-    return await handleDropBookmark(id, thunkAPI.getState().user.user?.token!);
+    return await handleDropBookmark(id, thunkAPI.getState().auth.user?.token!);
   } catch (error) {
     return error;
   }
@@ -94,7 +94,7 @@ export const updateBookmark = createAsyncThunk<
   try {
     return await handleUpdateBookmark(
       bookmark,
-      thunkAPI.getState().user.user?.token!
+      thunkAPI.getState().auth.user?.token!
     );
   } catch (error) {
     return error;
@@ -109,7 +109,7 @@ export const singleBookmark = createAsyncThunk<
   try {
     return await handleSingleBookmark(
       id,
-      thunkAPI.getState().user.user?.token!
+      thunkAPI.getState().auth.user?.token!
     );
   } catch (error) {
     return error;

@@ -7,7 +7,7 @@ import { RootState } from "../app/store";
 import Bookmarks from "./Bookmark/Bookmarks";
 
 const LandingPage = () => {
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.auth);
   return (
     <Container>
       <Header />

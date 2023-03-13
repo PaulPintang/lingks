@@ -24,7 +24,7 @@ const Verify = () => {
   const [email, setEmail] = useState<string>("");
   const [OTP, setOTP] = useState<number | null>(null);
   const { status, error } = useSelector((state: RootState) => state.recover);
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");

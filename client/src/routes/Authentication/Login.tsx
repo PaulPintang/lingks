@@ -12,25 +12,20 @@ import {
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset, UserInterface } from "../../features/auth/authSlice";
+import { login, reset } from "../../features/auth/authSlice";
 import { AppDispatch, RootState } from "../../app/store";
 import Loader from "../../components/Loader";
 import Logo from "../../components/Logo";
 import { getBookmarks } from "../../features/bookmarks/bookmarkSlice";
 
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>(
+    localStorage.getItem("email") || ""
+  );
   const [password, setPassword] = useState<string>("");
-  const { user, status, error } = useSelector((state: RootState) => state.user);
+  const { user, status, error } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setEmail(localStorage.getItem("email") || "");
-    return () => {
-      dispatch(reset());
-    };
-  }, []);
 
   useEffect(() => {
     user && navigate("/bookmarks");

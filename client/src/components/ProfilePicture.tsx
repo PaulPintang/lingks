@@ -12,7 +12,7 @@ interface Props extends ModalPropsInterface {
 const ProfilePicture = ({ opened, close, setViewImg }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { status, user } = useSelector((state: RootState) => state.user);
+  const { status, user } = useSelector((state: RootState) => state.auth);
 
   const onCrop = (view: string) => {
     setViewImg(view);

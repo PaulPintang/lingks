@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 
 const Loader = () => {
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.auth);
   return (
     <LoadingOverlay
       visible={user?.token ? true : false}

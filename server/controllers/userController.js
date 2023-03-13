@@ -122,6 +122,7 @@ const updateProfile = async (req, res, next) => {
       res.json({
         name: user.name,
         email: user.email,
+        day: user.day,
         image: user.image.url,
       });
     } else {
@@ -136,6 +137,7 @@ const updateProfile = async (req, res, next) => {
       res.json({
         name: user.name,
         email: user.email,
+        day: user.day,
         image: user.image.url,
       });
     }
@@ -206,8 +208,8 @@ const resetPassword = async (req, res, next) => {
 const profile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
-    const { name, email, image, _id } = user;
-    res.json({ name, email, image: image.url, _id });
+    const { name, email, image, day, _id } = user;
+    res.json({ name, email, image: image.url, day, _id });
   } catch (error) {
     next(error);
   }

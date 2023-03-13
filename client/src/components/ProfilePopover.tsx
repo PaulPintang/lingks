@@ -23,7 +23,8 @@ import { BiArrowBack } from "react-icons/bi";
 import { MdOutlineCake } from "react-icons/md";
 import Avatar from "react-avatar-edit";
 import ProfilePicture from "./ProfilePicture";
-import { update } from "../features/auth/authSlice";
+// import { update } from "../features/auth/authSlice";
+import { updateProfile } from "../features/profile/profileSlice";
 import { AiOutlineCheck } from "react-icons/ai";
 import ToasterNotification from "./ToasterNotification";
 
@@ -36,8 +37,10 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const [opened, { toggle }] = useDisclosure(false);
   const [picture, pictureHandlers] = useDisclosure(false);
-  const { user, status } = useSelector((state: RootState) => state.user);
-  // const { user, status } = useSelector((state: RootState) => state.profile);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { profile, isLoading } = useSelector(
+    (state: RootState) => state.profile
+  );
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
 
   const [viewImg, setViewImg] = useState<string | null>(null);
@@ -46,9 +49,9 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    setViewImg(user?.image!);
-    setName(user?.name!);
-    setEmail(user?.email!);
+    setViewImg(profile?.image!);
+    setName(profile?.name!);
+    setEmail(profile?.email!);
   }, []);
 
   const onCrop = (view: string) => {
@@ -61,16 +64,18 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
 
   const onUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const user = {
+    const profile = {
       name,
       email,
       image: viewImg,
     };
-    dispatch(update(user)).then(() => {
-      toggle();
-      const message = "Profile updated successfully";
-      ToasterNotification(message);
-    });
+    dispatch(updateProfile(profile))
+      .unwrap()
+      .then(() => {
+        toggle();
+        const message = "Profile updated successfully";
+        ToasterNotification(message);
+      });
   };
 
   const length = bookmarks.map((bm) => bm.links?.length);
@@ -111,12 +116,7 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Flex justify="end" pt={15}>
-            <Button
-              size="xs"
-              color="teal"
-              type="submit"
-              loading={status === "pending" && true}
-            >
+            <Button size="xs" color="teal" type="submit" loading={isLoading}>
               Update
             </Button>
           </Flex>
@@ -125,12 +125,12 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
         <>
           <Flex align="center" gap={13}>
             <ActionIcon radius="lg" size={45} variant="transparent">
-              <img src={user?.image || userimg} alt="" />
+              <img src={profile?.image || userimg} alt="" />
             </ActionIcon>
             <div className="-space-y-[3px]">
-              <Text size="sm">{user?.name}</Text>
+              <Text size="sm">{profile?.name}</Text>
               <Text size="sm" c="dimmed" fz="xs">
-                {user?.email}
+                {profile?.email}
               </Text>
             </div>
           </Flex>
@@ -169,7 +169,7 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
           <Flex align="center" gap={8}>
             <MdOutlineCake className="text-gray-500" />
             <Text c="dimmed" size="xs" pt={4}>
-              Joined on {user?.day}
+              Joined on {profile?.day}
             </Text>
           </Flex>
         </div>
@@ -185,7 +185,7 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
         <Flex justify="flex-end">
           <Button
             size="sm"
-            mt={13}
+            mt={10}
             onClick={() => {
               pictureHandlers.close();
             }}
