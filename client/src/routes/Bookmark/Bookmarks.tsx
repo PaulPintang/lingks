@@ -68,7 +68,7 @@ const Bookmarks = () => {
                   .then(() => navigate(`/bookmark/${bookmark._id!}`))
               }
               key={bookmark._id}
-              className="no-underline lg:w-[295px] md:w-[295px] w-full active:opacity-70 transition-all cursor-pointer hover:shadow-xl border-3"
+              className="no-underline lg:w-[295px] md:w-[295px] w-full active:opacity-90 transition-all cursor-pointer hover:shadow-xl border-3"
               shadow="sm"
               radius="md"
               withBorder

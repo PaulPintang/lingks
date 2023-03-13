@@ -122,7 +122,7 @@ export const bookmarkSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.status = "idle";
-      state.fetching = "idle";
+      // state.fetching = "idle";
       state.error = null;
       state.isLoading = false;
       state.bookmark = [];
@@ -133,21 +133,28 @@ export const bookmarkSlice = createSlice({
       .addCase(getBookmarks.pending, (state) => {
         if (state.bookmarks.length === 0) {
           state.fetching = "pending";
+          state.status = "pending";
         }
       })
       .addCase(getBookmarks.fulfilled, (state, action) => {
         state.fetching = "succeeded";
+        state.status = "succeeded";
         state.bookmarks = [...action.payload];
       })
       .addCase(getBookmarks.rejected, (state) => {
+        state.status = "failed";
         state.fetching = "failed";
       })
       .addCase(singleBookmark.pending, (state) => {
-        state.status = "pending";
+        if (state.bookmark.length !== 0) {
+          state.status = "pending";
+        }
       })
       .addCase(singleBookmark.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.bookmark = [...action.payload];
+        if (state.bookmark.length === 0) {
+          state.bookmark = [...action.payload];
+        }
       })
       .addCase(singleBookmark.rejected, (state) => {
         state.status = "failed";

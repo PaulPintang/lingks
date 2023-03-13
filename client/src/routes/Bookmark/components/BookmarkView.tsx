@@ -124,9 +124,12 @@ const BookmarkView = () => {
                       </Text>
                       <Flex gap={10} align="center" className="text-sm">
                         <Text c="dimmed" fw={600}>
-                          Bookmarks:
+                          Links:
                         </Text>
-                        <Text>{bookmark.links?.length} links</Text>
+                        <Text>
+                          {bookmark.links?.length}{" "}
+                          {bookmark.links?.length! > 1 ? "links" : "link"}
+                        </Text>
                       </Flex>
                       <Flex className="py-2 pr-2" gap={8} wrap="wrap">
                         {bookmark.labels?.map((label, index) => (

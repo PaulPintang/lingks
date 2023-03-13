@@ -37,8 +37,8 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   // const bookmark = bookmarks.filter((bm) => bm._id === id);
 
   const [links, setLinks] = useState<LinksInterface[]>([]);
-  const [name, setName] = useState<string | null>(null);
-  const [link, setLink] = useState<string | null>(null);
+  const [name, setName] = useState<string>("");
+  const [link, setLink] = useState<string>("");
   const [add, setAdd] = useState<boolean>(true);
   const [showAdded, setShowAdded] = useState<boolean>(false);
 
@@ -59,8 +59,8 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   }, [add]);
 
   const onClose = () => {
-    setName(null);
-    setLink(null);
+    setName("");
+    setLink("");
     setLinks([]);
     setAdd(true);
     close();
@@ -77,8 +77,8 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
     ]);
     setShowAdded(true);
     setAdd(false);
-    setName(null);
-    setLink(null);
+    setName("");
+    setLink("");
   };
 
   const onConfirm = (e: React.FormEvent) => {
@@ -171,7 +171,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
               <Button
                 onClick={onAdd}
                 className="bg-green-500 hover:bg-green-600 transition-all mt-3"
-                disabled={name === null && link === null && true}
+                disabled={name === null || (link === "" && true)}
               >
                 Add link
               </Button>
