@@ -5,19 +5,22 @@ import { AiOutlineCheck } from "react-icons/ai";
 
 const ToasterNotification = (message: string) => {
   return toast(
-    <Paper shadow="xs" p="md">
+    <>
       <Flex gap={10}>
         <div className="bg-green-400 rounded-full p-[5px]">
-          <AiOutlineCheck className="text-white text-xs" />
+          <AiOutlineCheck className="text-white text-xs rounded-none" />
         </div>
         <Text fz="sm" className="text-gray-500">
           {message}
         </Text>
       </Flex>
-    </Paper>,
+    </>,
     {
       duration: 2000,
-      className: "bg-none shadow-none",
+      className: "bg-white",
+      style: {
+        padding: 8,
+      },
     }
   );
 };
