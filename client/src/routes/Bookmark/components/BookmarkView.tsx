@@ -48,6 +48,7 @@ const BookmarkView = () => {
   const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
+    dispatch(getBookmarks());
     dispatch(singleBookmark(id!));
     return () => {
       dispatch(reset());
@@ -130,16 +131,22 @@ const BookmarkView = () => {
                         </Text>
                       </Flex>
                       <Flex className="py-2 pr-2" gap={8} wrap="wrap">
-                        {bookmark.labels?.map((label, index) => (
-                          <Badge
-                            key={index}
-                            style={{ background: label.color }}
-                            variant="filled"
-                            className="normal-case"
-                          >
-                            {label.label}
-                          </Badge>
-                        ))}
+                        {bookmark.labels?.length === 0 ? (
+                          <Text fz="sm" fs="italic">
+                            No bookmark labels
+                          </Text>
+                        ) : (
+                          bookmark.labels?.map((label, index) => (
+                            <Badge
+                              key={index}
+                              style={{ background: label.color }}
+                              variant="filled"
+                              className="normal-case"
+                            >
+                              {label.label}
+                            </Badge>
+                          ))
+                        )}
                       </Flex>
                     </div>
                   </Card.Section>

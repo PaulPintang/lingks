@@ -81,6 +81,7 @@ const Register = () => {
                 setName(e.target.value);
                 dispatch(reset());
               }}
+              spellCheck={false}
             />
             <TextInput
               size="md"
@@ -92,6 +93,7 @@ const Register = () => {
                 setEmail(e.target.value);
                 dispatch(reset());
               }}
+              spellCheck={false}
             />
             <PasswordInput
               size="md"
@@ -103,6 +105,7 @@ const Register = () => {
                 setPassword(e.target.value);
                 dispatch(reset());
               }}
+              spellCheck={false}
             />
             <Button
               type="submit"

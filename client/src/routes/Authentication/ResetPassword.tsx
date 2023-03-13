@@ -82,6 +82,7 @@ const ResetPassword = () => {
                 setPassword(e.target.value);
                 setError("");
               }}
+              spellCheck={false}
             />
             <PasswordInput
               size="md"
@@ -96,6 +97,7 @@ const ResetPassword = () => {
                 setConfirmPassword(e.target.value);
                 setError("");
               }}
+              spellCheck={false}
             />
             <Button
               size="md"

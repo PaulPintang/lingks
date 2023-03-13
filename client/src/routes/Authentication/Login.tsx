@@ -65,6 +65,7 @@ const Login = () => {
                 dispatch(reset());
               }}
               error={error?.toLowerCase().includes("email") && error}
+              spellCheck={false}
             />
             <PasswordInput
               size="md"
@@ -76,6 +77,7 @@ const Login = () => {
                 dispatch(reset());
               }}
               error={error?.toLowerCase().includes("password") && error}
+              spellCheck={false}
             />
             <Button
               type="submit"

@@ -67,6 +67,7 @@ const Recover = () => {
                 dispatch(reset());
               }}
               error={error}
+              spellCheck={false}
             />
 
             <Button
