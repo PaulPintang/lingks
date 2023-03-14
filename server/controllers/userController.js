@@ -103,7 +103,9 @@ const updateProfile = async (req, res, next) => {
       }
 
       const result = await cloudinary.uploader.upload(image, {
-        folder: "pictures",
+        folder: "lingks_profile",
+        gravity: "auto",
+        crop: "fill",
       });
 
       const user = await User.findByIdAndUpdate(
