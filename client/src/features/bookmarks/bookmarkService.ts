@@ -74,7 +74,6 @@ export const handleUpdateBookmark = async (bookmark: any, token: string) => {
         },
       }
     );
-    console.log(response);
     return response.data;
   } catch (error) {
     return error;

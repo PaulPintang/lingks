@@ -43,13 +43,20 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [labels, setLabels] = useState<colorInterface[]>([]);
-  const [create, setCreate] = useState(true);
+  const [create, setCreate] = useState(false);
 
   useEffect(() => {
     setBanner(bookmark[0]?.banner!);
     setTitle(bookmark[0]?.title!);
     setDescription(bookmark[0]?.description!);
+    setLabels(bookmark[0]?.labels!);
   }, [opened]);
+
+  useEffect(() => {
+    if (labels?.length === 0) {
+      setCreate(true);
+    }
+  }, [labels]);
 
   const onClose = () => {
     setBanner(bookmark[0]?.banner!);
@@ -89,11 +96,14 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
   ];
 
   const onChange = (current: string[]) => {
-    console.log("on change run");
-    const updated = labels.filter((item) => {
-      return current.includes(item.label);
-    });
-    // setLabels([...updated]);
+    if (!create) {
+      console.log("on change run");
+      const updated = labels.filter((item) => {
+        return current.includes(item.label);
+      });
+      setLabels([...updated]);
+    }
+    setCreate(false);
   };
 
   const onCreate = (query: string) => {
@@ -108,8 +118,6 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
     return query;
   };
 
-  // console.log("Labels", bookmark[0]?.labels);
-  // console.log("State labels", labels);
   return (
     <Modal opened={opened} onClose={onClose} title="Edit bookmark" size="sm">
       <form onSubmit={onSubmit} className="space-y-2">
@@ -132,15 +140,18 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
         />
         <MultiSelect
           label="Labels"
-          data={labels.map((label) => label.label)}
+          data={labels?.map((label) => label.label)}
           placeholder="Add 4 labels or less"
-          searchable
           creatable
+          searchable
           maxSelectedValues={4}
-          defaultValue={labels.map((label) => label.label)}
+          defaultValue={labels?.map((label) => label.label)}
           onChange={(values) => onChange(values)}
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => onCreate(query)}
+          onMouseLeave={() => {
+            setCreate(true);
+          }}
         />
 
         <Textarea

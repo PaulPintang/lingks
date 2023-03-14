@@ -60,6 +60,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const [saved, setSaved] = useState<boolean>(false);
   const [add, setAdd] = useState<boolean>(false);
   const [showAdded, setShowAdded] = useState<boolean>(false);
+  const [create, setCreate] = useState(false);
 
   const today = new Date();
   const [added, setAdded] = useState<string>("");
@@ -76,6 +77,12 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
 
     setAdded(`${format.date}, ${format.time}`);
   }, [add]);
+
+  useEffect(() => {
+    if (labels?.length === 0) {
+      setCreate(true);
+    }
+  }, [labels]);
 
   const onClose = () => {
     setTitle(null);
@@ -135,39 +142,28 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
     "#fab005",
   ];
 
-  // const [select, setSelect] = useState<string>("");
-  // const [colors, setColors] = useState<string[]>([]);
+  const onChange = (current: string[]) => {
+    if (!create) {
+      console.log("on change run");
+      const updated = labels.filter((item) => {
+        return current.includes(item.label);
+      });
+      setLabels([...updated]);
+    }
+    setCreate(false);
+  };
 
-  // useEffect(() => {
-  //   select && setColors([...colors, select]);
-
-  //   labelss.forEach((item, index) => {
-  //     item.color = colors[index];
-  //   });
-  // }, [select]);
-
-  // console.log("labelss", labelss);
-
-  // const notification = () => {
-  //   return (
-  //     <Paper shadow="xs" p="md">
-  //       <Flex gap={10}>
-  //         <div className="bg-green-400 rounded-full p-[5px]">
-  //           <AiOutlineCheck className="text-white text-xs" />
-  //         </div>
-  //         <Text fz="sm" className="text-gray-500">
-  //           1 new bookmark added to your list
-  //         </Text>
-  //       </Flex>
-  //     </Paper>
-  //   );
-  // };
-
-  // const notify = () =>
-  //   toast(notification(), {
-  //     duration: 2000,
-  //     className: "bg-none shadow-none",
-  //   });
+  const onCreate = (query: string) => {
+    console.log("on create run");
+    setLabels((prev) => [
+      ...prev,
+      {
+        label: query,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      },
+    ]);
+    return query;
+  };
 
   return (
     <Modal opened={opened} onClose={onClose} title="Add bookmark" size="sm">
@@ -351,23 +347,16 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
             />
             <MultiSelect
               label="Labels"
-              data={labels.map((label) => label.label)}
+              data={labels?.map((label) => label.label)}
               placeholder="Add 4 labels or less"
               searchable
               creatable
               maxSelectedValues={4}
-              onChange={(values) => console.log("values", values)}
+              onChange={(values) => onChange(values)}
               getCreateLabel={(query) => `+ Create ${query}`}
-              onCreate={(query) => {
-                const item = query;
-                setLabels((prev) => [
-                  ...prev,
-                  {
-                    label: item,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                  },
-                ]);
-                return item;
+              onCreate={(query) => onCreate(query)}
+              onMouseLeave={() => {
+                setCreate(true);
               }}
             />
             {/* <Flex align="center" justify="space-between">
