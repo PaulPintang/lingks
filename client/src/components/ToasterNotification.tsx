@@ -1,5 +1,4 @@
-import React from "react";
-import { Paper, Flex, Text } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
 import { toast } from "react-hot-toast";
 import { AiOutlineCheck } from "react-icons/ai";
 

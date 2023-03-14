@@ -1,29 +1,12 @@
-import React, { useEffect } from "react";
-import { RxLink2 } from "react-icons/rx";
-import {
-  Flex,
-  Card,
-  Text,
-  Group,
-  Image,
-  Badge,
-  Title,
-  Skeleton,
-  Button,
-  Center,
-  LoadingOverlay,
-  Loader,
-  Box,
-} from "@mantine/core";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Flex, Card, Text, Image, Badge, Title } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
 import {
   getBookmarks,
   singleBookmark,
 } from "../../features/bookmarks/bookmarkSlice";
-import bookmark from "../../assets/bookmark.png";
-import { AiOutlinePlus } from "react-icons/ai";
 import AddBookmarkModal from "../Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
 import BookmarkEmptyState from "../../components/BookmarkEmptyState";
@@ -36,8 +19,6 @@ export interface ModalPropsInterface {
 const Bookmarks = () => {
   const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
-  const { user } = useSelector((state: RootState) => state.auth);
-  const { status } = useSelector((state: RootState) => state.bookmark);
 
   const dispatch = useDispatch<AppDispatch>();
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
@@ -54,13 +35,8 @@ const Bookmarks = () => {
         </div>
       )}
       <Flex gap={20} className="w-full" wrap="wrap">
-        {bookmarks?.length ? (
+        {bookmarks?.length !== 0 ? (
           bookmarks?.map((bookmark) => (
-            // <Link
-            //   to={`${bookmark._id}`}
-            //   key={bookmark._id}
-            //   className="no-underline lg:w-[295px] md:w-[295px] w-full"
-            // >
             <Card
               onClick={() =>
                 dispatch(singleBookmark(bookmark._id!))
@@ -76,7 +52,6 @@ const Bookmarks = () => {
               <Card.Section>
                 <Image src={bookmark.banner} height={100} alt="React" />
               </Card.Section>
-              {/* <Card.Section p={15} className="lg:h-[190px] md:h-[190px]"> */}
               <Card.Section p={15}>
                 <div className="space-y-1">
                   <Text weight={600}>{bookmark.title}</Text>
@@ -113,7 +88,6 @@ const Bookmarks = () => {
                 </div>
               </Card.Section>
             </Card>
-            // </Link>
           ))
         ) : (
           <BookmarkEmptyState open={open} />

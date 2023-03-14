@@ -1,27 +1,10 @@
-import React, { useState } from "react";
-import { toast } from "react-hot-toast";
-import {
-  Image,
-  TextInput,
-  Textarea,
-  Button,
-  Flex,
-  Modal,
-  Text,
-  Title,
-  Paper,
-} from "@mantine/core";
+import { Button, Flex, Modal, Text, Title } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
-import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
-import {
-  dropBookmark,
-  getBookmarks,
-} from "../../../features/bookmarks/bookmarkSlice";
+import { dropBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { AiOutlineCheck } from "react-icons/ai";
 import ToasterNotification from "../../../components/ToasterNotification";
 
 const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {

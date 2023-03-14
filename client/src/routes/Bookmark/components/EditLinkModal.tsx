@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import {
-  Image,
-  TextInput,
-  Textarea,
-  Button,
-  Flex,
-  Modal,
-  ActionIcon,
-  Paper,
-  Text,
-} from "@mantine/core";
+import { TextInput, Button, Flex, Modal } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
-import { BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
-// import { addLink } from "../../../features/bookmarks/bookmarkSlice";
 import {
   BookmarkInterface,
   LinksInterface,
 } from "../../../interfaces/bookmark.interface";
-import { AiOutlineCheck } from "react-icons/ai";
 import ToasterNotification from "../../../components/ToasterNotification";
 
 interface Props extends ModalPropsInterface {

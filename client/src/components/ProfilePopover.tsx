@@ -1,29 +1,20 @@
-import React, { FormEvent, useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import React, { useState, useEffect } from "react";
 import {
-  Popover,
   Button,
   Text,
   Flex,
-  ActionIcon,
-  Collapse,
   TextInput,
   Center,
-  Modal,
   Avatar,
   Alert,
-  Paper,
 } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import userimg from "../assets/user.png";
-import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { useDisclosure } from "@mantine/hooks";
 import { BiArrowBack } from "react-icons/bi";
 import { MdOutlineCake } from "react-icons/md";
-// import { update } from "../features/auth/authSlice";
 import { updateProfile } from "../features/profile/profileSlice";
-import { AiOutlineCheck } from "react-icons/ai";
 import ToasterNotification from "./ToasterNotification";
 
 import ImageUploading, { ImageListType } from "react-images-uploading";
@@ -36,8 +27,6 @@ interface Props {
 const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const [opened, { toggle }] = useDisclosure(false);
-  const [picture, pictureHandlers] = useDisclosure(false);
-  const { user } = useSelector((state: RootState) => state.auth);
   const { profile, isLoading } = useSelector(
     (state: RootState) => state.profile
   );
@@ -57,10 +46,7 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
   const [images, setImages] = useState([]);
   const maxNumber = 1;
 
-  const onChange = (
-    imageList: ImageListType
-    // addUpdateIndex: number[] | undefined
-  ) => {
+  const onChange = (imageList: ImageListType) => {
     setImages(imageList as never[]);
     setProfilePicture(imageList[0].dataURL!);
   };
@@ -149,9 +135,6 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
       ) : (
         <>
           <Flex align="center" gap={13}>
-            {/* <ActionIcon radius="lg" size={45} variant="transparent">
-              <img src={profile?.image || userimg} alt=""  />
-            </ActionIcon> */}
             <Avatar
               radius={100}
               size={47}
@@ -205,26 +188,6 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
           </Flex>
         </div>
       )}
-      {/* <Modal
-        opened={picture}
-        onClose={pictureHandlers.close}
-        size="xs"
-        centered
-        withCloseButton={false}
-      >
-        <Avatar onClose={onClose} onCrop={onCrop} width="100%" height={295} />
-        <Flex justify="flex-end">
-          <Button
-            size="sm"
-            mt={10}
-            onClick={() => {
-              pictureHandlers.close();
-            }}
-          >
-            Done
-          </Button>
-        </Flex>
-      </Modal> */}
     </section>
   );
 };

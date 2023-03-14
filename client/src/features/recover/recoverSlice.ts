@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { handleChangePass, handleOTP, handleVerifyOTP } from "./recoverService";
-// import { UserInterface } from "../auth/authService";
 import { UserInterface } from "../../interfaces/user.interface";
 interface OTPInterface {
   email: string;

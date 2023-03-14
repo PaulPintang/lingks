@@ -13,11 +13,10 @@ import {
   Title,
   Skeleton,
   Highlight,
-  Notification,
 } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { RxLink2 } from "react-icons/rx";
-import { AiOutlinePlus, AiFillCloseCircle } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import AddLinksModal from "./AddLinksModal";
 import EditGroupModal from "./EditBookmarkModal";
 import DropGroupModal from "./DropBookmarkModal";
@@ -32,7 +31,6 @@ import {
   singleBookmark,
 } from "../../../features/bookmarks/bookmarkSlice";
 import { BiArrowBack } from "react-icons/bi";
-import toast, { Toaster } from "react-hot-toast";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import ToasterNotification from "../../../components/ToasterNotification";
 import { LinksInterface } from "../../../interfaces/bookmark.interface";
@@ -255,15 +253,6 @@ const BookmarkView = () => {
                     visible={status === "pending" && true}
                     className="lg:w-[298px] md:w-[298px] w-full"
                   >
-                    {/* <ActionIcon
-                      onClick={() => onDelete(i)}
-                      color="red"
-                      variant="transparent"
-                      className="absolute -right-3 -top-3 z-50"
-                    >
-                      <AiFillCloseCircle className="text-gray-400 hover:text-red-300 focus:text-red-300 transition-all" />
-                    </ActionIcon> */}
-
                     <Card
                       key={i}
                       px={10}
@@ -337,7 +326,6 @@ const BookmarkView = () => {
           bookmark={bookmark}
           links={links!}
         />
-        {/* Notification */}
       </Grid>
     </>
   );

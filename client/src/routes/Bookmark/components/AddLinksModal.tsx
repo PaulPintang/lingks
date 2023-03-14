@@ -1,23 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Modal,
-  Grid,
-  Text,
-  Image,
-  Card,
-  Flex,
-  Badge,
-  TextInput,
-  Textarea,
-  Button,
-  Notification,
-  Paper,
-} from "@mantine/core";
+import { Modal, Text, Card, Flex, TextInput, Button } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
-import { getBookmarks } from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../interfaces/bookmark.interface";
-import { AiFillCloseCircle, AiOutlineCheck } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
@@ -29,9 +15,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const { isLoading, bookmark } = useSelector(
     (state: RootState) => state.bookmark
   );
-  const { user } = useSelector((state: RootState) => state.auth);
   const { id } = useParams();
-  // const bookmark = bookmarks.filter((bm) => bm._id === id);
 
   const [links, setLinks] = useState<LinksInterface[]>([]);
   const [name, setName] = useState<string>("");

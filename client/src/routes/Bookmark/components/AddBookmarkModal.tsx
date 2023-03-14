@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
 import {
   Modal,
-  Grid,
   Text,
   Image,
   Card,
@@ -13,30 +11,17 @@ import {
   Button,
   ActionIcon,
   MultiSelect,
-  ColorPicker,
-  Paper,
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
-import {
-  addBookmark,
-  getBookmarks,
-} from "../../../features/bookmarks/bookmarkSlice";
+import { addBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../interfaces/bookmark.interface";
-import {
-  AiFillCloseCircle,
-  AiOutlinePlus,
-  AiOutlineCheck,
-} from "react-icons/ai";
+import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import ToasterNotification from "../../../components/ToasterNotification";
-
-interface colorInterface {
-  label: string;
-  color: string;
-}
+import { LabelInterface } from "../../../interfaces/bookmark.interface";
 
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,7 +35,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [links, setLinks] = useState<LinksInterface[]>([]);
-  const [labels, setLabels] = useState<colorInterface[]>([]);
+  const [labels, setLabels] = useState<LabelInterface[]>([]);
 
   // links
   const [linkName, setLinkName] = useState<string | null>(null);
@@ -248,7 +233,6 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                               Date Added:
                             </Text>
                             <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                              {/* March 05, 2023, 5: 20 PM */}
                               {link.date}
                             </Text>
                           </Flex>
@@ -256,7 +240,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                         <AiFillCloseCircle
                           onClick={() =>
                             setLinks((prev) =>
-                              prev.filter((link, i) => i !== index)
+                              prev.filter((_, i) => i !== index)
                             )
                           }
                           className="absolute right-[-5px] top-[-4px] text-gray-400 cursor-pointer hover:text-gray-500 transition-all"
@@ -360,32 +344,6 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               onKeyPress={() => setCreate(true)}
               onKeyUp={() => setCreate(true)}
             />
-            {/* <Flex align="center" justify="space-between">
-              <Text size="xs" pt={4} c="dimmed">
-                Select 3 label colors:
-              </Text>
-
-              <ColorPicker
-                withPicker={false}
-                swatchesPerRow={10}
-                format="hex"
-                value={select}
-                onChange={setSelect}
-                swatches={colors}
-              />
-            </Flex> */}
-            {/* <Flex gap={7}>
-              {labelss.map((label, index) => (
-                <Badge
-                  key={index}
-                  style={{ background: label.color }}
-                  variant="filled"
-                  className="normal-case"
-                >
-                  {label.label}
-                </Badge>
-              ))}
-            </Flex> */}
             <Textarea
               placeholder="Description"
               label="Description"

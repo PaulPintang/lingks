@@ -1,20 +1,9 @@
-import React, { useRef, useState } from "react";
-import {
-  Image,
-  TextInput,
-  Button,
-  Flex,
-  Modal,
-  Text,
-  Title,
-  PasswordInput,
-} from "@mantine/core";
+import React, { useState } from "react";
+import { TextInput, Button, Flex, Modal, Text, Title } from "@mantine/core";
 import { ModalPropsInterface } from "../routes/Bookmark/Bookmarks";
-import { MdLockOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
-// import { deleteAcc } from "../features/auth/authSlice";
 import { deleteProfile } from "../features/profile/profileSlice";
 import { logout } from "../features/auth/authSlice";
 import { reset } from "../features/bookmarks/bookmarkSlice";

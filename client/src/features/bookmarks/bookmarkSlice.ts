@@ -3,7 +3,6 @@ import { BookmarkInterface } from "../../interfaces/bookmark.interface";
 import { RootState } from "../../app/store";
 import {
   handleAddBookmark,
-  handleAddLink,
   handleDropBookmark,
   handleGetBookmarks,
   handleUpdateBookmark,

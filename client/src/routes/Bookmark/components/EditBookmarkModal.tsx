@@ -6,20 +6,14 @@ import {
   Button,
   Flex,
   Modal,
-  Text,
   MultiSelect,
-  ColorPicker,
 } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
-import {
-  getBookmarks,
-  updateBookmark,
-  singleBookmark,
-} from "../../../features/bookmarks/bookmarkSlice";
+import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import { BookmarkInterface } from "../../../interfaces/bookmark.interface";
 import ToasterNotification from "../../../components/ToasterNotification";
 

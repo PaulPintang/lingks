@@ -7,15 +7,11 @@ import {
   Container,
   TextInput,
   Center,
-  NumberInput,
-  UnstyledButton,
 } from "@mantine/core";
 import { MdAlternateEmail } from "react-icons/md";
-import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOTP, verifyOTP, reset } from "../../features/recover/recoverSlice";
+import { sendOTP, reset } from "../../features/recover/recoverSlice";
 import { AppDispatch, RootState } from "../../app/store";
-import Loader from "../../components/Loader";
 import Logo from "../../components/Logo";
 
 const Recover = () => {

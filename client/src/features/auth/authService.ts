@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { UserInterface } from "./authSlice";
 import { UserInterface } from "../../interfaces/user.interface";
 
 interface Props extends UserInterface {
@@ -32,21 +31,4 @@ export const handleChangePass = async (
     password: data.password,
   });
   return res;
-};
-
-export const handleError = (response: string) => {
-  if (JSON.stringify(response).toLowerCase().includes("name")) {
-    console.log("name error");
-    return response;
-  }
-
-  if (JSON.stringify(response).toLowerCase().includes("email")) {
-    console.log("email error");
-    return response;
-  }
-
-  if (JSON.stringify(response).toLowerCase().includes("password")) {
-    console.log("password error");
-    return response;
-  }
 };

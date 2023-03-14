@@ -1,4 +1,4 @@
-export interface colorInterface {
+export interface LabelInterface {
   label: string;
   color: string;
 }
@@ -14,6 +14,6 @@ export interface BookmarkInterface {
   title?: string | null;
   description?: string | null;
   banner?: string | null;
-  labels?: colorInterface[];
+  labels?: LabelInterface[];
   links?: LinksInterface[];
 }

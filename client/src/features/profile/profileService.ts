@@ -21,7 +21,6 @@ export const handleUpdateProfile = async (
         },
       }
     );
-    // console.log(user.data);
     localStorage.setItem("user", JSON.stringify({ ...user.data, token }));
     return user.data;
   } catch (error) {
@@ -36,7 +35,6 @@ export const handleGetProfile = async (token: string) => {
         "auth-token": token,
       },
     });
-    // localStorage.setItem("user", JSON.stringify({ ...user.data, token }));
     return user.data;
   } catch (error) {
     console.log(error);

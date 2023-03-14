@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  Flex,
-  Center,
-  Title,
-  Button,
-  ActionIcon,
-  Popover,
-  Avatar,
-} from "@mantine/core";
-import { GiBookmarklet } from "react-icons/gi";
+import { Flex, Button, ActionIcon, Popover, Avatar } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import userimg from "../assets/user.png";
 import AddBookmarkModal from "../routes/Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
-import { AiOutlinePlus } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import Logo from "./Logo";
 import ProfileView from "./ProfilePopover";

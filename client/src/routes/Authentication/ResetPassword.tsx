@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   PasswordInput,
@@ -8,14 +8,10 @@ import {
   Container,
   Title,
   Center,
-  Alert,
 } from "@mantine/core";
 import { MdLockOutline } from "react-icons/md";
-import { GiBookmarklet } from "react-icons/gi";
-import { reset } from "../../features/auth/authSlice";
 import { AppDispatch, RootState } from "../../app/store";
 import { resetPassword } from "../../features/recover/recoverSlice";
-import Loader from "../../components/Loader";
 import Logo from "../../components/Logo";
 
 export interface User {
@@ -41,7 +37,7 @@ const ResetPassword = () => {
   }, []);
 
   useEffect(() => {
-    !localStorage.getItem("session") && navigate("/");
+    !localStorage.getItem("session") && navigate("/login");
     return () => {
       localStorage.removeItem("session");
     };
@@ -55,9 +51,9 @@ const ResetPassword = () => {
         password,
       };
       // payload return true if response id success
-      return dispatch(resetPassword(user)).then(
-        (res) => res.payload && navigate("/")
-      );
+      return dispatch(resetPassword(user))
+        .unwrap()
+        .then(() => navigate("/login"));
     }
     setError("Those passwords didn't match. Try again");
   };

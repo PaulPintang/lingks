@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { UserInterface } from "../auth/authService";
 import { UserInterface } from "../../interfaces/user.interface";
 
 export const handleOTP = async (email: string) => {
