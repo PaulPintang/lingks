@@ -358,6 +358,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               onMouseLeave={() => {
                 setCreate(true);
               }}
+              onKeyDown={() => setCreate(true)}
             />
             {/* <Flex align="center" justify="space-between">
               <Text size="xs" pt={4} c="dimmed">

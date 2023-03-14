@@ -149,9 +149,8 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
           onChange={(values) => onChange(values)}
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => onCreate(query)}
-          onMouseLeave={() => {
-            setCreate(true);
-          }}
+          onMouseLeave={() => setCreate(true)}
+          onKeyDown={() => setCreate(true)}
         />
 
         <Textarea
