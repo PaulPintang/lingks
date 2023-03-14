@@ -6,6 +6,7 @@ import {
   Button,
   ActionIcon,
   Popover,
+  Avatar,
 } from "@mantine/core";
 import { GiBookmarklet } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
@@ -68,19 +69,17 @@ const Header = () => {
             <Popover.Target>
               <ActionIcon
                 onClick={popoverHandlers.toggle}
-                radius="lg"
+                radius="xl"
                 size={40}
                 variant="transparent"
               >
-                <img src={profile?.image! || userimg} alt="" />
+                <Avatar radius={100} src={profile?.image! || userimg} alt="" />
               </ActionIcon>
             </Popover.Target>
             <Popover.Dropdown>
               <ProfileView
                 closePopover={popoverHandlers.close}
                 deletePrompt={deleteHandlers.open}
-                // setViewImg={setViewImg}
-                // viewImg={viewImg}
               />
             </Popover.Dropdown>
           </Popover>

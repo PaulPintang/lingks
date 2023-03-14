@@ -10,7 +10,7 @@ import {
   TextInput,
   Center,
   Modal,
-  Avatar as Picture,
+  Avatar,
   Alert,
   Paper,
 } from "@mantine/core";
@@ -21,12 +21,12 @@ import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { useDisclosure } from "@mantine/hooks";
 import { BiArrowBack } from "react-icons/bi";
 import { MdOutlineCake } from "react-icons/md";
-import Avatar from "react-avatar-edit";
-import ProfilePicture from "./ProfilePicture";
 // import { update } from "../features/auth/authSlice";
 import { updateProfile } from "../features/profile/profileSlice";
 import { AiOutlineCheck } from "react-icons/ai";
 import ToasterNotification from "./ToasterNotification";
+
+import ImageUploading, { ImageListType } from "react-images-uploading";
 
 interface Props {
   deletePrompt: () => void;
@@ -43,23 +43,26 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
   );
   const { bookmarks } = useSelector((state: RootState) => state.bookmark);
 
-  const [viewImg, setViewImg] = useState<string | null>(null);
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    setViewImg(profile?.image!);
+    setProfilePicture(profile?.image!);
     setName(profile?.name!);
     setEmail(profile?.email!);
   }, []);
 
-  const onCrop = (view: string) => {
-    setViewImg(view);
-  };
+  const [images, setImages] = useState([]);
+  const maxNumber = 1;
 
-  const onClose = () => {
-    setViewImg("");
+  const onChange = (
+    imageList: ImageListType
+    // addUpdateIndex: number[] | undefined
+  ) => {
+    setImages(imageList as never[]);
+    setProfilePicture(imageList[0].dataURL!);
   };
 
   const onUpdate = (e: React.FormEvent) => {
@@ -67,7 +70,7 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
     const profile = {
       name,
       email,
-      image: viewImg,
+      image: profilePicture,
     };
     dispatch(updateProfile(profile))
       .unwrap()
@@ -87,21 +90,35 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
     <section className="space-y-2">
       {opened ? (
         <form className="w-[210px]" onSubmit={onUpdate}>
-          <Flex align="center" gap={10} pb={18}>
+          <Flex align="center" gap={10} pb={15}>
             <BiArrowBack
               onClick={toggle}
               className="text-gray-500 hover:text-gray-500 cursor-pointer"
             />
-            <Text size="xs">Edit Profile</Text>
+            <Text size="sm">Edit Profile</Text>
           </Flex>
-          <Center>
-            <Picture
-              radius={100}
-              size={140}
-              src={viewImg || user?.image || userimg}
-              onClick={pictureHandlers.open}
-            />
-          </Center>
+          <ImageUploading
+            multiple
+            value={images}
+            onChange={onChange}
+            maxNumber={maxNumber}
+          >
+            {({ imageList, onImageUpload, onImageUpdate }) => (
+              <>
+                <Center>
+                  <Avatar
+                    radius={100}
+                    size={140}
+                    src={imageList[0]?.dataURL || profilePicture}
+                    onClick={() => {
+                      images.length === 1 ? onImageUpdate(0) : onImageUpload();
+                    }}
+                    className="cursor-pointer"
+                  />
+                </Center>
+              </>
+            )}
+          </ImageUploading>
           {error && (
             <Alert color="red" mt={18}>
               <Text fz={12} className="text-gray-800">
@@ -132,9 +149,15 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
       ) : (
         <>
           <Flex align="center" gap={13}>
-            <ActionIcon radius="lg" size={45} variant="transparent">
-              <img src={profile?.image || userimg} alt="" />
-            </ActionIcon>
+            {/* <ActionIcon radius="lg" size={45} variant="transparent">
+              <img src={profile?.image || userimg} alt=""  />
+            </ActionIcon> */}
+            <Avatar
+              radius={100}
+              size={47}
+              src={profile?.image || userimg}
+              alt="it's me"
+            />
             <div className="-space-y-[3px]">
               <Text size="sm">{profile?.name}</Text>
               <Text size="sm" c="dimmed" fz="xs">
@@ -182,7 +205,7 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
           </Flex>
         </div>
       )}
-      <Modal
+      {/* <Modal
         opened={picture}
         onClose={pictureHandlers.close}
         size="xs"
@@ -201,7 +224,7 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
             Done
           </Button>
         </Flex>
-      </Modal>
+      </Modal> */}
     </section>
   );
 };
