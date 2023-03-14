@@ -65,7 +65,7 @@ const Header = () => {
           <ActionIcon onClick={onLogout} loading={status}>
             <MdLogout className="text-gray-400" />
           </ActionIcon>
-          <Popover position="bottom-end" opened={popover}>
+          <Popover position="bottom-end">
             <Popover.Target>
               <ActionIcon
                 onClick={popoverHandlers.toggle}
@@ -76,7 +76,7 @@ const Header = () => {
                 <Avatar radius={100} src={profile?.image! || userimg} alt="" />
               </ActionIcon>
             </Popover.Target>
-            <Popover.Dropdown>
+            <Popover.Dropdown onBlur={popoverHandlers.close}>
               <ProfileView
                 closePopover={popoverHandlers.close}
                 deletePrompt={deleteHandlers.open}

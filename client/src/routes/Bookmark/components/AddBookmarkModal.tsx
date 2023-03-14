@@ -355,10 +355,10 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               onChange={(values) => onChange(values)}
               getCreateLabel={(query) => `+ Create ${query}`}
               onCreate={(query) => onCreate(query)}
-              onMouseLeave={() => {
-                setCreate(true);
-              }}
+              onMouseLeave={() => setCreate(true)}
               onKeyDown={() => setCreate(true)}
+              onKeyPress={() => setCreate(true)}
+              onKeyUp={() => setCreate(true)}
             />
             {/* <Flex align="center" justify="space-between">
               <Text size="xs" pt={4} c="dimmed">

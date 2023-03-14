@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 
 const Loader = () => {
-  const { fetching } = useSelector((state: RootState) => state.bookmark);
+  const { status } = useSelector((state: RootState) => state.profile);
   return (
     <LoadingOverlay
-      visible={fetching == "pending" && true}
+      visible={status == "pending" && true}
       loader={<Loading variant="bars" />}
       overlayOpacity={1}
     />

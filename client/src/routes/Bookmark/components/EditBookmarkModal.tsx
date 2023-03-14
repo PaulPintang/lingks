@@ -151,6 +151,8 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
           onCreate={(query) => onCreate(query)}
           onMouseLeave={() => setCreate(true)}
           onKeyDown={() => setCreate(true)}
+          onKeyPress={() => setCreate(true)}
+          onKeyUp={() => setCreate(true)}
         />
 
         <Textarea

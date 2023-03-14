@@ -112,10 +112,8 @@ export const bookmarkSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getBookmarks.pending, (state) => {
-        if (state.bookmarks.length === 0) {
-          state.fetching = "pending";
-          state.status = "pending";
-        }
+        state.fetching = "pending";
+        state.status = "pending";
       })
       .addCase(getBookmarks.fulfilled, (state, action) => {
         state.fetching = "succeeded";
