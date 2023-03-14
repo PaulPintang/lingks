@@ -16,7 +16,8 @@ import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
 // import { deleteAcc } from "../features/auth/authSlice";
 import { deleteProfile } from "../features/profile/profileSlice";
-import { logout, reset } from "../features/auth/authSlice";
+import { logout } from "../features/auth/authSlice";
+import { reset } from "../features/bookmarks/bookmarkSlice";
 interface Props extends ModalPropsInterface {
   closePopover: () => void;
 }
@@ -24,15 +25,17 @@ interface Props extends ModalPropsInterface {
 const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [type, setType] = useState("");
-  const { status } = useSelector((state: RootState) => state.auth);
+  const [typeDelete, setType] = useState("");
+  const { status } = useSelector((state: RootState) => state.profile);
 
   const onDelete = () => {
     dispatch(deleteProfile())
       .unwrap()
       .then(() => {
-        dispatch(logout());
-        navigate("/");
+        dispatch(logout()).then(() => {
+          reset();
+          navigate("/");
+        });
       });
   };
 
@@ -58,7 +61,7 @@ const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
         </Text>
         <TextInput
           size="sm"
-          value={type}
+          value={typeDelete}
           onChange={(e) => setType(e.target.value)}
           autoFocus
         />
@@ -70,7 +73,7 @@ const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
             onClick={onDelete}
             color="red"
             fullWidth
-            disabled={type !== "delete" && true}
+            disabled={typeDelete !== "delete" && true}
             loading={status === "pending" && true}
           >
             Delete account

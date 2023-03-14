@@ -73,7 +73,7 @@ export const deleteProfile = createAsyncThunk<
   }
 });
 
-export const authSlice = createSlice({
+export const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
@@ -118,6 +118,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { reset } = authSlice.actions;
+export const { reset } = profileSlice.actions;
 
-export default authSlice.reducer;
+export default profileSlice.reducer;

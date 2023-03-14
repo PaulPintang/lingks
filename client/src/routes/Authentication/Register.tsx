@@ -59,7 +59,8 @@ const Register = () => {
     };
     dispatch(register(newUser))
       .unwrap()
-      .then(() => navigate("/login"));
+      .then(() => navigate("/login"))
+      .catch((err) => {});
   };
 
   return (

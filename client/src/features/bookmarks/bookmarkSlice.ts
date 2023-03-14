@@ -103,10 +103,10 @@ export const bookmarkSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.status = "idle";
-      // state.fetching = "idle";
       state.error = null;
       state.isLoading = false;
       state.bookmark = [];
+      state.bookmarks = [];
     },
   },
   extraReducers(builder) {

@@ -37,17 +37,19 @@ export const login = createAsyncThunk<
   }
 });
 
-export const register = createAsyncThunk(
-  "/user/register",
-  async (newUser: UserInterface) => {
-    try {
-      const user = await handleRegister(newUser);
-      return user;
-    } catch (err: any) {
-      return err.response.data.error;
-    }
+export const register = createAsyncThunk<
+  UserInterface,
+  UserInterface,
+  { rejectValue: string }
+>("/user/register", async (newUser, thunkAPI) => {
+  try {
+    const user = await handleRegister(newUser);
+    return user;
+  } catch (err: any) {
+    const message = err.response.data.error;
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 // export const update = createAsyncThunk<
 //   UserInterface,
@@ -117,18 +119,20 @@ export const authSlice = createSlice({
         state.status = "pending";
       })
       .addCase(register.fulfilled, (state, action) => {
-        const error = handleError(action.payload);
+        // const error = handleError(action.payload);
 
-        if (error) {
-          state.error = error;
-          state.status = "idle";
-          return;
-        }
+        // if (error) {
+        //   state.error = error;
+        //   state.status = "idle";
+        //   return;
+        // }
 
         state.status = "succeeded";
+        state.user = action.payload;
       })
-      .addCase(register.rejected, (state) => {
+      .addCase(register.rejected, (state, action) => {
         state.status = "failed";
+        state.error = action.payload;
       })
       // .addCase(update.pending, (state) => {
       //   state.status = "pending";
