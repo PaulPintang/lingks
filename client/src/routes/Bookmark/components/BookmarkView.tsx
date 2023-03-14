@@ -278,16 +278,15 @@ const BookmarkView = () => {
                           </Highlight>
                         </Text>
                         <Flex align="center" gap={2}>
-                          {i !== index && (
-                            <ActionIcon
-                              color="red"
-                              variant="subtle"
-                              onClick={() => onDelete(i)}
-                              loading={isLoading && i === index}
-                            >
-                              <BiTrash />
-                            </ActionIcon>
-                          )}
+                          <ActionIcon
+                            color="red"
+                            variant="subtle"
+                            onClick={() => onDelete(i)}
+                            loading={isLoading && i === index && editGroup}
+                            disabled={editLink && true}
+                          >
+                            <BiTrash />
+                          </ActionIcon>
 
                           <ActionIcon
                             onClick={() => onEditClick(i)}
