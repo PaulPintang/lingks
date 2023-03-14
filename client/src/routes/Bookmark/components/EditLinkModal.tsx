@@ -30,58 +30,43 @@ interface Props extends ModalPropsInterface {
   index: number;
   bookmark: BookmarkInterface[];
   links: LinksInterface[];
+  toEdit: LinksInterface;
 }
 
-const EditLinkModal = ({ opened, close, index, links }: Props) => {
+const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { isLoading, bookmark } = useSelector(
-    (state: RootState) => state.bookmark
-  );
+  const { isLoading } = useSelector((state: RootState) => state.bookmark);
 
-  const [all, setLinks] = useState(links);
+  const [allLinks, setAllLinks] = useState<LinksInterface[]>([]);
   const [update, setUpdate] = useState<boolean>(false);
+  const [name, setName] = useState<string | null>(null);
+  const [link, setLink] = useState<string | null>(null);
 
-  const toEdit = all?.find((_, i) => i === index);
-
-  const [name, setName] = useState<string | null>(toEdit?.name!);
-  const [link, setLink] = useState<string | null>(toEdit?.link!);
-  // const [deleting, setDeleting] = useState<boolean>(false);
+  useEffect(() => {
+    setName(toEdit.name);
+    setLink(toEdit.link);
+    setAllLinks(links);
+  }, [opened]);
 
   const onClose = () => {
-    // setDeleting(false);
     setUpdate(false);
     setName("");
     setLink("");
     close();
   };
 
-  // const onDelete = () => {
-  //   links?.splice(index, 1);
-  //   const updated = {
-  //     id,
-  //     links,
-  //   };
-
-  //   dispatch(updateBookmark(updated))
-  //     .unwrap()
-  //     .then(() => {
-  //       onClose();
-  //       const message = "Link deleted successfully!";
-  //       ToasterNotification(message);
-  //     });
-  // };
-
   const onEdit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLinks(
-      all?.map((item, i) => {
+    setAllLinks(
+      allLinks?.map((item, i) => {
         if (i === index) {
-          const ugh = {
+          const updated = {
+            ...item,
             name: name,
             link: link,
           };
-          return ugh;
+          return updated;
         } else {
           return item;
         }
@@ -93,13 +78,14 @@ const EditLinkModal = ({ opened, close, index, links }: Props) => {
   const dispatchEdit = () => {
     const updated = {
       id,
-      links: all,
+      links: allLinks,
     };
 
     dispatch(updateBookmark(updated))
       .unwrap()
       .then(() => {
         onClose();
+        setUpdate(false);
         const message = "Link updated successfully!";
         ToasterNotification(message);
       });
@@ -109,22 +95,13 @@ const EditLinkModal = ({ opened, close, index, links }: Props) => {
     update && dispatchEdit();
 
     return () => {
-      onClose();
+      setUpdate(false);
     };
-  }, [all]);
+  }, [allLinks]);
 
   return (
     <Modal opened={opened} onClose={onClose} title="Edit link" size="sm">
       <form onSubmit={onEdit}>
-        <ActionIcon
-          color="red"
-          variant="subtle"
-          className="absolute top-5 right-12"
-          // onClick={onDelete}
-          loading={isLoading}
-        >
-          <BiTrash />
-        </ActionIcon>
         <div className="space-y-2">
           <TextInput
             placeholder="Name"
@@ -144,8 +121,8 @@ const EditLinkModal = ({ opened, close, index, links }: Props) => {
             <Button onClick={close} variant="light" color="gray" fullWidth>
               Cancel
             </Button>
-            <Button type="submit" fullWidth loading={update}>
-              {update ? "Updating" : "Confirm"}
+            <Button type="submit" fullWidth loading={isLoading}>
+              {isLoading ? "Updating" : "Confirm"}
             </Button>
           </Flex>
         </div>

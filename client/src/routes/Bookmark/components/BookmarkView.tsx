@@ -17,7 +17,7 @@ import {
 } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { RxLink2 } from "react-icons/rx";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlinePlus, AiFillCloseCircle } from "react-icons/ai";
 import AddLinksModal from "./AddLinksModal";
 import EditGroupModal from "./EditBookmarkModal";
 import DropGroupModal from "./DropBookmarkModal";
@@ -33,19 +33,27 @@ import {
 } from "../../../features/bookmarks/bookmarkSlice";
 import { BiArrowBack } from "react-icons/bi";
 import toast, { Toaster } from "react-hot-toast";
-
+import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
+import ToasterNotification from "../../../components/ToasterNotification";
+import { LinksInterface } from "../../../interfaces/bookmark.interface";
 const BookmarkView = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { bookmark, status } = useSelector(
+  const { bookmark, status, isLoading } = useSelector(
     (state: RootState) => state.bookmark
   );
   const [opened, { open, close }] = useDisclosure(false);
   const [editGroup, editGroupHandlers] = useDisclosure(false);
   const [dropGroup, dropGroupHandlers] = useDisclosure(false);
-  const [editLink, editLinkHandlers] = useDisclosure(false);
-  const [index, setIndex] = useState<number>(0);
+  const [editLink, editLinkHandlers] = useDisclosure(false, {
+    onClose() {
+      setIndex(null);
+    },
+  });
+  const [index, setIndex] = useState<number | null>(null);
   const [query, setQuery] = useState<string>("");
+
+  const [toEdit, setToEdit] = useState<LinksInterface>({} as LinksInterface);
 
   useEffect(() => {
     dispatch(getBookmarks());
@@ -59,6 +67,29 @@ const BookmarkView = () => {
     return link.name?.toLowerCase().includes(query.toLowerCase());
   });
 
+  const onDelete = (i: number) => {
+    setIndex(i);
+    links?.splice(i, 1);
+    const updated = {
+      id,
+      links,
+    };
+
+    dispatch(updateBookmark(updated))
+      .unwrap()
+      .then(() => {
+        setIndex(null);
+        const message = "Link deleted successfully!";
+        ToasterNotification(message);
+      });
+  };
+
+  const onEditClick = (i: number) => {
+    const toEdit = links?.find((_, index) => index === i);
+    setToEdit(toEdit!);
+    setIndex(i);
+    editLinkHandlers.toggle();
+  };
   return (
     <>
       <Flex
@@ -214,19 +245,28 @@ const BookmarkView = () => {
                     no result found
                   </Text>
                 )
-              : links?.map((link, index) => (
+              : links?.map((link, i) => (
                   <Skeleton
-                    key={index}
+                    key={i}
                     visible={status === "pending" && true}
                     className="lg:w-[298px] md:w-[298px] w-full"
                   >
+                    {/* <ActionIcon
+                      onClick={() => onDelete(i)}
+                      color="red"
+                      variant="transparent"
+                      className="absolute -right-3 -top-3 z-50"
+                    >
+                      <AiFillCloseCircle className="text-gray-400 hover:text-red-300 focus:text-red-300 transition-all" />
+                    </ActionIcon> */}
+
                     <Card
-                      key={index}
+                      key={i}
                       px={10}
                       py={6}
                       withBorder
                       radius={10}
-                      className="lg:w-[298px] md:w-[298px] w-full cursor-pointer hover:bg-gray-50 hover:shadow-md transition-all"
+                      className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all"
                     >
                       <Flex justify="space-between" align="center">
                         <Text
@@ -237,16 +277,26 @@ const BookmarkView = () => {
                             {link.name!}
                           </Highlight>
                         </Text>
-                        <ActionIcon
-                          onClick={() => {
-                            setIndex(index);
-                            editLinkHandlers.open();
-                          }}
-                          color="gray"
-                          variant="light"
-                        >
-                          <BiEdit />
-                        </ActionIcon>
+                        <Flex align="center" gap={2}>
+                          {i !== index && (
+                            <ActionIcon
+                              color="red"
+                              variant="subtle"
+                              onClick={() => onDelete(i)}
+                              loading={isLoading && i === index}
+                            >
+                              <BiTrash />
+                            </ActionIcon>
+                          )}
+
+                          <ActionIcon
+                            onClick={() => onEditClick(i)}
+                            color="gray"
+                            variant="transparent"
+                          >
+                            <BiEdit />
+                          </ActionIcon>
+                        </Flex>
                       </Flex>
                       <Flex className="text-gray-400" align="center" gap={5}>
                         <RxLink2 size={14} />
@@ -277,7 +327,8 @@ const BookmarkView = () => {
         <EditLinkModal
           opened={editLink}
           close={editLinkHandlers.close}
-          index={index}
+          toEdit={toEdit}
+          index={index!}
           bookmark={bookmark}
           links={links!}
         />

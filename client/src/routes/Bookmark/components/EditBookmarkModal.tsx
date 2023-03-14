@@ -39,13 +39,17 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
   const { isLoading, bookmarks } = useSelector(
     (state: RootState) => state.bookmark
   );
-  const [banner, setBanner] = useState<string | null>(bookmark[0]?.banner!);
-  const [title, setTitle] = useState<string>(bookmark[0]?.title!);
-  const [description, setDescription] = useState<string>(
-    bookmark[0]?.description!
-  );
+  const [banner, setBanner] = useState<string | null>("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [labels, setLabels] = useState<colorInterface[]>([]);
   const [create, setCreate] = useState(true);
+
+  useEffect(() => {
+    setBanner(bookmark[0]?.banner!);
+    setTitle(bookmark[0]?.title!);
+    setDescription(bookmark[0]?.description!);
+  }, [opened]);
 
   const onClose = () => {
     setBanner(bookmark[0]?.banner!);
