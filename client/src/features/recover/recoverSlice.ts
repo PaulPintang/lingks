@@ -4,7 +4,7 @@ import { UserInterface } from "../../interfaces/user.interface";
 interface OTPInterface {
   email: string;
   status: "idle" | "pending" | "succeeded" | "failed";
-  error: string | null;
+  error: string | null | boolean;
 }
 
 const initialState: OTPInterface = {
@@ -26,18 +26,19 @@ export const sendOTP = createAsyncThunk(
   }
 );
 
-export const verifyOTP = createAsyncThunk(
-  "/user/verifyOTP",
-  async (OTP: number) => {
-    try {
-      // payload return true
-      const res = await handleVerifyOTP(OTP);
-      return res;
-    } catch (err: any) {
-      return err.response.data.error;
-    }
+export const verifyOTP = createAsyncThunk<
+  Boolean,
+  number,
+  { rejectValue: boolean }
+>("/user/verifyOTP", async (OTP: number) => {
+  try {
+    // payload return true
+    const res = await handleVerifyOTP(OTP);
+    return res;
+  } catch (err: any) {
+    return err.response.data.error;
   }
-);
+});
 
 export const resetPassword = createAsyncThunk(
   "/user/resetPassword",
@@ -90,6 +91,10 @@ const recoverSlice = createSlice({
           state.error = "Invalid OTP";
           state.status = "idle";
         }
+      })
+      .addCase(verifyOTP.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload!;
       })
       .addCase(resetPassword.pending, (state) => {
         state.status = "pending";

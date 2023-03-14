@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Title,
   Text,
   Container,
   Center,
-  NumberInput,
-  UnstyledButton,
+  PinInput,
+  Flex,
 } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOTP, verifyOTP, reset } from "../../features/recover/recoverSlice";
@@ -18,9 +18,10 @@ const Verify = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
-  const [OTP, setOTP] = useState<number | null>(null);
+  const [OTP, setOTP] = useState<string>("");
   const { status, error } = useSelector((state: RootState) => state.recover);
   const { user } = useSelector((state: RootState) => state.auth);
+  const [resend, setResend] = useState<boolean>(false);
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
@@ -28,6 +29,7 @@ const Verify = () => {
 
     return () => {
       dispatch(reset());
+      setResend(false);
     };
   }, []);
 
@@ -37,7 +39,15 @@ const Verify = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(sendOTP(email));
+    setResend(true);
+    dispatch(sendOTP(email)).then(() => setResend(false));
+  };
+
+  const onVerify = () => {
+    const toInteger = parseInt(OTP);
+    dispatch(verifyOTP(toInteger)).then(
+      (res) => res.payload === true && navigate("/reset")
+    );
   };
 
   return (
@@ -52,46 +62,50 @@ const Verify = () => {
               Enter the 6 digit code we sent to your email
             </Text>
 
-            <NumberInput
-              size="md"
-              my={10}
-              hideControls
-              value={OTP!}
-              onChange={(value) => {
-                setOTP(value!);
-                dispatch(reset());
-              }}
-              error={error}
-            />
+            <Center>
+              <PinInput
+                size="lg"
+                length={6}
+                type="number"
+                onChange={(value) => {
+                  setOTP(value);
+                  dispatch(reset());
+                }}
+                error={error ? true : false}
+              />
+            </Center>
 
             <Button
               size="md"
               type="button"
-              onClick={() =>
-                dispatch(verifyOTP(OTP!)).then(
-                  (res) => res.payload === true && navigate("/reset")
-                )
-              }
+              onClick={onVerify}
               color="green"
               fullWidth
               mb={7}
               disabled={OTP!?.toString().length >= 6 ? false : true}
-              loading={status === "pending" && true}
+              loading={status === "pending" && !resend && true && true}
             >
-              {status === "pending" ? "Verifying..." : "Continue"}
+              {status === "pending" && !resend && true
+                ? "Verifying..."
+                : "Continue"}
             </Button>
 
-            <div className="flex text-sm justify-center gap-1 ">
-              <Text fw={500}>Didn't receive code?</Text>
-              <Text fw={500}>
-                <UnstyledButton
-                  type="submit"
-                  className="text-green-500 text-sm hover:text-green-400 transition-all"
-                >
-                  Resend
-                </UnstyledButton>
+            <Flex justify="center" align={"center"} gap={6}>
+              <Text fw={500} fz="sm" pb={2.2}>
+                Didn't receive code?
               </Text>
-            </div>
+              <Button
+                type="submit"
+                variant="white"
+                color={"teal"}
+                p={0}
+                m={0}
+                size="sm"
+                loading={resend}
+              >
+                Resend
+              </Button>
+            </Flex>
           </form>
           <Text className="text-sm text-gray-600 text-center" fw={700}>
             lingks is your bookmark for saving important topics, organizing your
