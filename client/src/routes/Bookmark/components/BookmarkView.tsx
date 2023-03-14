@@ -50,6 +50,7 @@ const BookmarkView = () => {
       setIndex(null);
     },
   });
+  const [deleting, setDeleting] = useState<boolean>(false);
   const [index, setIndex] = useState<number | null>(null);
   const [query, setQuery] = useState<string>("");
 
@@ -68,6 +69,7 @@ const BookmarkView = () => {
   });
 
   const onDelete = (i: number) => {
+    setDeleting(true);
     setIndex(i);
     links?.splice(i, 1);
     const updated = {
@@ -79,6 +81,7 @@ const BookmarkView = () => {
       .unwrap()
       .then(() => {
         setIndex(null);
+        setDeleting(false);
         const message = "Link deleted successfully!";
         ToasterNotification(message);
       });
@@ -88,6 +91,7 @@ const BookmarkView = () => {
     const toEdit = links?.find((_, index) => index === i);
     setToEdit(toEdit!);
     setIndex(i);
+    setDeleting(false);
     editLinkHandlers.toggle();
   };
   return (
@@ -282,7 +286,9 @@ const BookmarkView = () => {
                             color="red"
                             variant="subtle"
                             onClick={() => onDelete(i)}
-                            loading={isLoading && i === index && editGroup}
+                            loading={
+                              isLoading && i === index && deleting && !editLink
+                            }
                             disabled={editLink && true}
                           >
                             <BiTrash />
