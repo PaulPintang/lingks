@@ -5,7 +5,6 @@ import {
   Title,
   Text,
   Button,
-  Loader,
   LoadingOverlay,
 } from "@mantine/core";
 import bookmark from "../assets/bookmark.png";
@@ -15,6 +14,7 @@ import { AppDispatch, RootState } from "../app/store";
 // import { profile } from "../features/auth/authSlice";
 import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
 import { Link } from "react-router-dom";
+import Loader from "./Loader";
 
 interface Props {
   open?: () => void;
@@ -24,6 +24,7 @@ const BookmarkEmptyState = ({ open }: Props) => {
   const { user } = useSelector((state: RootState) => state.auth);
   return (
     <Center className="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-120px)] md:h-[calc(100vh-120px)]">
+      <Loader />
       <Flex
         justify="center"
         align="center"

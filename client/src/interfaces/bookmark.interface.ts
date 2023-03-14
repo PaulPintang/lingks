@@ -6,7 +6,7 @@ export interface colorInterface {
 export interface LinksInterface {
   name: string | null;
   link: string | null;
-  date: string | null;
+  date?: string | null;
 }
 
 export interface BookmarkInterface {
