@@ -9,6 +9,7 @@ import {
   MultiSelect,
   ActionIcon,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +40,7 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
   const [create, setCreate] = useState(false);
   const [error, setError] = useState(false);
 
+  const isMobile = useMediaQuery("(max-width: 50em)");
   useEffect(() => {
     setBanner(bookmark[0]?.banner!);
     setTitle(bookmark[0]?.title!);
@@ -125,6 +127,7 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
       title="Edit bookmark"
       size="sm"
       closeOnClickOutside={false}
+      fullScreen={isMobile}
     >
       <form onSubmit={onSubmit} className="space-y-2">
         <Image

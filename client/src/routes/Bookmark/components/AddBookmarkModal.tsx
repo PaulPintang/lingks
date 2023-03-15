@@ -12,6 +12,7 @@ import {
   ActionIcon,
   MultiSelect,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,6 +51,8 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
 
   const today = new Date();
   const [added, setAdded] = useState<string>("");
+
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   useEffect(() => {
     const format = {
@@ -166,6 +169,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
       title="Add bookmark"
       size="sm"
       closeOnClickOutside={false}
+      fullScreen={isMobile}
     >
       <form onSubmit={onSubmit}>
         {saved ? (
