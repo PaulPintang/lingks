@@ -27,7 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import {
   getBookmarks,
-  reset,
+  resetBookmarkState,
   singleBookmark,
 } from "../../../features/bookmarks/bookmarkSlice";
 import { BiArrowBack } from "react-icons/bi";
@@ -58,7 +58,7 @@ const BookmarkView = () => {
     dispatch(getBookmarks());
     dispatch(singleBookmark(id!));
     return () => {
-      dispatch(reset());
+      dispatch(resetBookmarkState());
     };
   }, []);
 

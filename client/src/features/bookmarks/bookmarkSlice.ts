@@ -100,7 +100,7 @@ export const bookmarkSlice = createSlice({
   name: "bookmark",
   initialState,
   reducers: {
-    reset: (state) => {
+    resetBookmarkState: (state) => {
       state.status = "idle";
       state.error = null;
       state.isLoading = false;
@@ -173,6 +173,6 @@ export const bookmarkSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { reset } = bookmarkSlice.actions;
+export const { resetBookmarkState } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;

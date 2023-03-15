@@ -13,7 +13,7 @@ import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
-import { register, reset } from "../../features/auth/authSlice";
+import { register, resetErrorState } from "../../features/auth/authSlice";
 import Logo from "../../components/Logo";
 
 const Register = () => {
@@ -31,7 +31,7 @@ const Register = () => {
   useEffect(() => {
     user && navigate("/bookmarks");
     return () => {
-      dispatch(reset());
+      dispatch(resetErrorState());
     };
   }, []);
 
@@ -72,7 +72,7 @@ const Register = () => {
               error={error?.toLowerCase().includes("name") && error}
               onChange={(e) => {
                 setName(e.target.value);
-                dispatch(reset());
+                dispatch(resetErrorState());
               }}
               spellCheck={false}
             />
@@ -84,7 +84,7 @@ const Register = () => {
               error={error?.toLowerCase().includes("email") && error}
               onChange={(e) => {
                 setEmail(e.target.value);
-                dispatch(reset());
+                dispatch(resetErrorState());
               }}
               spellCheck={false}
             />
@@ -96,7 +96,7 @@ const Register = () => {
               error={error?.toLowerCase().includes("password") && error}
               onChange={(e) => {
                 setPassword(e.target.value);
-                dispatch(reset());
+                dispatch(resetErrorState());
               }}
               spellCheck={false}
             />

@@ -10,8 +10,9 @@ import { MdLogout } from "react-icons/md";
 import Logo from "./Logo";
 import ProfileView from "./ProfilePopover";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
-import { logout } from "../features/auth/authSlice";
+import { logout, resetAuthState } from "../features/auth/authSlice";
 import { userProfile } from "../features/profile/profileSlice";
+import ProfilePopover from "./ProfilePopover";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const Header = () => {
   const onLogout = () => {
     setStatus(true);
     setTimeout(() => {
+      dispatch(resetAuthState());
       dispatch(logout()).then(() => navigate("/"));
     }, 1000);
   };
@@ -58,7 +60,7 @@ const Header = () => {
           <Popover position="bottom-end">
             <Popover.Target>
               <ActionIcon
-                onClick={popoverHandlers.toggle}
+                // onClick={popoverHandlers.toggle}
                 radius="xl"
                 size={40}
                 variant="transparent"
@@ -66,11 +68,8 @@ const Header = () => {
                 <Avatar radius={100} src={profile?.image! || userimg} alt="" />
               </ActionIcon>
             </Popover.Target>
-            <Popover.Dropdown onBlur={popoverHandlers.close}>
-              <ProfileView
-                closePopover={popoverHandlers.close}
-                deletePrompt={deleteHandlers.open}
-              />
+            <Popover.Dropdown>
+              <ProfilePopover deletePrompt={deleteHandlers.open} />
             </Popover.Dropdown>
           </Popover>
         </Flex>

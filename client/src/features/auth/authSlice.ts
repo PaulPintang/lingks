@@ -51,9 +51,12 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    reset: (state) => {
+    resetErrorState: (state) => {
       state.status = "idle";
       state.error = null;
+    },
+    resetAuthState: (state) => {
+      state.user = null;
     },
   },
   extraReducers(builder) {
@@ -87,6 +90,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { reset } = authSlice.actions;
+export const { resetAuthState, resetErrorState } = authSlice.actions;
 
 export default authSlice.reducer;

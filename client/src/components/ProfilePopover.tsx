@@ -21,10 +21,9 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 
 interface Props {
   deletePrompt: () => void;
-  closePopover: () => void;
 }
 
-const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
+const ProfilePopover = ({ deletePrompt }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const [opened, { toggle }] = useDisclosure(false);
   const { profile, isLoading } = useSelector(
@@ -159,7 +158,6 @@ const ProfilePopover = ({ deletePrompt, closePopover }: Props) => {
               variant="white"
               onClick={() => {
                 deletePrompt();
-                closePopover();
               }}
             >
               Delete account

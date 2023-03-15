@@ -28,7 +28,9 @@ export const userProfile = createAsyncThunk<
   { state: RootState }
 >("user/profile", async (_, thunkAPI) => {
   try {
-    const res = await handleGetProfile(thunkAPI.getState().auth.user?.token!);
+    const res: any = await handleGetProfile(
+      thunkAPI.getState().auth.user?.token!
+    );
     return res;
   } catch (error) {
     return error;
@@ -69,9 +71,10 @@ export const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    reset: (state) => {
+    resetProfileState: (state) => {
       state.status = "idle";
       state.error = null;
+      state.profile = null;
     },
   },
   extraReducers(builder) {
@@ -111,6 +114,6 @@ export const profileSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { reset } = profileSlice.actions;
+export const { resetProfileState } = profileSlice.actions;
 
 export default profileSlice.reducer;

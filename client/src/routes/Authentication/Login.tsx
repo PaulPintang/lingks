@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -10,13 +10,10 @@ import {
   Center,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
-import { GiBookmarklet } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../../features/auth/authSlice";
+import { login, resetErrorState } from "../../features/auth/authSlice";
 import { AppDispatch, RootState } from "../../app/store";
-import Loader from "../../components/Loader";
 import Logo from "../../components/Logo";
-import { getBookmarks } from "../../features/bookmarks/bookmarkSlice";
 
 const Login = () => {
   const [email, setEmail] = useState<string>(
@@ -29,6 +26,9 @@ const Login = () => {
 
   useEffect(() => {
     user && navigate("/bookmarks");
+    return () => {
+      dispatch(resetErrorState());
+    };
   }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -61,7 +61,7 @@ const Login = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                dispatch(reset());
+                dispatch(resetErrorState());
               }}
               error={error?.toLowerCase().includes("email") && error}
               spellCheck={false}
@@ -73,7 +73,7 @@ const Login = () => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                dispatch(reset());
+                dispatch(resetErrorState());
               }}
               error={error?.toLowerCase().includes("password") && error}
               spellCheck={false}

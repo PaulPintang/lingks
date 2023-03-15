@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
 import { deleteProfile } from "../features/profile/profileSlice";
-import { logout } from "../features/auth/authSlice";
-import { reset } from "../features/bookmarks/bookmarkSlice";
+import { logout, resetAuthState } from "../features/auth/authSlice";
+import { resetBookmarkState } from "../features/bookmarks/bookmarkSlice";
+import { resetProfileState } from "../features/profile/profileSlice";
 interface Props extends ModalPropsInterface {
   closePopover: () => void;
 }
@@ -22,7 +23,9 @@ const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
       .unwrap()
       .then(() => {
         dispatch(logout()).then(() => {
-          reset();
+          dispatch(resetBookmarkState());
+          dispatch(resetProfileState());
+          dispatch(resetAuthState());
           navigate("/");
         });
       });
