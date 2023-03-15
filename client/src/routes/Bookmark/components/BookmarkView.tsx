@@ -12,7 +12,7 @@ import {
   ActionIcon,
   Title,
   Skeleton,
-  Anchor,
+  Paper,
   Highlight,
 } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
@@ -255,68 +255,74 @@ const BookmarkView = () => {
                     visible={status === "pending" && true}
                     className="lg:w-[298px] md:w-[298px] w-full"
                   >
-                    <Card
-                      component="a"
-                      href={link.link!}
+                    <Paper
                       key={i}
-                      variant="outline"
-                      target="_blank"
-                      px={10}
-                      py={6}
-                      withBorder
-                      radius={10}
-                      className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all relative  z-[-100]"
+                      component="div"
+                      className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all relative z-[-100]"
                     >
-                      <Flex justify="space-between" align="center" py={5}>
-                        <Text
-                          className="lg:text-[12.3px] text-sm text-gray-800"
-                          fw={600}
+                      <Card
+                        component="a"
+                        href={link.link!}
+                        variant="outline"
+                        target="_blank"
+                        px={10}
+                        py={6}
+                        withBorder
+                        radius={10}
+                        // className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all relative  z-[-100]"
+                      >
+                        <Flex justify="space-between" align="center" py={5}>
+                          <Text
+                            className="lg:text-[12.3px] text-sm text-gray-800"
+                            fw={600}
+                          >
+                            <Highlight highlightColor="cyan" highlight={query}>
+                              {link.name!}
+                            </Highlight>
+                          </Text>
+                        </Flex>
+                        <Flex className="text-gray-400" align="center" gap={5}>
+                          <RxLink2 size={14} />
+                          <Text c="dimmed" fz="xs" className="truncate w-full">
+                            {link.link}
+                          </Text>
+                        </Flex>
+                        <Flex gap={10} align="center" className="text-xs">
+                          <Text c="dimmed" fw={600}>
+                            Date Added:
+                          </Text>
+                          <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
+                            {link.date}
+                          </Text>
+                        </Flex>
+                      </Card>
+                      <Flex
+                        align="center"
+                        gap={2}
+                        // className="absolute left-[221px] p-2 top-0 w-max"
+                        className="absolute right-0 p-2 top-0 w-max"
+                      >
+                        <ActionIcon
+                          color="red"
+                          variant="subtle"
+                          onClick={() => onDelete(i)}
+                          loading={
+                            isLoading && i === index && deleting && !editLink
+                          }
+                          disabled={editLink && true}
                         >
-                          <Highlight highlightColor="cyan" highlight={query}>
-                            {link.name!}
-                          </Highlight>
-                        </Text>
-                      </Flex>
-                      <Flex className="text-gray-400" align="center" gap={5}>
-                        <RxLink2 size={14} />
-                        <Text c="dimmed" fz="xs" className="truncate w-full">
-                          {link.link}
-                        </Text>
-                      </Flex>
-                      <Flex gap={10} align="center" className="text-xs">
-                        <Text c="dimmed" fw={600}>
-                          Date Added:
-                        </Text>
-                        <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                          {link.date}
-                        </Text>
-                      </Flex>
-                    </Card>
-                    <Flex
-                      align="center"
-                      gap={2}
-                      className="absolute left-[221px] p-2 top-0 w-max"
-                    >
-                      <ActionIcon
-                        color="red"
-                        variant="subtle"
-                        onClick={() => onDelete(i)}
-                        loading={
-                          isLoading && i === index && deleting && !editLink
-                        }
-                        disabled={editLink && true}
-                      >
-                        <BiTrash />
-                      </ActionIcon>
+                          <BiTrash />
+                        </ActionIcon>
 
-                      <ActionIcon
-                        onClick={() => onEditClick(i)}
-                        color="gray"
-                        variant="transparent"
-                      >
-                        <BiEdit />
-                      </ActionIcon>
-                    </Flex>
+                        <ActionIcon
+                          onClick={() => onEditClick(i)}
+                          color="gray"
+                          variant="transparent"
+                        >
+                          <BiEdit />
+                        </ActionIcon>
+                      </Flex>
+                    </Paper>
                   </Skeleton>
                 ))}
           </Flex>
