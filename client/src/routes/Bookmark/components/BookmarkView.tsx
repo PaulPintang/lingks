@@ -12,6 +12,7 @@ import {
   ActionIcon,
   Title,
   Skeleton,
+  Anchor,
   Highlight,
 } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
@@ -255,14 +256,18 @@ const BookmarkView = () => {
                     className="lg:w-[298px] md:w-[298px] w-full"
                   >
                     <Card
+                      component="a"
+                      href={link.link!}
                       key={i}
+                      variant="outline"
+                      target="_blank"
                       px={10}
                       py={6}
                       withBorder
                       radius={10}
-                      className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all"
+                      className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all relative  z-[-100]"
                     >
-                      <Flex justify="space-between" align="center">
+                      <Flex justify="space-between" align="center" py={5}>
                         <Text
                           className="lg:text-[12.3px] text-sm text-gray-800"
                           fw={600}
@@ -271,27 +276,6 @@ const BookmarkView = () => {
                             {link.name!}
                           </Highlight>
                         </Text>
-                        <Flex align="center" gap={2}>
-                          <ActionIcon
-                            color="red"
-                            variant="subtle"
-                            onClick={() => onDelete(i)}
-                            loading={
-                              isLoading && i === index && deleting && !editLink
-                            }
-                            disabled={editLink && true}
-                          >
-                            <BiTrash />
-                          </ActionIcon>
-
-                          <ActionIcon
-                            onClick={() => onEditClick(i)}
-                            color="gray"
-                            variant="transparent"
-                          >
-                            <BiEdit />
-                          </ActionIcon>
-                        </Flex>
                       </Flex>
                       <Flex className="text-gray-400" align="center" gap={5}>
                         <RxLink2 size={14} />
@@ -308,6 +292,31 @@ const BookmarkView = () => {
                         </Text>
                       </Flex>
                     </Card>
+                    <Flex
+                      align="center"
+                      gap={2}
+                      className="absolute left-[221px] p-2 top-0 w-max"
+                    >
+                      <ActionIcon
+                        color="red"
+                        variant="subtle"
+                        onClick={() => onDelete(i)}
+                        loading={
+                          isLoading && i === index && deleting && !editLink
+                        }
+                        disabled={editLink && true}
+                      >
+                        <BiTrash />
+                      </ActionIcon>
+
+                      <ActionIcon
+                        onClick={() => onEditClick(i)}
+                        color="gray"
+                        variant="transparent"
+                      >
+                        <BiEdit />
+                      </ActionIcon>
+                    </Flex>
                   </Skeleton>
                 ))}
           </Flex>
