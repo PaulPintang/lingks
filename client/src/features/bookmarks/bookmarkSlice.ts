@@ -105,7 +105,6 @@ export const bookmarkSlice = createSlice({
       state.error = null;
       state.isLoading = false;
       state.bookmark = [];
-      state.bookmarks = [];
     },
   },
   extraReducers(builder) {
