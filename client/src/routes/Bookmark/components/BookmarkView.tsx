@@ -112,6 +112,7 @@ const BookmarkView = () => {
             <>
               {status === "pending" ? (
                 <Skeleton
+                  key={index}
                   visible={true}
                   height={200}
                   className="lg:w-[295px] md:w-[295px] w-full"

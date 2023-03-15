@@ -28,18 +28,17 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const navigate = useNavigate();
   const { isLoading } = useSelector((state: RootState) => state.bookmark);
 
-  // bookmark
-  const [banner, setBanner] = useState<string | null>(
+  const [banner, setBanner] = useState<string>(
     "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80"
   );
-  const [title, setTitle] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [links, setLinks] = useState<LinksInterface[]>([]);
   const [labels, setLabels] = useState<LabelInterface[]>([]);
 
   // links
-  const [linkName, setLinkName] = useState<string | null>(null);
-  const [link, setLink] = useState<string | null>(null);
+  const [linkName, setLinkName] = useState<string>("");
+  const [link, setLink] = useState<string>("");
 
   // state booleans
   const [saved, setSaved] = useState<boolean>(false);
@@ -70,7 +69,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   }, [labels]);
 
   const onClose = () => {
-    setTitle(null);
+    setTitle("");
     setDescription("");
     setLabels([]);
     setLinks([]);
@@ -110,8 +109,8 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
     ]);
     setShowAdded(true);
     setAdd(false);
-    setLink(null);
-    setLinkName(null);
+    setLink("");
+    setLinkName("");
   };
 
   const colors = [
@@ -129,7 +128,6 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
 
   const onChange = (current: string[]) => {
     if (!create) {
-      console.log("on change run");
       const updated = labels.filter((item) => {
         return current.includes(item.label);
       });
@@ -139,7 +137,6 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   };
 
   const onCreate = (query: string) => {
-    console.log("on create run");
     setLabels((prev) => [
       ...prev,
       {
@@ -265,7 +262,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       placeholder="Name"
                       label="Name"
                       className="space-y-1"
-                      value={linkName!}
+                      value={linkName}
                       onChange={(e) => setLinkName(e.target.value)}
                       spellCheck="false"
                     />
@@ -274,7 +271,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       label="Link"
                       className="space-y-1"
                       icon={<RxLink2 size="1rem" />}
-                      value={link!}
+                      value={link}
                       onChange={(e) => setLink(e.target.value)}
                       spellCheck="false"
                     />
@@ -325,7 +322,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               placeholder="Bookmark name"
               label="Bookmark name"
               className="space-y-1"
-              value={title!}
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               spellCheck="false"
             />
@@ -347,7 +344,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
             <Textarea
               placeholder="Description"
               label="Description"
-              value={description!}
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
               spellCheck="false"
             />
