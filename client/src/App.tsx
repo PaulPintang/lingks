@@ -2,6 +2,7 @@ import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Protected } from "./middleware/Protected";
+import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 
 // Axios baseUrl
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
@@ -20,6 +21,10 @@ import BookmarkView from "./routes/Bookmark/components/BookmarkView";
 import Bookmarks from "./routes/Bookmark/Bookmarks";
 import RootLayout from "./routes/RootLayout";
 import LandingPage from "./routes/LandingPage";
+
+if (import.meta.env.VITE_NODE_ENV === "production") {
+  disableReactDevTools();
+}
 
 const router = createBrowserRouter([
   {

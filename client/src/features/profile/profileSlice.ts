@@ -83,8 +83,8 @@ export const profileSlice = createSlice({
         state.status = "pending";
       })
       .addCase(userProfile.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.profile = action.payload;
+        state.status = "succeeded";
       })
       .addCase(userProfile.rejected, (state) => {
         state.status = "failed";
@@ -93,8 +93,8 @@ export const profileSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.profile = action.payload;
+        state.isLoading = false;
       })
       .addCase(updateProfile.rejected, (state) => {
         state.isLoading = false;
@@ -104,7 +104,6 @@ export const profileSlice = createSlice({
       })
       .addCase(deleteProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-
         state.profile = null;
       })
       .addCase(deleteProfile.rejected, (state) => {

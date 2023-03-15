@@ -114,9 +114,9 @@ export const bookmarkSlice = createSlice({
         state.status = "pending";
       })
       .addCase(getBookmarks.fulfilled, (state, action) => {
+        state.bookmarks = [...action.payload];
         state.fetching = "succeeded";
         state.status = "succeeded";
-        state.bookmarks = [...action.payload];
       })
       .addCase(getBookmarks.rejected, (state) => {
         state.status = "failed";
@@ -128,10 +128,10 @@ export const bookmarkSlice = createSlice({
         }
       })
       .addCase(singleBookmark.fulfilled, (state, action) => {
-        state.status = "succeeded";
         if (state.bookmark.length === 0) {
           state.bookmark = [...action.payload];
         }
+        state.status = "succeeded";
       })
       .addCase(singleBookmark.rejected, (state) => {
         state.status = "failed";
@@ -140,8 +140,8 @@ export const bookmarkSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(addBookmark.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.bookmarks.push(action.payload);
+        state.isLoading = false;
       })
       .addCase(addBookmark.rejected, (state) => {
         state.isLoading = false;
@@ -162,8 +162,8 @@ export const bookmarkSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateBookmark.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.bookmark = [action.payload];
+        state.isLoading = false;
       })
       .addCase(updateBookmark.rejected, (state) => {
         state.isLoading = false;

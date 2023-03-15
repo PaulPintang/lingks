@@ -114,7 +114,10 @@ const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
             label="Link"
             icon={<RxLink2 size="1rem" />}
             value={link!}
-            onChange={(e) => setLink(e.target.value)}
+            onChange={(e) => {
+              setLink(e.target.value);
+              setError(false);
+            }}
             error={error && "Please enter a valid link or URL"}
             rightSection={
               link?.length > 5 && (

@@ -16,7 +16,6 @@
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.3.3",
     "react": "^18.2.0",
-    "react-avatar-edit": "^1.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
