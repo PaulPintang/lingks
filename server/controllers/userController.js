@@ -191,14 +191,20 @@ const resetPassword = async (req, res, next) => {
   // if (!req.app.locals.session)
   //   return res.status(440).send({ error: "Session expired!" });
 
+  const { email, password } = req.body;
   // Hash password
   const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+  const hashedPassword = bcrypt.hashSync(password, salt);
   try {
-    await User.findOneAndUpdate(
-      req.body.email,
-      { password: hashedPassword },
-      { new: true }
+    const user = await User.findOne({ email });
+    await User.findByIdAndUpdate(
+      user._id,
+      {
+        password: hashedPassword,
+      },
+      {
+        new: true,
+      }
     );
     req.app.locals.session = false;
     res.json({ success: true });

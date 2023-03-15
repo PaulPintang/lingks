@@ -21,13 +21,12 @@ export const handleLogout = () => {
   localStorage.removeItem("user");
 };
 
-export const handleChangePass = async (
-  data: Props,
-  setError: (val: string) => void
-) => {
+export const handleChangePass = async (data: Props) => {
   const res = await axios.put("/api/user/reset", {
     email: data.email,
     password: data.password,
   });
+
+  console.log(res);
   return res;
 };
