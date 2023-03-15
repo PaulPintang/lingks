@@ -7,7 +7,6 @@ interface Props extends UserInterface {
 
 export const handleLogin = async (user: UserInterface) => {
   const res = await axios.post("/api/user/login", user);
-  localStorage.removeItem("email");
   localStorage.setItem("user", JSON.stringify({ token: res.data.token }));
   return res.data;
 };
