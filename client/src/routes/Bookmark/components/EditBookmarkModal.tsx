@@ -119,7 +119,13 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Edit bookmark" size="sm">
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title="Edit bookmark"
+      size="sm"
+      closeOnClickOutside={false}
+    >
       <form onSubmit={onSubmit} className="space-y-2">
         <Image
           src={banner?.includes("http") ? banner : defaultImage}

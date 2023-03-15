@@ -112,6 +112,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
     ]);
     setShowAdded(true);
     setAdd(false);
+    setError(false);
     setLink("");
     setLinkName("");
   };
@@ -159,7 +160,13 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Add bookmark" size="sm">
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title="Add bookmark"
+      size="sm"
+      closeOnClickOutside={false}
+    >
       <form onSubmit={onSubmit}>
         {saved ? (
           <>
@@ -279,6 +286,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       value={linkName}
                       onChange={(e) => setLinkName(e.target.value)}
                       spellCheck="false"
+                      data-autofocus
                     />
                     <TextInput
                       placeholder="Paste link here"
@@ -376,6 +384,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                   </ActionIcon>
                 )
               }
+              data-autofocus
             />
             <TextInput
               placeholder="Bookmark name"

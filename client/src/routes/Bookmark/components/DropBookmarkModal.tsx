@@ -30,6 +30,7 @@ const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
       size="xs"
       centered
       withCloseButton={false}
+      closeOnClickOutside={false}
     >
       <div className="space-y-2">
         <Title order={4}>Drop bookmark</Title>

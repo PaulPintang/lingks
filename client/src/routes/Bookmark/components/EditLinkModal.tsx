@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { TextInput, Button, Flex, Modal } from "@mantine/core";
+import { TextInput, Button, Flex, Modal, ActionIcon } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
+import { AiFillCloseCircle } from "react-icons/ai";
 import {
   BookmarkInterface,
   LinksInterface,
@@ -26,12 +27,13 @@ const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
 
   const [allLinks, setAllLinks] = useState<LinksInterface[]>([]);
   const [update, setUpdate] = useState<boolean>(false);
-  const [name, setName] = useState<string | null>(null);
-  const [link, setLink] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [link, setLink] = useState<string>("");
 
   useEffect(() => {
-    setName(toEdit.name);
-    setLink(toEdit.link);
+    setName(toEdit.name!);
+    setLink(toEdit.link!);
     setAllLinks(links);
   }, [opened]);
 
@@ -39,6 +41,7 @@ const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
     setUpdate(false);
     setName("");
     setLink("");
+    setError(false);
     close();
   };
 
@@ -62,19 +65,23 @@ const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
   };
 
   const dispatchEdit = () => {
-    const updated = {
-      id,
-      links: allLinks,
-    };
+    if (link.includes("http")) {
+      const updated = {
+        id,
+        links: allLinks,
+      };
 
-    dispatch(updateBookmark(updated))
-      .unwrap()
-      .then(() => {
-        onClose();
-        setUpdate(false);
-        const message = "Link updated successfully!";
-        ToasterNotification(message);
-      });
+      dispatch(updateBookmark(updated))
+        .unwrap()
+        .then(() => {
+          onClose();
+          setUpdate(false);
+          const message = "Link updated successfully!";
+          ToasterNotification(message);
+        });
+    } else {
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -86,7 +93,13 @@ const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
   }, [allLinks]);
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Edit link" size="sm">
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title="Edit link"
+      size="sm"
+      closeOnClickOutside={false}
+    >
       <form onSubmit={onEdit}>
         <div className="space-y-2">
           <TextInput
@@ -102,6 +115,19 @@ const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
             icon={<RxLink2 size="1rem" />}
             value={link!}
             onChange={(e) => setLink(e.target.value)}
+            error={error && "Please enter a valid link or URL"}
+            rightSection={
+              link?.length > 5 && (
+                <ActionIcon
+                  onClick={() => {
+                    setLink("");
+                    setError(false);
+                  }}
+                >
+                  <AiFillCloseCircle className="text-gray-400" />
+                </ActionIcon>
+              )
+            }
           />
           <Flex gap={10} pt={10}>
             <Button onClick={close} variant="light" color="gray" fullWidth>

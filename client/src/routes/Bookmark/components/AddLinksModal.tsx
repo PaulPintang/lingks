@@ -100,7 +100,13 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Add link" size="sm">
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title="Add link"
+      size="sm"
+      closeOnClickOutside={false}
+    >
       <>
         {showAdded &&
           links.map((link, index) => {
@@ -161,6 +167,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
               value={name!}
               onChange={(e) => setName(e.target.value)}
               spellCheck="false"
+              data-autofocus
             />
             <TextInput
               placeholder="Paste link here"
@@ -191,8 +198,8 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
               <Button
                 // onClick={onAdd}
                 type="submit"
-                className="bg-green-500 hover:bg-green-600 transition-all mt-3"
-                disabled={name === null || (link === "" && true)}
+                color={"teal"}
+                disabled={(name === "" && link === "") || (error && true)}
               >
                 Add link
               </Button>
