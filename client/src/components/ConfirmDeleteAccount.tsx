@@ -15,7 +15,7 @@ const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [typeDelete, setType] = useState("");
-  const { status } = useSelector((state: RootState) => state.profile);
+  const { isLoading } = useSelector((state: RootState) => state.profile);
 
   const onDelete = () => {
     dispatch(deleteProfile())
@@ -63,7 +63,7 @@ const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
             color="red"
             fullWidth
             disabled={typeDelete !== "delete" && true}
-            loading={status === "pending" && true}
+            loading={isLoading}
           >
             Delete account
           </Button>

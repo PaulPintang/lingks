@@ -1,20 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { UserInterface } from "../../interfaces/user.interface";
 
 import {
   handleUpdateProfile,
   handleDeleteProfile,
   handleGetProfile,
 } from "../profile/profileService";
-
-export interface UserInterface {
-  name?: string | null;
-  email: string | null;
-  image?: string | null;
-  day?: string;
-  password?: string;
-  token?: string;
-}
 
 interface InitialStateInterface {
   profile: UserInterface | null;
@@ -105,14 +97,15 @@ export const profileSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deleteProfile.pending, (state) => {
-        state.status = "pending";
+        state.isLoading = true;
       })
       .addCase(deleteProfile.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.isLoading = false;
+
         state.profile = null;
       })
       .addCase(deleteProfile.rejected, (state) => {
-        state.status = "failed";
+        state.isLoading = false;
       });
   },
 });

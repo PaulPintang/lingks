@@ -49,6 +49,7 @@ export const handleDeleteProfile = async (token: string) => {
       },
     });
     localStorage.removeItem("user");
+    localStorage.removeItem("email");
     return user.data;
   } catch (error) {
     console.log(error);
