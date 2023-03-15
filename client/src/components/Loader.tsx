@@ -6,7 +6,7 @@ const Loader = () => {
   const { status } = useSelector((state: RootState) => state.profile);
   return (
     <LoadingOverlay
-      visible={status == "pending" && true}
+      visible={status === "pending" && true}
       loader={<Loading variant="bars" />}
       overlayOpacity={1}
     />

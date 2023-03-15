@@ -7,11 +7,11 @@ import Bookmarks from "./Bookmark/Bookmarks";
 
 const LandingPage = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const { profile } = useSelector((state: RootState) => state.profile);
   return (
     <Container>
       <Header />
-      {user && profile ? <Bookmarks /> : <BookmarkEmptyState />}
+      {user ? <Bookmarks /> : <BookmarkEmptyState />}
+      {/* <BookmarkEmptyState /> */}
     </Container>
   );
 };

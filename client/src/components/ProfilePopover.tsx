@@ -71,6 +71,9 @@ const ProfilePopover = ({ deletePrompt }: Props) => {
   let total = 0;
   length.forEach((item) => (total += item!));
 
+  // setTotals()
+  // console.log(length);
+
   return (
     <section className="space-y-2">
       {opened ? (

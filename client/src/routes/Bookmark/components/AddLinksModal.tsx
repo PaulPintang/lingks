@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Text, Card, Flex, TextInput, Button } from "@mantine/core";
+import {
+  Modal,
+  Text,
+  Card,
+  Flex,
+  TextInput,
+  Button,
+  ActionIcon,
+} from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { LinksInterface } from "../../../interfaces/bookmark.interface";
@@ -8,8 +16,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 
-import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
+import {
+  getBookmarks,
+  updateBookmark,
+} from "../../../features/bookmarks/bookmarkSlice";
 import ToasterNotification from "../../../components/ToasterNotification";
+
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading, bookmark } = useSelector(
@@ -22,6 +34,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const [link, setLink] = useState<string>("");
   const [add, setAdd] = useState<boolean>(true);
   const [showAdded, setShowAdded] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const today = new Date();
   const [added, setAdded] = useState<string>("");
@@ -47,19 +60,24 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
     close();
   };
 
-  const onAdd = () => {
-    setLinks([
-      ...links,
-      {
-        name: name,
-        link: link,
-        date: added,
-      },
-    ]);
-    setShowAdded(true);
-    setAdd(false);
-    setName("");
-    setLink("");
+  const onAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (link.includes("http")) {
+      setLinks([
+        ...links,
+        {
+          name: name,
+          link: link,
+          date: added,
+        },
+      ]);
+      setShowAdded(true);
+      setAdd(false);
+      setName("");
+      setLink("");
+    } else {
+      setError(true);
+    }
   };
 
   const onConfirm = (e: React.FormEvent) => {
@@ -76,6 +94,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
         const message = `${links.length} new ${
           links.length > 1 ? "links" : "link"
         } added to your list!`;
+
         ToasterNotification(message);
       });
   };
@@ -100,7 +119,11 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
                   </Text>
                   <Flex className="text-gray-400" align="center" gap={5}>
                     <RxLink2 size={14} />
-                    <Text c="dimmed" fz="xs" className="truncate w-full">
+                    <Text
+                      c="dimmed"
+                      fz="xs"
+                      className="truncate lg:w-[300px] md:w-[300px] w-[250px]"
+                    >
                       {link.link}
                     </Text>
                   </Flex>
@@ -130,7 +153,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
         )}
 
         {add && (
-          <>
+          <form onSubmit={onAdd}>
             <TextInput
               placeholder="Name"
               label="Name"
@@ -145,19 +168,36 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
               className="space-y-1"
               icon={<RxLink2 size="1rem" />}
               value={link!}
-              onChange={(e) => setLink(e.target.value)}
+              onChange={(e) => {
+                setLink(e.target.value);
+                setError(false);
+              }}
               spellCheck="false"
+              error={error && "Please enter a valid link or URL"}
+              rightSection={
+                link.length > 5 && (
+                  <ActionIcon
+                    onClick={() => {
+                      setLink("");
+                      setError(false);
+                    }}
+                  >
+                    <AiFillCloseCircle className="text-gray-400" />
+                  </ActionIcon>
+                )
+              }
             />
             <Flex justify="flex-end" pt={10}>
               <Button
-                onClick={onAdd}
+                // onClick={onAdd}
+                type="submit"
                 className="bg-green-500 hover:bg-green-600 transition-all mt-3"
                 disabled={name === null || (link === "" && true)}
               >
                 Add link
               </Button>
             </Flex>
-          </>
+          </form>
         )}
 
         {links.length !== 0 && showAdded && !add && (

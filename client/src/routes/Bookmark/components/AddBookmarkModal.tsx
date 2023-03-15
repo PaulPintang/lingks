@@ -23,14 +23,15 @@ import { useNavigate } from "react-router-dom";
 import ToasterNotification from "../../../components/ToasterNotification";
 import { LabelInterface } from "../../../interfaces/bookmark.interface";
 
+export const defaultImage =
+  "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80";
+
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { isLoading } = useSelector((state: RootState) => state.bookmark);
 
-  const [banner, setBanner] = useState<string>(
-    "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80"
-  );
+  const [banner, setBanner] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [links, setLinks] = useState<LinksInterface[]>([]);
@@ -45,6 +46,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const [add, setAdd] = useState<boolean>(false);
   const [showAdded, setShowAdded] = useState<boolean>(false);
   const [create, setCreate] = useState(false);
+  const [error, setError] = useState<boolean>(false);
 
   const today = new Date();
   const [added, setAdded] = useState<string>("");
@@ -71,6 +73,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const onClose = () => {
     setTitle("");
     setDescription("");
+    setError(false);
     setLabels([]);
     setLinks([]);
     setAdd(false);
@@ -83,7 +86,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
     const bookmark = {
       title,
       description,
-      banner,
+      banner: banner.includes("http") ? banner : defaultImage,
       labels,
       links,
     };
@@ -147,6 +150,14 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
     return query;
   };
 
+  const onReturn = () => {
+    setSaved(false);
+    setAdd(false);
+    setLink("");
+    setLinkName("");
+    setError(false);
+  };
+
   return (
     <Modal opened={opened} onClose={onClose} title="Add bookmark" size="sm">
       <form onSubmit={onSubmit}>
@@ -154,7 +165,10 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
           <>
             <Card radius="md" className="w-full">
               <Card.Section>
-                <Image src={banner} height={100} alt="Banner img" />
+                <Image
+                  src={banner.includes("http") ? banner : defaultImage}
+                  height={100}
+                />
               </Card.Section>
               <Card.Section p={13}>
                 <div>
@@ -220,7 +234,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                             <Text
                               c="dimmed"
                               fz="xs"
-                              className="truncate w-full"
+                              className="truncate lg:w-[295px] md:w-[295px] w-[250px]"
                             >
                               {link.link}
                             </Text>
@@ -274,12 +288,43 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                       value={link}
                       onChange={(e) => setLink(e.target.value)}
                       spellCheck="false"
+                      error={error && "Please enter a valid link or URL"}
+                      rightSection={
+                        link.length > 5 && (
+                          <ActionIcon
+                            onClick={() => {
+                              setLink("");
+                              setError(false);
+                            }}
+                          >
+                            <AiFillCloseCircle className="text-gray-400" />
+                          </ActionIcon>
+                        )
+                      }
                     />
                     <Flex justify="flex-end" pt={15}>
+                      {error && (
+                        <Button
+                          onClick={() => {
+                            setAdd(false);
+                            setError(false);
+                          }}
+                          variant="white"
+                          size="sm"
+                        >
+                          Skip for now
+                        </Button>
+                      )}
                       <Button
-                        onClick={handleAddLinks}
-                        className="bg-green-500 hover:bg-green-600 transition-all"
-                        disabled={linkName === null && link === null && true}
+                        onClick={() => {
+                          if (link.includes("http")) {
+                            return handleAddLinks();
+                          }
+                          setError(true);
+                        }}
+                        color="teal"
+                        // className="bg-green-500 hover:bg-green-600 transition-all"
+                        disabled={linkName === "" && link === "" && true}
                       >
                         Add
                       </Button>
@@ -289,12 +334,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               </Card.Section>
             </Card>
             <Flex gap={10} pt={20}>
-              <Button
-                onClick={() => setSaved(false)}
-                variant="light"
-                color="gray"
-                fullWidth
-              >
+              <Button onClick={onReturn} variant="light" color="gray" fullWidth>
                 Return
               </Button>
               <Button
@@ -302,6 +342,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                 onClick={() => setSaved(true)}
                 fullWidth
                 loading={isLoading}
+                disabled={error}
               >
                 Save
               </Button>
@@ -309,7 +350,11 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
           </>
         ) : (
           <div className="space-y-2">
-            <Image src={banner} height={100} alt="Banner img" />
+            <Image
+              src={banner.includes("http") ? banner : defaultImage}
+              height={100}
+              alt="Banner img"
+            />
             <TextInput
               icon={<RxLink2 size="1rem" />}
               placeholder="Paste link here"
@@ -317,6 +362,20 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               className="space-y-1"
               onChange={(e) => setBanner(e.target.value)}
               spellCheck="false"
+              value={banner}
+              error={error && "Please enter a valid link or URL"}
+              rightSection={
+                banner.length > 5 && (
+                  <ActionIcon
+                    onClick={() => {
+                      setBanner("");
+                      setError(false);
+                    }}
+                  >
+                    <AiFillCloseCircle className="text-gray-400" />
+                  </ActionIcon>
+                )
+              }
             />
             <TextInput
               placeholder="Bookmark name"
@@ -353,8 +412,12 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
                 Cancel
               </Button>
               <Button
-                type="button"
-                onClick={() => setSaved(true)}
+                onClick={() => {
+                  if (banner.includes("http") || banner.length === 0) {
+                    return setSaved(true);
+                  }
+                  setError(true);
+                }}
                 fullWidth
                 disabled={
                   title?.length === 0 || (description?.length === 0 && true)
