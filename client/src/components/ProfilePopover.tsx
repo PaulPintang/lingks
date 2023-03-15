@@ -94,7 +94,7 @@ const ProfilePopover = ({ deletePrompt }: Props) => {
                   <Avatar
                     radius={100}
                     size={140}
-                    src={imageList[0]?.dataURL || profilePicture}
+                    src={imageList[0]?.dataURL || profilePicture || userimg}
                     onClick={() => {
                       images.length === 1 ? onImageUpdate(0) : onImageUpload();
                     }}
