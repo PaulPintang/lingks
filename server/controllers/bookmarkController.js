@@ -29,7 +29,7 @@ const addBookmark = async (req, res, next) => {
 const deleteBookmark = async (req, res, next) => {
   try {
     const bookmark = await Bookmark.findByIdAndDelete(req.params.id);
-    res.json({ bookmark });
+    res.json({ _id: bookmark._id });
   } catch (error) {
     next(error);
   }

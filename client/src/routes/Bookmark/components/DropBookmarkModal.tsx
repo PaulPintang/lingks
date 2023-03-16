@@ -2,8 +2,12 @@ import { Button, Flex, Modal, Text, Title } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
-import { dropBookmark } from "../../../features/bookmarks/bookmarkSlice";
+import {
+  dropBookmark,
+  getBookmarks,
+} from "../../../features/bookmarks/bookmarkSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import { userProfile } from "../../../features/profile/profileSlice";
 
 import ToasterNotification from "../../../components/ToasterNotification";
 
@@ -17,6 +21,8 @@ const DropGroupModal = ({ opened, close }: ModalPropsInterface) => {
     dispatch(dropBookmark(id!))
       .unwrap()
       .then(() => {
+        // dispatch(getBookmarks());
+        // dispatch(userProfile());
         navigate("/bookmarks");
         const message = " Bookmark successfully deleted!";
         ToasterNotification(message);

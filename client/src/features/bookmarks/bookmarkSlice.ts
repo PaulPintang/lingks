@@ -13,7 +13,6 @@ export interface BookmarkStateInterface {
   bookmarks: BookmarkInterface[];
   bookmark: BookmarkInterface[];
   status?: "idle" | "pending" | "succeeded" | "failed";
-  fetching?: "idle" | "pending" | "succeeded" | "failed";
   isLoading: boolean;
   error?: string | null;
 }
@@ -22,7 +21,6 @@ const initialState: BookmarkStateInterface = {
   bookmarks: [],
   bookmark: [],
   status: "idle",
-  fetching: "idle",
   isLoading: false,
   error: null,
 };
@@ -61,6 +59,7 @@ export const dropBookmark = createAsyncThunk<
 >("user/bookmark/drop", async (id, thunkAPI) => {
   try {
     return await handleDropBookmark(id, thunkAPI.getState().auth.user?.token!);
+    // return deleted id
   } catch (error) {
     return error;
   }
@@ -110,17 +109,14 @@ export const bookmarkSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getBookmarks.pending, (state) => {
-        state.fetching = "pending";
         state.status = "pending";
       })
       .addCase(getBookmarks.fulfilled, (state, action) => {
         state.bookmarks = [...action.payload];
-        state.fetching = "succeeded";
         state.status = "succeeded";
       })
       .addCase(getBookmarks.rejected, (state) => {
         state.status = "failed";
-        state.fetching = "failed";
       })
       .addCase(singleBookmark.pending, (state) => {
         if (state.bookmark.length !== 0) {
@@ -162,6 +158,17 @@ export const bookmarkSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateBookmark.fulfilled, (state, action) => {
+        state.bookmarks = state.bookmarks.map((bm, i) => {
+          if (bm._id === action.payload._id) {
+            const updated = {
+              ...bm,
+              ...action.payload,
+            };
+            return updated;
+          } else {
+            return bm;
+          }
+        });
         state.bookmark = [action.payload];
         state.isLoading = false;
       })

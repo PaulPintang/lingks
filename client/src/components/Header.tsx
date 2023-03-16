@@ -13,13 +13,16 @@ import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { logout, resetAuthState } from "../features/auth/authSlice";
 import { userProfile } from "../features/profile/profileSlice";
 import ProfilePopover from "./ProfilePopover";
+import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
   const { profile } = useSelector((state: RootState) => state.profile);
-  const { bookmarks } = useSelector((state: RootState) => state.bookmark);
+  const { bookmarks, isLoading } = useSelector(
+    (state: RootState) => state.bookmark
+  );
   const [opened, { open, close }] = useDisclosure(false);
   const [popover, popoverHandlers] = useDisclosure(false);
   const [deleteMe, deleteHandlers] = useDisclosure(false);
@@ -36,6 +39,7 @@ const Header = () => {
   };
 
   useEffect(() => {
+    dispatch(getBookmarks());
     dispatch(userProfile());
   }, []);
 
@@ -59,12 +63,7 @@ const Header = () => {
           </ActionIcon>
           <Popover position="bottom-end">
             <Popover.Target>
-              <ActionIcon
-                // onClick={popoverHandlers.toggle}
-                radius="xl"
-                size={40}
-                variant="transparent"
-              >
+              <ActionIcon radius="xl" size={40} variant="transparent">
                 <Avatar radius={100} src={profile?.image! || userimg} alt="" />
               </ActionIcon>
             </Popover.Target>

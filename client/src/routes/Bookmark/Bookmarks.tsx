@@ -21,11 +21,13 @@ const Bookmarks = () => {
   const [opened, { open, close }] = useDisclosure(false);
 
   const dispatch = useDispatch<AppDispatch>();
-  const { bookmarks } = useSelector((state: RootState) => state.bookmark);
+  const { bookmarks, bookmark } = useSelector(
+    (state: RootState) => state.bookmark
+  );
 
-  useEffect(() => {
-    dispatch(getBookmarks());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getBookmarks());
+  // }, []);
 
   return (
     <>
@@ -35,7 +37,10 @@ const Bookmarks = () => {
         </div>
       )}
       <Flex gap={20} className="w-full" wrap="wrap">
-        {bookmarks?.length !== 0 ? (
+        {bookmark.length === 0 && bookmarks?.length === 0 && (
+          <BookmarkEmptyState open={open} />
+        )}
+        {bookmarks?.length !== 0 &&
           bookmarks?.map((bookmark) => (
             <Card
               onClick={() =>
@@ -88,10 +93,7 @@ const Bookmarks = () => {
                 </div>
               </Card.Section>
             </Card>
-          ))
-        ) : (
-          <BookmarkEmptyState open={open} />
-        )}
+          ))}
         <AddBookmarkModal opened={opened} close={close} />
       </Flex>
     </>
