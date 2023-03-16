@@ -227,11 +227,12 @@ const BookmarkView = () => {
 
               <ActionIcon
                 onClick={open}
-                className="lg:hidden md:hidden bg-green-500 hover:bg-green-400 transition-all fixed bottom-8 right-4 z-10"
+                className="lg:hidden md:hidden transition-all fixed bottom-5 right-4 z-10"
                 variant="filled"
-                size="lg"
+                color={"teal"}
+                size={37}
               >
-                <AiOutlinePlus />
+                <AiOutlinePlus size={20} />
               </ActionIcon>
             </div>
           </Flex>
