@@ -76,6 +76,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const onClose = () => {
     setTitle("");
     setDescription("");
+    setBanner("");
     setError(false);
     setLabels([]);
     setLinks([]);
@@ -407,6 +408,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
               searchable
               creatable
               maxSelectedValues={4}
+              defaultValue={labels?.map((label) => label.label)}
               onChange={(values) => onChange(values)}
               getCreateLabel={(query) => `+ Create ${query}`}
               onCreate={(query) => onCreate(query)}
