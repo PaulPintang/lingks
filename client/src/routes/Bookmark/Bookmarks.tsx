@@ -1,12 +1,8 @@
-import { useEffect } from "react";
 import { Flex, Card, Text, Image, Badge, Title } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
-import {
-  getBookmarks,
-  singleBookmark,
-} from "../../features/bookmarks/bookmarkSlice";
+import { singleBookmark } from "../../features/bookmarks/bookmarkSlice";
 import AddBookmarkModal from "../Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
 import BookmarkEmptyState from "../../components/BookmarkEmptyState";
@@ -25,9 +21,9 @@ const Bookmarks = () => {
     (state: RootState) => state.bookmark
   );
 
-  // useEffect(() => {
-  //   dispatch(getBookmarks());
-  // }, []);
+  const orderedBookmarks = bookmarks
+    .slice()
+    .sort((a, b) => b.createdAt!.localeCompare(a.createdAt!));
 
   return (
     <>
@@ -41,7 +37,7 @@ const Bookmarks = () => {
           <BookmarkEmptyState open={open} />
         )}
         {bookmarks?.length !== 0 &&
-          bookmarks?.map((bookmark) => (
+          orderedBookmarks?.map((bookmark) => (
             <Card
               onClick={() =>
                 dispatch(singleBookmark(bookmark._id!))

@@ -7,6 +7,7 @@ export interface LinksInterface {
   name: string | null;
   link: string | null;
   date?: string | null;
+  createdAt: string;
 }
 
 export interface BookmarkInterface {
@@ -16,4 +17,5 @@ export interface BookmarkInterface {
   banner?: string | null;
   labels?: LabelInterface[];
   links?: LinksInterface[];
+  createdAt?: string;
 }

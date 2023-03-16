@@ -67,6 +67,10 @@ const BookmarkView = () => {
     return link.name?.toLowerCase().includes(query.toLowerCase());
   });
 
+  const orderedLinks = links
+    ?.slice()
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+
   const onDelete = (i: number) => {
     setDeleting(true);
     setIndex(i);
@@ -249,7 +253,7 @@ const BookmarkView = () => {
                     no result found
                   </Text>
                 )
-              : links?.map((link, i) => (
+              : orderedLinks?.map((link, i) => (
                   <Skeleton
                     key={i}
                     visible={status === "pending" && true}

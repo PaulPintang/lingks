@@ -16,10 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 
-import {
-  getBookmarks,
-  updateBookmark,
-} from "../../../features/bookmarks/bookmarkSlice";
+import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import ToasterNotification from "../../../components/ToasterNotification";
 
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
@@ -69,6 +66,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
           name: name,
           link: link,
           date: added,
+          createdAt: today.toUTCString(),
         },
       ]);
       setShowAdded(true);

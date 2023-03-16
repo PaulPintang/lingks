@@ -111,6 +111,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
         name: linkName,
         link: link,
         date: added,
+        createdAt: today.toUTCString(),
       },
     ]);
     setShowAdded(true);
