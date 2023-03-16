@@ -25,7 +25,7 @@ import ToasterNotification from "../../../components/ToasterNotification";
 import { LabelInterface } from "../../../interfaces/bookmark.interface";
 
 export const defaultImage =
-  "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80";
+  "https://img.freepik.com/free-vector/variety-cute-shapes-abstract-background_23-2148544989.jpg";
 
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -363,6 +363,7 @@ const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
         ) : (
           <div className="space-y-2">
             <Image
+              radius={"sm"}
               src={banner.includes("http") ? banner : defaultImage}
               height={100}
               alt="Banner img"

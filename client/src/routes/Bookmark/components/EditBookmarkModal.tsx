@@ -131,6 +131,7 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
     >
       <form onSubmit={onSubmit} className="space-y-2">
         <Image
+          radius={"sm"}
           src={banner?.includes("http") ? banner : defaultImage}
           height={100}
         />
