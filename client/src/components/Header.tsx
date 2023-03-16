@@ -20,9 +20,7 @@ const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
   const { profile } = useSelector((state: RootState) => state.profile);
-  const { bookmarks, isLoading } = useSelector(
-    (state: RootState) => state.bookmark
-  );
+  const { bookmarks } = useSelector((state: RootState) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
   const [popover, popoverHandlers] = useDisclosure(false);
   const [deleteMe, deleteHandlers] = useDisclosure(false);
@@ -39,8 +37,8 @@ const Header = () => {
   };
 
   useEffect(() => {
-    dispatch(getBookmarks());
-    dispatch(userProfile());
+    user && dispatch(getBookmarks());
+    user && dispatch(userProfile());
   }, []);
 
   return (

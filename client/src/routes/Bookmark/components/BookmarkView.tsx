@@ -110,10 +110,9 @@ const BookmarkView = () => {
       <Grid>
         <Grid.Col lg={4} md={4} sm={5}>
           {bookmark.map((bookmark, index) => (
-            <>
+            <Paper component="div" key={index}>
               {status === "pending" ? (
                 <Skeleton
-                  key={index}
                   visible={true}
                   height={200}
                   className="lg:w-[295px] md:w-[295px] w-full"
@@ -187,7 +186,7 @@ const BookmarkView = () => {
                   </Card.Section>
                 </Card>
               )}
-            </>
+            </Paper>
           ))}
         </Grid.Col>
         <Grid.Col lg={8} md={8} sm={7} className="bg-red -500 w-full">
@@ -256,7 +255,6 @@ const BookmarkView = () => {
                     className="lg:w-[298px] md:w-[298px] w-full"
                   >
                     <Paper
-                      key={i}
                       component="div"
                       className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all relative z-[-100]"
                     >
@@ -269,7 +267,6 @@ const BookmarkView = () => {
                         py={6}
                         withBorder
                         radius={10}
-                        // className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all relative  z-[-100]"
                       >
                         <Flex justify="space-between" align="center" py={5}>
                           <Text
