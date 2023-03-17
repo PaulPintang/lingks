@@ -7,7 +7,7 @@ const Logo = () => {
     <Flex align="center" justify="center" gap={6}>
       <RxLink2 size={25} className="text-blue-500" />
       <Title className="text-[26px]">
-        <Link to="bookmarks" className="text-inherit no-underline">
+        <Link to="/" className="text-inherit no-underline">
           <span className="">lingks</span>
         </Link>
       </Title>
