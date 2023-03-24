@@ -8,8 +8,6 @@ import {
   Avatar,
   Alert,
 } from "@mantine/core";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../app/store";
 import userimg from "../assets/user.png";
 import { useDisclosure } from "@mantine/hooks";
 import { BiArrowBack } from "react-icons/bi";
@@ -18,18 +16,19 @@ import { updateProfile } from "../features/profile/profileSlice";
 import ToasterNotification from "./ToasterNotification";
 
 import ImageUploading, { ImageListType } from "react-images-uploading";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 interface Props {
   deletePrompt: () => void;
 }
 
 const ProfilePopover = ({ deletePrompt }: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const [opened, { toggle }] = useDisclosure(false);
-  const { profile, isLoading } = useSelector(
-    (state: RootState) => state.profile
+  const { profile, isLoading } = useAppSelector(
+    (state) => state.profile
   );
-  const { bookmarks } = useSelector((state: RootState) => state.bookmark);
+  const { bookmarks } = useAppSelector((state) => state.bookmark);
 
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
@@ -71,8 +70,6 @@ const ProfilePopover = ({ deletePrompt }: Props) => {
   let total = 0;
   length.forEach((item) => (total += item!));
 
-  // setTotals()
-  // console.log(length);
 
   return (
     <section className="space-y-2">

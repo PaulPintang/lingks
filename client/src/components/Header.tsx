@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Flex, Button, ActionIcon, Popover, Avatar } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../app/store";
 import userimg from "../assets/user.png";
 import AddBookmarkModal from "../routes/Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
 import { MdLogout } from "react-icons/md";
 import Logo from "./Logo";
-import ProfileView from "./ProfilePopover";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { logout, resetAuthState } from "../features/auth/authSlice";
 import { userProfile } from "../features/profile/profileSlice";
 import ProfilePopover from "./ProfilePopover";
 import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.auth);
-  const { profile } = useSelector((state: RootState) => state.profile);
-  const { bookmarks } = useSelector((state: RootState) => state.bookmark);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const { profile } = useAppSelector((state) => state.profile);
+  const { bookmarks } = useAppSelector((state) => state.bookmark);
   const [opened, { open, close }] = useDisclosure(false);
   const [popover, popoverHandlers] = useDisclosure(false);
   const [deleteMe, deleteHandlers] = useDisclosure(false);

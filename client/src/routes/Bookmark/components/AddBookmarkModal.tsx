@@ -15,22 +15,21 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../app/store";
 import { addBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import { LinksInterface } from "../../../interfaces/bookmark.interface";
 import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import ToasterNotification from "../../../components/ToasterNotification";
 import { LabelInterface } from "../../../interfaces/bookmark.interface";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 export const defaultImage =
   "https://img.freepik.com/free-vector/variety-cute-shapes-abstract-background_23-2148544989.jpg";
 
 const BookmarkModal = ({ opened, close }: ModalPropsInterface) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLoading } = useSelector((state: RootState) => state.bookmark);
+  const { isLoading } = useAppSelector((state) => state.bookmark);
 
   const [banner, setBanner] = useState<string>("");
   const [title, setTitle] = useState<string>("");

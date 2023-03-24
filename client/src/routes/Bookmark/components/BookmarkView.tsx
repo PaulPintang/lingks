@@ -24,8 +24,6 @@ import DropGroupModal from "./DropBookmarkModal";
 import EditLinkModal from "./EditLinkModal";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { useParams, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../app/store";
 import {
   getBookmarks,
   resetBookmarkState,
@@ -35,11 +33,12 @@ import { BiArrowBack } from "react-icons/bi";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import ToasterNotification from "../../../components/ToasterNotification";
 import { LinksInterface } from "../../../interfaces/bookmark.interface";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 const BookmarkView = () => {
   const { id } = useParams();
-  const dispatch = useDispatch<AppDispatch>();
-  const { bookmark, status, isLoading } = useSelector(
-    (state: RootState) => state.bookmark
+  const dispatch = useAppDispatch();
+  const { bookmark, status, isLoading } = useAppSelector(
+    (state) => state.bookmark
   );
   const [opened, { open, close }] = useDisclosure(false);
   const [editGroup, editGroupHandlers] = useDisclosure(false);

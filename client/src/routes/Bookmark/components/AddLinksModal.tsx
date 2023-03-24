@@ -12,17 +12,16 @@ import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
 import { LinksInterface } from "../../../interfaces/bookmark.interface";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import ToasterNotification from "../../../components/ToasterNotification";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, bookmark } = useSelector(
-    (state: RootState) => state.bookmark
+  const dispatch = useAppDispatch();
+  const { isLoading, bookmark } = useAppSelector(
+    (state) => state.bookmark
   );
   const { id } = useParams();
 

@@ -1,9 +1,8 @@
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { RootState } from "../app/store";
+import { useAppSelector } from "../app/hooks";
 
 export const Protected = ({ children }: any) => {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
   if (!user) return <Navigate to={"/"} replace={true}></Navigate>;
   return children!;
 };

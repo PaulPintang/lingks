@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { TextInput, Button, Flex, Modal, ActionIcon } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -12,6 +10,7 @@ import {
   LinksInterface,
 } from "../../../interfaces/bookmark.interface";
 import ToasterNotification from "../../../components/ToasterNotification";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 interface Props extends ModalPropsInterface {
   index: number;
@@ -21,9 +20,9 @@ interface Props extends ModalPropsInterface {
 }
 
 const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const { isLoading } = useSelector((state: RootState) => state.bookmark);
+  const { isLoading } = useAppSelector((state) => state.bookmark);
 
   const [allLinks, setAllLinks] = useState<LinksInterface[]>([]);
   const [update, setUpdate] = useState<boolean>(false);
