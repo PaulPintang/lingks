@@ -14,6 +14,7 @@ import {
   Skeleton,
   Paper,
   Highlight,
+  ScrollArea,
 } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { RxLink2 } from "react-icons/rx";
@@ -102,7 +103,7 @@ const BookmarkView = () => {
       <Flex
         align="center"
         gap="sm"
-        className=" sticky lg:top-[100px] md:top-[100px] top-[60px] z-[1] bg-white pb-3"
+        className=" sticky lg:top-[100px] md:top-[100px] top-[62px] z-[1] bg-white pb-3"
       >
         <Link to="/bookmarks">
           <ActionIcon>
@@ -193,10 +194,10 @@ const BookmarkView = () => {
             </Paper>
           ))}
         </Grid.Col>
-        <Grid.Col lg={8} md={8} sm={7} className="bg-red -500 w-full">
+        <Grid.Col lg={8} md={8} sm={7} className="w-full pb-5 lg:pb-0 md:pb-0">
           <Flex
             justify="space-between"
-            className="sticky lg:top-[156px] md:top-[150px] top-[110px] pb-4 bg-white z-[1]"
+            className="sticky lg:top-[156px] md:top-[150px] top-[113px] pb-4 bg-white z-[1]"
           >
             {status === "pending" ? (
               <Skeleton
@@ -228,106 +229,120 @@ const BookmarkView = () => {
                   Add links
                 </Button>
               </Skeleton>
-
-              <ActionIcon
-                onClick={open}
-                className="lg:hidden md:hidden transition-all fixed bottom-5 right-4 z-10"
-                variant="filled"
-                color={"teal"}
-                size={37}
-              >
-                <AiOutlinePlus size={20} />
-              </ActionIcon>
+              <Skeleton visible={status === "pending" && true}>
+                <ActionIcon
+                  onClick={open}
+                  className="lg:hidden md:hidden flex ml-2"
+                  variant="filled"
+                  color={"teal"}
+                  size={36}
+                >
+                  <AiOutlinePlus size={20} />
+                </ActionIcon>
+              </Skeleton>
             </div>
           </Flex>
-          <Flex
-            className="w-full"
-            rowGap={12}
-            wrap="wrap"
-            justify="space-between"
-            gap={5}
+          <ScrollArea
+            className="lg:h-[calc(100vh-251px)] md:h-[calc(100vh-251px)] h-full"
+            type="scroll"
+            scrollbarSize={10}
+            w="100%"
           >
-            {links?.length === 0
-              ? status !== "pending" && (
-                  <Text c="dimmed" size="sm" fs="italic">
-                    no result found
-                  </Text>
-                )
-              : orderedLinks?.map((link, i) => (
-                  <Skeleton
-                    key={i}
-                    visible={status === "pending" && true}
-                    className="lg:w-[298px] md:w-[298px] w-full"
-                  >
-                    <Paper
-                      component="div"
-                      className="lg:w-[298px] md:w-[298px] w-full cursor-pointer  hover:shadow-lg transition-all relative z-[-100]"
+            <Flex
+              className="w-full"
+              rowGap={12}
+              wrap="wrap"
+              justify="space-between"
+              gap={5}
+            >
+              {links?.length === 0
+                ? status !== "pending" && (
+                    <Text c="dimmed" size="sm" fs="italic">
+                      no result found
+                    </Text>
+                  )
+                : orderedLinks?.map((link, i) => (
+                    <Skeleton
+                      key={i}
+                      visible={status === "pending" && true}
+                      className="lg:w-[298px] md:w-[298px] w-full"
                     >
-                      <Card
-                        component="a"
-                        href={link.link!}
-                        variant="outline"
-                        target="_blank"
-                        px={10}
-                        py={6}
-                        withBorder
-                        radius={10}
+                      <Paper
+                        component="div"
+                        className="lg:w-[298px] md:w-[298px] cursor-pointer  hover:shadow-lg transition-all relative z-[-100]"
                       >
-                        <Flex justify="space-between" align="center" py={5}>
-                          <Text
-                            className="lg:text-[12.3px] text-sm text-gray-800"
-                            fw={600}
+                        <Card
+                          component="a"
+                          href={link.link!}
+                          variant="outline"
+                          target="_blank"
+                          px={10}
+                          py={6}
+                          withBorder
+                          radius={10}
+                        >
+                          <Flex justify="space-between" align="center" py={5}>
+                            <Text
+                              className="lg:text-[12.3px] text-sm text-gray-800"
+                              fw={600}
+                            >
+                              <Highlight
+                                highlightColor="cyan"
+                                highlight={query}
+                              >
+                                {link.name!}
+                              </Highlight>
+                            </Text>
+                          </Flex>
+                          <Flex
+                            className="text-gray-400 w-[290px] lg:w-full md:w-full"
+                            align="center"
+                            gap={5}
                           >
-                            <Highlight highlightColor="cyan" highlight={query}>
-                              {link.name!}
-                            </Highlight>
-                          </Text>
-                        </Flex>
-                        <Flex className="text-gray-400" align="center" gap={5}>
-                          <RxLink2 size={14} />
-                          <Text c="dimmed" fz="xs" className="truncate w-full">
-                            {link.link}
-                          </Text>
-                        </Flex>
-                        <Flex gap={10} align="center" className="text-xs">
-                          <Text c="dimmed" fw={600}>
-                            Date Added:
-                          </Text>
-                          <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
-                            {link.date}
-                          </Text>
-                        </Flex>
-                      </Card>
-                      <Flex
-                        align="center"
-                        gap={2}
-                        // className="absolute left-[221px] p-2 top-0 w-max"
-                        className="absolute right-0 p-2 top-0 w-max"
-                      >
-                        <ActionIcon
-                          color="red"
-                          variant="subtle"
-                          onClick={() => onDelete(i)}
-                          loading={
-                            isLoading && i === index && deleting && !editLink
-                          }
-                          disabled={editLink && true}
+                            <RxLink2 size={14} />
+                            <Text c="dimmed" fz="xs" className="truncate">
+                              {link.link}
+                            </Text>
+                          </Flex>
+                          <Flex gap={10} align="center" className="text-xs">
+                            <Text c="dimmed" fw={600}>
+                              Date Added:
+                            </Text>
+                            <Text className="bg-gray-100 text-gray-800 px-2 rounded-md">
+                              {link.date}
+                            </Text>
+                          </Flex>
+                        </Card>
+                        <Flex
+                          align="center"
+                          gap={2}
+                          className="absolute right-0 p-2 top-0 w-max"
                         >
-                          <BiTrash />
-                        </ActionIcon>
+                          <ActionIcon
+                            color="red"
+                            variant="subtle"
+                            onClick={() => onDelete(i)}
+                            loading={
+                              isLoading && i === index && deleting && !editLink
+                            }
+                            disabled={editLink && true}
+                          >
+                            <BiTrash />
+                          </ActionIcon>
 
-                        <ActionIcon
-                          onClick={() => onEditClick(i)}
-                          color="gray"
-                          variant="transparent"
-                        >
-                          <BiEdit />
-                        </ActionIcon>
-                      </Flex>
-                    </Paper>
-                  </Skeleton>
-                ))}
-          </Flex>
+                          <ActionIcon
+                            onClick={() => onEditClick(i)}
+                            color="gray"
+                            variant="transparent"
+                          >
+                            <BiEdit />
+                          </ActionIcon>
+                        </Flex>
+                      </Paper>
+                    </Skeleton>
+                  ))}
+            </Flex>
+          </ScrollArea>
         </Grid.Col>
         <AddLinksModal opened={opened} close={close} />
         <EditGroupModal

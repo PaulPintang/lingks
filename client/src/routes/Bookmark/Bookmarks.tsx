@@ -29,7 +29,7 @@ const Bookmarks = () => {
           <Title order={1}>Bookmarks</Title>
         </div>
       )}
-      <Flex gap={20} className="w-full" wrap="wrap">
+      <Flex gap={20} className="w-full pb-5" wrap="wrap">
         {bookmark.length === 0 && bookmarks?.length === 0 && (
           <BookmarkEmptyState open={open} />
         )}

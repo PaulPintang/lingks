@@ -4,7 +4,7 @@ import { Anchor } from "@mantine/core";
 import { Flex, Text } from "@mantine/core";
 const Footer = () => {
   return (
-    <div className="h-10 bg-red-5">
+    <div className="py-3">
       <Flex justify="space-between" align="center">
         <Flex className="text-gray-500  text-xs font-semibold" gap={2}>
           <Text>
