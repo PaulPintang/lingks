@@ -1,12 +1,6 @@
 import { Button, Flex, Modal, Text, Title } from "@mantine/core";
 import { ModalPropsInterface } from "../Bookmarks";
-<<<<<<< HEAD
 import { dropBookmark } from "../../../features/bookmarks/bookmarkSlice";
-=======
-import {
-  dropBookmark,
-} from "../../../features/bookmarks/bookmarkSlice";
->>>>>>> d2c6102773b0d7b0e27e817db129cd69d73edc05
 import { useNavigate, useParams } from "react-router-dom";
 
 import ToasterNotification from "../../../components/ToasterNotification";

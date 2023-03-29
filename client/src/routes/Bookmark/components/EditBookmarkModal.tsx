@@ -29,13 +29,7 @@ const EditGroupModal = ({ opened, close, bookmark }: Props) => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
-<<<<<<< HEAD
   const { isLoading } = useAppSelector((state) => state.bookmark);
-=======
-  const { isLoading } = useAppSelector(
-    (state) => state.bookmark
-  );
->>>>>>> d2c6102773b0d7b0e27e817db129cd69d73edc05
   const [banner, setBanner] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");

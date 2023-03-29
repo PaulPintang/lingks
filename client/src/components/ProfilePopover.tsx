@@ -25,13 +25,7 @@ interface Props {
 const ProfilePopover = ({ deletePrompt }: Props) => {
   const dispatch = useAppDispatch();
   const [opened, { toggle }] = useDisclosure(false);
-<<<<<<< HEAD
   const { profile, isLoading } = useAppSelector((state) => state.profile);
-=======
-  const { profile, isLoading } = useAppSelector(
-    (state) => state.profile
-  );
->>>>>>> d2c6102773b0d7b0e27e817db129cd69d73edc05
   const { bookmarks } = useAppSelector((state) => state.bookmark);
 
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
@@ -74,10 +68,6 @@ const ProfilePopover = ({ deletePrompt }: Props) => {
   let total = 0;
   length.forEach((item) => (total += item!));
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d2c6102773b0d7b0e27e817db129cd69d73edc05
   return (
     <section className="space-y-2">
       {opened ? (

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, Button, Flex, Modal, Text, Title } from "@mantine/core";
 import { ModalPropsInterface } from "../routes/Bookmark/Bookmarks";
-<<<<<<< HEAD
-=======
 import { AppDispatch, RootState } from "../app/store";
->>>>>>> d2c6102773b0d7b0e27e817db129cd69d73edc05
 import { useNavigate } from "react-router-dom";
 import { deleteProfile } from "../features/profile/profileSlice";
 import { logout, resetAuthState } from "../features/auth/authSlice";
@@ -15,11 +12,7 @@ interface Props extends ModalPropsInterface {
   closePopover: () => void;
 }
 
-<<<<<<< HEAD
-const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
-=======
 const ConfirmDeleteAccount = ({ opened, close }: Props) => {
->>>>>>> d2c6102773b0d7b0e27e817db129cd69d73edc05
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [typeDelete, setType] = useState("");
