@@ -6,7 +6,6 @@ import AddBookmarkModal from "../routes/Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
 import { MdLogout } from "react-icons/md";
 import Logo from "./Logo";
-import ProfileView from "./ProfilePopover";
 import ConfirmDeleteAccount from "./ConfirmDeleteAccount";
 import { logout, resetAuthState } from "../features/auth/authSlice";
 import { userProfile } from "../features/profile/profileSlice";

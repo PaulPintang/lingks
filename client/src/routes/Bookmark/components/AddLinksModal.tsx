@@ -20,7 +20,13 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
   const dispatch = useAppDispatch();
+<<<<<<< HEAD
   const { isLoading, bookmark } = useAppSelector((state) => state.bookmark);
+=======
+  const { isLoading, bookmark } = useAppSelector(
+    (state) => state.bookmark
+  );
+>>>>>>> d2c6102773b0d7b0e27e817db129cd69d73edc05
   const { id } = useParams();
 
   const [links, setLinks] = useState<LinksInterface[]>([]);
