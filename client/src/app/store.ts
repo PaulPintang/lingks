@@ -11,11 +11,7 @@ export const store = configureStore({
     recover: recoverReducers,
     bookmark: bookmarkReducers,
   },
-  // devTools: import.meta.env.VITE_NODE_ENV === "production" ? false : true,
-  // devTools: false,
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;

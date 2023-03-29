@@ -9,17 +9,16 @@ import {
   Center,
 } from "@mantine/core";
 import { MdAlternateEmail } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
 import { sendOTP, reset } from "../../features/recover/recoverSlice";
-import { AppDispatch, RootState } from "../../app/store";
 import Logo from "../../components/Logo";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const Recover = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState<string>("");
-  const { status, error } = useSelector((state: RootState) => state.recover);
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { status, error } = useAppSelector((state) => state.recover);
+  const { user } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
@@ -33,7 +32,7 @@ const Recover = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(sendOTP(email)).then(
-      (res) => res.payload === true && navigate("/verify")
+      (res: any) => res.payload === true && navigate("/verify")
     );
   };
 

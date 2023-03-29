@@ -12,8 +12,6 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import { ModalPropsInterface } from "../Bookmarks";
 import { RxLink2 } from "react-icons/rx";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../app/store";
 import { useParams } from "react-router-dom";
 import { updateBookmark } from "../../../features/bookmarks/bookmarkSlice";
 import { BookmarkInterface } from "../../../interfaces/bookmark.interface";
@@ -21,18 +19,17 @@ import ToasterNotification from "../../../components/ToasterNotification";
 import { LabelInterface } from "../../../interfaces/bookmark.interface";
 import { defaultImage } from "./AddBookmarkModal";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 interface Props extends ModalPropsInterface {
   bookmark: BookmarkInterface[];
 }
 
 const EditGroupModal = ({ opened, close, bookmark }: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
-  const { isLoading, bookmarks } = useSelector(
-    (state: RootState) => state.bookmark
-  );
+  const { isLoading } = useAppSelector((state) => state.bookmark);
   const [banner, setBanner] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");

@@ -1,9 +1,8 @@
 import { Loader as Loading, LoadingOverlay } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import { useAppSelector } from "../app/hooks";
 
 const Loader = () => {
-  const { status } = useSelector((state: RootState) => state.profile);
+  const { status } = useAppSelector((state) => state.profile);
   return (
     <LoadingOverlay
       visible={status === "pending" && true}

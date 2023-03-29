@@ -1,11 +1,10 @@
 import { Flex, Card, Text, Image, Badge, Title } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../app/store";
 import { singleBookmark } from "../../features/bookmarks/bookmarkSlice";
 import AddBookmarkModal from "../Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
 import BookmarkEmptyState from "../../components/BookmarkEmptyState";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export interface ModalPropsInterface {
   opened: boolean;
@@ -16,10 +15,8 @@ const Bookmarks = () => {
   const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
 
-  const dispatch = useDispatch<AppDispatch>();
-  const { bookmarks, bookmark } = useSelector(
-    (state: RootState) => state.bookmark
-  );
+  const dispatch = useAppDispatch();
+  const { bookmarks, bookmark } = useAppSelector((state) => state.bookmark);
 
   const orderedBookmarks = bookmarks
     .slice()

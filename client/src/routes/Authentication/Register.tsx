@@ -11,18 +11,17 @@ import {
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../app/store";
 import { register, resetErrorState } from "../../features/auth/authSlice";
 import Logo from "../../components/Logo";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const Register = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { user, status, error } = useSelector((state: RootState) => state.auth);
+  const { user, status, error } = useAppSelector((state) => state.auth);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const today = new Date();

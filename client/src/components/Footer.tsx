@@ -1,5 +1,4 @@
 import { RiGithubFill } from "react-icons/ri";
-import { AiFillHeart } from "react-icons/ai";
 import { Anchor } from "@mantine/core";
 
 import { Flex, Text } from "@mantine/core";

@@ -1,10 +1,6 @@
 import { Center, Flex, Title, Text, Button } from "@mantine/core";
 import bookmark from "../assets/bookmark.png";
 import { AiOutlinePlus } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
-import { Link } from "react-router-dom";
-import Loader from "./Loader";
 
 interface Props {
   open?: () => void;

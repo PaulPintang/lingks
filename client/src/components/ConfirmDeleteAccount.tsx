@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { TextInput, Button, Flex, Modal, Text, Title } from "@mantine/core";
 import { ModalPropsInterface } from "../routes/Bookmark/Bookmarks";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
 import { deleteProfile } from "../features/profile/profileSlice";
 import { logout, resetAuthState } from "../features/auth/authSlice";
 import { resetBookmarkState } from "../features/bookmarks/bookmarkSlice";
 import { resetProfileState } from "../features/profile/profileSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 interface Props extends ModalPropsInterface {
   closePopover: () => void;
 }
 
 const ConfirmDeleteAccount = ({ opened, close, closePopover }: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [typeDelete, setType] = useState("");
-  const { isLoading } = useSelector((state: RootState) => state.profile);
+  const { isLoading } = useAppSelector((state) => state.profile);
 
   const onDelete = () => {
     dispatch(deleteProfile())

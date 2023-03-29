@@ -1,15 +1,14 @@
 import { Container, Center, Flex, Title, Text, Button } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
 import bookmark from "../assets/bookmark.png";
 import { useEffect } from "react";
 import Footer from "../components/Footer";
+import { useAppSelector } from "../app/hooks";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     user && navigate("/bookmarks");

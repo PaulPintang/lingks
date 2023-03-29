@@ -10,18 +10,17 @@ import {
   Center,
 } from "@mantine/core";
 import { MdAlternateEmail, MdLockOutline } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
 import { login, resetErrorState } from "../../features/auth/authSlice";
-import { AppDispatch, RootState } from "../../app/store";
 import Logo from "../../components/Logo";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const Login = () => {
   const [email, setEmail] = useState<string>(
     localStorage.getItem("email") || ""
   );
   const [password, setPassword] = useState<string>("");
-  const { user, status, error } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch<AppDispatch>();
+  const { user, status, error } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {

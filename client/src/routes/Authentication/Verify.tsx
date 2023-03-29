@@ -9,18 +9,17 @@ import {
   PinInput,
   Flex,
 } from "@mantine/core";
-import { useDispatch, useSelector } from "react-redux";
 import { sendOTP, verifyOTP, reset } from "../../features/recover/recoverSlice";
-import { AppDispatch, RootState } from "../../app/store";
 import Logo from "../../components/Logo";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const Verify = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState<string>("");
   const [OTP, setOTP] = useState<string>("");
-  const { status, error } = useSelector((state: RootState) => state.recover);
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { status, error } = useAppSelector((state) => state.recover);
+  const { user } = useAppSelector((state) => state.auth);
   const [resend, setResend] = useState<boolean>(false);
 
   useEffect(() => {

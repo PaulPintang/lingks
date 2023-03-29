@@ -4,12 +4,9 @@ import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import { useAppSelector } from "../app/hooks";
 const RootLayout = () => {
-  const { bookmarks, bookmark } = useSelector(
-    (state: RootState) => state.bookmark
-  );
+  const { bookmarks, bookmark } = useAppSelector((state) => state.bookmark);
 
   return (
     <Container>

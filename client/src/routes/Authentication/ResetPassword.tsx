@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -10,9 +9,9 @@ import {
   Center,
 } from "@mantine/core";
 import { MdLockOutline } from "react-icons/md";
-import { AppDispatch, RootState } from "../../app/store";
 import { resetPassword } from "../../features/recover/recoverSlice";
 import Logo from "../../components/Logo";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export interface User {
   name?: string;
@@ -22,14 +21,14 @@ export interface User {
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { status } = useSelector((state: RootState) => state.recover);
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { status } = useAppSelector((state) => state.recover);
+  const { user } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     setEmail(localStorage.getItem("email") || "");
