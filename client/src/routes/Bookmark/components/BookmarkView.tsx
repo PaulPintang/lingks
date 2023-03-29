@@ -97,6 +97,7 @@ const BookmarkView = () => {
     setDeleting(false);
     editLinkHandlers.toggle();
   };
+
   return (
     <>
       <Flex

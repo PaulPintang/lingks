@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import bookmark from "../assets/bookmark.png";
 import { useEffect } from "react";
+import Footer from "../components/Footer";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -17,14 +18,14 @@ const LandingPage = () => {
   return (
     <Container>
       <Header />
-      <Center className="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-120px)] md:h-[calc(100vh-120px)]">
+      <Center className="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-140px)] md:h-[calc(100vh-140px)]">
         <Flex
           justify="center"
           align="center"
           direction="column"
           className="w-full"
         >
-          <img src={bookmark} className="w-[430px]" alt="" />
+          <img src={bookmark} className="w-[420px]" alt="" />
           <Title order={1} className="text-center">
             Bring all your link together
           </Title>
@@ -50,6 +51,7 @@ const LandingPage = () => {
           </Link>
         </Flex>
       </Center>
+      <Footer />
     </Container>
   );
 };
