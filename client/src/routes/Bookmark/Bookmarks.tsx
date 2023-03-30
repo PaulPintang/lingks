@@ -1,4 +1,14 @@
-import { Flex, Card, Text, Image, Badge, Title } from "@mantine/core";
+import { useState } from "react";
+import {
+  Flex,
+  Card,
+  Text,
+  Image,
+  Badge,
+  Title,
+  LoadingOverlay,
+  Loader,
+} from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { singleBookmark } from "../../features/bookmarks/bookmarkSlice";
 import AddBookmarkModal from "../Bookmark/components/AddBookmarkModal";
@@ -14,9 +24,12 @@ export interface ModalPropsInterface {
 const Bookmarks = () => {
   const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
+  const [load, setLoad] = useState<number | null>(null);
 
   const dispatch = useAppDispatch();
-  const { bookmarks, bookmark } = useAppSelector((state) => state.bookmark);
+  const { bookmarks, bookmark, status } = useAppSelector(
+    (state) => state.bookmark
+  );
 
   const orderedBookmarks = bookmarks
     .slice()
@@ -34,15 +47,19 @@ const Bookmarks = () => {
           <BookmarkEmptyState open={open} />
         )}
         {bookmarks?.length !== 0 &&
-          orderedBookmarks?.map((bookmark) => (
+          orderedBookmarks?.map((bookmark, i) => (
             <Card
-              onClick={() =>
+              onClick={() => {
+                setLoad(i);
                 dispatch(singleBookmark(bookmark._id!))
                   .unwrap()
-                  .then(() => navigate(`/bookmark/${bookmark._id!}`))
-              }
+                  .then(() => {
+                    navigate(`/bookmark/${bookmark._id!}`);
+                    setLoad(null);
+                  });
+              }}
               key={bookmark._id}
-              className="no-underline lg:w-[295px] md:w-[295px] w-full active:opacity-90 transition-all cursor-pointer hover:shadow-xl border-3"
+              className="no-underline lg:w-[295px] md:w-[295px] w-full active:opacity-80 transition-all cursor-pointer hover:shadow-xl border-3"
               shadow="sm"
               radius="md"
               withBorder
@@ -83,6 +100,9 @@ const Bookmarks = () => {
                       ))
                     )}
                   </Flex>
+                  {i === load && (
+                    <Loader color="violet" size="sm" variant="dots" />
+                  )}
                 </div>
               </Card.Section>
             </Card>
