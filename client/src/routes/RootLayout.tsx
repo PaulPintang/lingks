@@ -9,8 +9,8 @@ const RootLayout = () => {
   const { bookmarks, bookmark } = useAppSelector((state) => state.bookmark);
   return (
     <>
-      <Header />
       <Loader />
+      <Header />
       <Toaster />
       <Container
         className={
