@@ -56,6 +56,7 @@ const BookmarkView = () => {
   const [toEdit, setToEdit] = useState<LinksInterface>({} as LinksInterface);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(getBookmarks());
     dispatch(singleBookmark(id!));
     return () => {

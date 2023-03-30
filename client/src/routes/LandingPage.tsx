@@ -1,4 +1,4 @@
-import { Container, Center, Flex, Title, Text, Button } from "@mantine/core";
+import { Center, Flex, Title, Text, Button } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import bookmark from "../assets/bookmark.png";
@@ -17,7 +17,7 @@ const LandingPage = () => {
   return (
     <>
       <Header />
-      <Center className="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] px-3">
+      <Center className="w-full h-[calc(100vh-7rem)] lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] px-3">
         <Flex
           justify="center"
           align="center"
