@@ -158,7 +158,7 @@ export const bookmarkSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateBookmark.fulfilled, (state, action) => {
-        state.bookmarks = state.bookmarks.map((bm, i) => {
+        state.bookmarks = state.bookmarks.map((bm) => {
           if (bm._id === action.payload._id) {
             const updated = {
               ...bm,

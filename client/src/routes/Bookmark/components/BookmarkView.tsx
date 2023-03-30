@@ -72,15 +72,14 @@ const BookmarkView = () => {
     ?.slice()
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
-  const onDelete = (i: number) => {
+  const onDelete = (ID: string, i: number) => {
     setDeleting(true);
     setIndex(i);
-    links?.splice(i, 1);
+    const newLinks = links?.filter((link) => link._id !== ID);
     const updated = {
       id,
-      links,
+      links: newLinks,
     };
-
     dispatch(updateBookmark(updated))
       .unwrap()
       .then(() => {
@@ -322,7 +321,7 @@ const BookmarkView = () => {
                           <ActionIcon
                             color="red"
                             variant="subtle"
-                            onClick={() => onDelete(i)}
+                            onClick={() => onDelete(link._id, i)}
                             loading={
                               isLoading && i === index && deleting && !editLink
                             }
