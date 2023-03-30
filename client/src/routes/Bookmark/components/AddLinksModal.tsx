@@ -63,7 +63,7 @@ const AddLinksModal = ({ opened, close }: ModalPropsInterface) => {
           name: name,
           link: link,
           date: added,
-          createdAt: today.toUTCString(),
+          createdAt: today.toISOString(),
         },
       ]);
       setShowAdded(true);
