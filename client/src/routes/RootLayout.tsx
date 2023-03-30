@@ -15,7 +15,7 @@ const RootLayout = () => {
       <Container
         className={
           bookmarks.length <= 3
-            ? "lg:h-[calc(100vh-130px)] md:h-[calc(100vh-130px)]"
+            ? "lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)]"
             : ""
         }
       >

@@ -8,14 +8,14 @@ interface Props {
 
 const BookmarkEmptyState = ({ open }: Props) => {
   return (
-    <Center className="w-full h-[calc(100vh-6rem)] lg:h-[calc(100vh-160px)] md:h-[calc(100vh-160px)]">
+    <Center className="w-full h-[calc(100vh-8.5rem)] lg:h-[calc(100vh-170px)] md:h-[calc(100vh-170px)]">
       <Flex
         justify="center"
         align="center"
         direction="column"
         className="w-full"
       >
-        <img src={bookmark} className="w-[430px]" alt="" />
+        <img src={bookmark} className="w-[420px]" alt="" />
         <Title order={1} className="text-center">
           Start by creating a bookmark
         </Title>
