@@ -16,7 +16,7 @@ const RootLayout = () => {
         className={
           bookmarks.length <= 3
             ? "lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-113px)]"
-            : bookmark[0]?.links?.length! <= 3
+            : bookmark[0]?.links?.length! <= 2
             ? "lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-113px)]"
             : ""
         }
