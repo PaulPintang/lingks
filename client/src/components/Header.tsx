@@ -39,10 +39,10 @@ const Header = () => {
     }, 1000);
   };
 
-  useEffect(() => {
-    user && dispatch(getBookmarks());
-    user && dispatch(userProfile());
-  }, []);
+  // useEffect(() => {
+  //   user && dispatch(getBookmarks());
+  //   user && dispatch(userProfile());
+  // }, []);
 
   return (
     <main className="sticky top-0 z-10 bg-white">

@@ -1,73 +1,128 @@
 import axios from "axios";
+import { LoadingOverlay, Loader as Loading } from "@mantine/core";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Protected } from "./middleware/Protected";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
+import { lazy, Suspense } from "react";
 
 // Axios baseUrl
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 // axios.defaults.baseURL = import.meta.env.VITE_LOCAL_SERVER;
 
 // Routes
-import Login from "./routes/Authentication/Login";
-import Register from "./routes/Authentication/Register";
-import Recover from "./routes/Authentication/Recover";
-import Verify from "./routes/Authentication/Verify";
-import ResetPassword from "./routes/Authentication/ResetPassword";
-import NotFound from "./routes/NotFound";
+const Login = lazy(() => import("./routes/Authentication/Login"));
+const Register = lazy(() => import("./routes/Authentication/Register"));
+const Recover = lazy(() => import("./routes/Authentication/Recover"));
+const Verify = lazy(() => import("./routes/Authentication/Verify"));
+const ResetPassword = lazy(
+  () => import("./routes/Authentication/ResetPassword")
+);
+const NotFound = lazy(() => import("./routes/NotFound"));
 
 import { store } from "./app/store";
-import BookmarkView from "./routes/Bookmark/components/BookmarkView";
-import Bookmarks from "./routes/Bookmark/Bookmarks";
-import RootLayout from "./routes/RootLayout";
-import LandingPage from "./routes/LandingPage";
+const BookmarkView = lazy(
+  () => import("./routes/Bookmark/components/BookmarkView")
+);
+const Bookmarks = lazy(() => import("./routes/Bookmark/Bookmarks"));
+const LandingPage = lazy(() => import("./routes/LandingPage"));
+
+const RootLayout = lazy(() => import("./routes/RootLayout"));
+import Loader from "./components/Loader";
 
 if (import.meta.env.VITE_NODE_ENV === "production") {
   disableReactDevTools();
 }
 
+const LoaderFallback = () => {
+  return (
+    <LoadingOverlay
+      visible={true}
+      loader={<Loading variant="bars" />}
+      overlayOpacity={1}
+    />
+  );
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
-    errorElement: <NotFound />,
+    element: (
+      <Suspense fallback={<LoaderFallback />}>
+        <LandingPage />
+      </Suspense>
+    ),
+    errorElement: (
+      <Suspense fallback={<LoaderFallback />}>
+        <NotFound />
+      </Suspense>
+    ),
   },
   {
     path: "/login",
-    element: <Login />,
-    errorElement: <NotFound />,
+    element: (
+      <Suspense fallback={<LoaderFallback />}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <Suspense fallback={<LoaderFallback />}>
+        <Register />
+      </Suspense>
+    ),
   },
   {
     path: "/recover",
-    element: <Recover />,
+    element: (
+      <Suspense fallback={<LoaderFallback />}>
+        <Recover />
+      </Suspense>
+    ),
   },
   {
     path: "/verify",
-    element: <Verify />,
+    element: (
+      <Suspense fallback={<LoaderFallback />}>
+        <Verify />
+      </Suspense>
+    ),
   },
   {
     path: "/reset",
-    element: <ResetPassword />,
+    element: (
+      <Suspense fallback={<LoaderFallback />}>
+        <ResetPassword />
+      </Suspense>
+    ),
   },
   {
     path: "/",
     element: (
       <Protected>
-        <RootLayout />
+        <Suspense fallback={<LoaderFallback />}>
+          <RootLayout />
+        </Suspense>
       </Protected>
     ),
     children: [
       {
         path: "/bookmarks",
-        element: <Bookmarks />,
+        element: (
+          <Suspense fallback={<LoaderFallback />}>
+            <Bookmarks />
+          </Suspense>
+        ),
       },
       {
         path: "/bookmark/:id",
-        element: <BookmarkView />,
+        element: (
+          <Suspense fallback={<LoaderFallback />}>
+            <BookmarkView />
+          </Suspense>
+        ),
       },
     ],
   },

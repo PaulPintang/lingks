@@ -1,19 +1,13 @@
-import { useState } from "react";
-import {
-  Flex,
-  Card,
-  Text,
-  Image,
-  Badge,
-  Title,
-  LoadingOverlay,
-  Loader,
-} from "@mantine/core";
+import { lazy, Suspense, useState } from "react";
+import { Flex, Card, Text, Image, Badge, Title, Loader } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { singleBookmark } from "../../features/bookmarks/bookmarkSlice";
 import AddBookmarkModal from "../Bookmark/components/AddBookmarkModal";
 import { useDisclosure } from "@mantine/hooks";
-import BookmarkEmptyState from "../../components/BookmarkEmptyState";
+const BookmarkEmptyState = lazy(
+  () => import("../../components/BookmarkEmptyState")
+);
+// import BookmarkEmptyState from "../../components/BookmarkEmptyState";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export interface ModalPropsInterface {
@@ -27,16 +21,14 @@ const Bookmarks = () => {
   const [load, setLoad] = useState<number | null>(null);
 
   const dispatch = useAppDispatch();
-  const { bookmarks, bookmark, status } = useAppSelector(
-    (state) => state.bookmark
-  );
+  const { bookmarks, bookmark } = useAppSelector((state) => state.bookmark);
 
   const orderedBookmarks = bookmarks
     .slice()
     .sort((a, b) => b.createdAt!.localeCompare(a.createdAt!));
 
   return (
-    <>
+    <Suspense fallback={<Loader />}>
       {bookmarks?.length !== 0 && (
         <div className="pb-3">
           <Title order={1}>Bookmarks</Title>
@@ -47,7 +39,7 @@ const Bookmarks = () => {
           <BookmarkEmptyState open={open} />
         )}
         {bookmarks?.length !== 0 &&
-          orderedBookmarks?.map((bookmark, i) => (
+          orderedBookmarks?.map((bookmark: any, i: number) => (
             <Card
               onClick={() => {
                 setLoad(i);
@@ -88,7 +80,7 @@ const Bookmarks = () => {
                         No bookmark labels
                       </Text>
                     ) : (
-                      bookmark.labels?.map((label, index) => (
+                      bookmark.labels?.map((label: any, index: number) => (
                         <Badge
                           key={index}
                           style={{ background: label.color }}
@@ -109,7 +101,7 @@ const Bookmarks = () => {
           ))}
         <AddBookmarkModal opened={opened} close={close} />
       </Flex>
-    </>
+    </Suspense>
   );
 };
 
