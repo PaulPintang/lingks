@@ -4,7 +4,7 @@ export interface LabelInterface {
 }
 
 export interface LinksInterface {
-  _id: string;
+  _id?: string;
   name: string | null;
   link: string | null;
   date?: string | null;

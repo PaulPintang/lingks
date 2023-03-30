@@ -321,7 +321,7 @@ const BookmarkView = () => {
                           <ActionIcon
                             color="red"
                             variant="subtle"
-                            onClick={() => onDelete(link._id, i)}
+                            onClick={() => onDelete(link._id!, i)}
                             loading={
                               isLoading && i === index && deleting && !editLink
                             }
