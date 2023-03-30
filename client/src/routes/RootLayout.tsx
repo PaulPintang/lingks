@@ -6,13 +6,13 @@ import Loader from "../components/Loader";
 import Footer from "../components/Footer";
 import { useAppSelector } from "../app/hooks";
 const RootLayout = () => {
-  const { bookmarks, bookmark } = useAppSelector((state) => state.bookmark);
+  const { bookmarks } = useAppSelector((state) => state.bookmark);
   return (
-    <Container>
-      <Loader />
+    <>
       <Header />
+      <Loader />
       <Toaster />
-      <main
+      <Container
         className={
           bookmarks.length <= 3
             ? "lg:h-[calc(100vh-130px)] md:h-[calc(100vh-130px)]"
@@ -20,9 +20,9 @@ const RootLayout = () => {
         }
       >
         <Outlet />
-      </main>
+      </Container>
       <Footer />
-    </Container>
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ const Bookmarks = () => {
   return (
     <>
       {bookmarks?.length !== 0 && (
-        <div className="sticky lg:top-[100px] md:top-[100px] top-[60px] z-[1] bg-white pb-3">
+        <div className="pb-3">
           <Title order={1}>Bookmarks</Title>
         </div>
       )}

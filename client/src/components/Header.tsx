@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Flex, Button, ActionIcon, Popover, Avatar } from "@mantine/core";
+import {
+  Flex,
+  Button,
+  ActionIcon,
+  Popover,
+  Avatar,
+  Container,
+} from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import userimg from "../assets/user.png";
 import AddBookmarkModal from "../routes/Bookmark/components/AddBookmarkModal";
@@ -24,8 +31,6 @@ const Header = () => {
   const [deleteMe, deleteHandlers] = useDisclosure(false);
   const [status, setStatus] = useState(false);
 
-  // const [viewImg, setViewImg] = useState<string | null>(null);
-
   const onLogout = () => {
     setStatus(true);
     setTimeout(() => {
@@ -40,59 +45,63 @@ const Header = () => {
   }, []);
 
   return (
-    <Flex
-      justify="space-between"
-      align="center"
-      className="lg:h-[100px] md:h-[100px] h-16 sticky top-0 z-10 bg-white"
-    >
-      <Logo />
-      {user ? (
-        <Flex justify="space-between" align="center" gap={12}>
-          {bookmarks.length !== 0 && (
-            <Button size="xs" onClick={open}>
-              <span className="hidden lg:flex md:flex ">Add bookmark</span>
-              <span className="flex lg:hidden md:hidden">Add</span>
-            </Button>
-          )}
-          <ActionIcon onClick={onLogout} loading={status}>
-            <MdLogout className="text-gray-400" />
-          </ActionIcon>
-          <Popover position="bottom-end">
-            <Popover.Target>
-              <ActionIcon radius="xl" size={40} variant="transparent">
-                <Avatar radius={100} src={profile?.image! || userimg} alt="" />
+    <main className="sticky top-0 z-10 bg-white">
+      <Container className="lg:h-[100px] md:h-[100px] h-16">
+        <Flex justify="space-between" align="center" className="h-full">
+          <Logo />
+          {user ? (
+            <Flex justify="space-between" align="center" gap={12}>
+              {bookmarks.length !== 0 && (
+                <Button size="xs" onClick={open}>
+                  <span className="hidden lg:flex md:flex ">Add bookmark</span>
+                  <span className="flex lg:hidden md:hidden">Add</span>
+                </Button>
+              )}
+              <ActionIcon onClick={onLogout} loading={status}>
+                <MdLogout className="text-gray-400" />
               </ActionIcon>
-            </Popover.Target>
-            <Popover.Dropdown>
-              <ProfilePopover deletePrompt={deleteHandlers.open} />
-            </Popover.Dropdown>
-          </Popover>
-        </Flex>
-      ) : (
-        <Flex justify="space-between" align="center" gap={12}>
-          <Link to="/login">
-            <Button variant="white" color="gray">
-              Log in
-            </Button>
-          </Link>
-          <Link to="/register">
-            <Button
-              variant="gradient"
-              gradient={{ from: "indigo", to: "cyan" }}
-            >
-              Sign up
-            </Button>
-          </Link>
-        </Flex>
-      )}
+              <Popover position="bottom-end">
+                <Popover.Target>
+                  <ActionIcon radius="xl" size={40} variant="transparent">
+                    <Avatar
+                      radius={100}
+                      src={profile?.image! || userimg}
+                      alt=""
+                    />
+                  </ActionIcon>
+                </Popover.Target>
+                <Popover.Dropdown>
+                  <ProfilePopover deletePrompt={deleteHandlers.open} />
+                </Popover.Dropdown>
+              </Popover>
+            </Flex>
+          ) : (
+            <Flex justify="space-between" align="center" gap={12}>
+              <Link to="/login">
+                <Button variant="white" color="gray">
+                  Log in
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button
+                  variant="gradient"
+                  gradient={{ from: "indigo", to: "cyan" }}
+                >
+                  Sign up
+                </Button>
+              </Link>
+            </Flex>
+          )}
 
-      <AddBookmarkModal opened={opened} close={close} />
-      <ConfirmDeleteAccount
-        opened={deleteMe}
-        close={deleteHandlers.close}
-        closePopover={popoverHandlers.close}
-      />
-    </Flex>
+          <AddBookmarkModal opened={opened} close={close} />
+          <ConfirmDeleteAccount
+            opened={deleteMe}
+            close={deleteHandlers.close}
+            closePopover={popoverHandlers.close}
+          />
+        </Flex>
+      </Container>
+    </main>
   );
 };
 

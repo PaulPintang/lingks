@@ -1,10 +1,10 @@
 import { RiGithubFill } from "react-icons/ri";
-import { Anchor } from "@mantine/core";
+import { Anchor, Container } from "@mantine/core";
 
 import { Flex, Text } from "@mantine/core";
 const Footer = () => {
   return (
-    <div className="py-3">
+    <Container className="py-3">
       <Flex justify="space-between" align="center">
         <Flex className="text-gray-500  text-xs font-semibold" gap={2}>
           <Text>
@@ -20,7 +20,7 @@ const Footer = () => {
           </Anchor>
         </div>
       </Flex>
-    </div>
+    </Container>
   );
 };
 
