@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import {
   Grid,
@@ -103,7 +103,7 @@ const BookmarkView = () => {
       <Flex
         align="center"
         gap="sm"
-        className=" sticky lg:top-[100px] md:top-[100px] top-[62px] z-[1] bg-white pb-3"
+        className="sticky lg:top-[100px] md:top-[100px] top-[62px] z-[1] bg-white pb-3"
       >
         <Link to="/bookmarks">
           <ActionIcon>
@@ -243,7 +243,7 @@ const BookmarkView = () => {
             </div>
           </Flex>
           <ScrollArea
-            className="lg:h-[calc(100vh-251px)] md:h-[calc(100vh-251px)] h-full"
+            className="lg:h-[calc(100vh-251px)] md:h-[calc(100vh-251px)] h-auto"
             type="scroll"
             scrollbarSize={10}
             w="100%"
