@@ -7,7 +7,6 @@ import { useDisclosure } from "@mantine/hooks";
 const BookmarkEmptyState = lazy(
   () => import("../../components/BookmarkEmptyState")
 );
-// import BookmarkEmptyState from "../../components/BookmarkEmptyState";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export interface ModalPropsInterface {

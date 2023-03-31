@@ -1,5 +1,4 @@
 import axios from "axios";
-import { LoadingOverlay, Loader as Loading } from "@mantine/core";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Protected } from "./middleware/Protected";
@@ -21,6 +20,7 @@ const ResetPassword = lazy(
 const NotFound = lazy(() => import("./routes/NotFound"));
 
 import { store } from "./app/store";
+import LoaderFallback from "./components/LoaderFallback";
 const BookmarkView = lazy(
   () => import("./routes/Bookmark/components/BookmarkView")
 );
@@ -28,21 +28,10 @@ const Bookmarks = lazy(() => import("./routes/Bookmark/Bookmarks"));
 const LandingPage = lazy(() => import("./routes/LandingPage"));
 
 const RootLayout = lazy(() => import("./routes/RootLayout"));
-import Loader from "./components/Loader";
 
 if (import.meta.env.VITE_NODE_ENV === "production") {
   disableReactDevTools();
 }
-
-const LoaderFallback = () => {
-  return (
-    <LoadingOverlay
-      visible={true}
-      loader={<Loading variant="bars" />}
-      overlayOpacity={1}
-    />
-  );
-};
 
 const router = createBrowserRouter([
   {
@@ -110,19 +99,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/bookmarks",
-        element: (
-          <Suspense fallback={<LoaderFallback />}>
-            <Bookmarks />
-          </Suspense>
-        ),
+        element: <Bookmarks />,
       },
       {
         path: "/bookmark/:id",
-        element: (
-          <Suspense fallback={<LoaderFallback />}>
-            <BookmarkView />
-          </Suspense>
-        ),
+        element: <BookmarkView />,
       },
     ],
   },

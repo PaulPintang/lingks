@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { Container } from "@mantine/core";
 import Header from "../components/Header";
@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getBookmarks } from "../features/bookmarks/bookmarkSlice";
 import { userProfile } from "../features/profile/profileSlice";
-import Loader from "../components/Loader";
+import LoaderFallback from "../components/LoaderFallback";
 const RootLayout = () => {
   const dispatch = useAppDispatch();
   const { bookmarks, bookmark } = useAppSelector((state) => state.bookmark);
@@ -21,7 +21,7 @@ const RootLayout = () => {
   return (
     <main>
       {status === "pending" ? (
-        <Loader />
+        <LoaderFallback />
       ) : (
         <>
           <Header />
@@ -30,12 +30,14 @@ const RootLayout = () => {
             className={
               bookmarks.length <= 3
                 ? "lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-113px)]"
-                : bookmark[0]?.links?.length! <= 3
+                : bookmark[0]?.links?.length! < 3
                 ? "lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-113px)]"
                 : ""
             }
           >
-            <Outlet />
+            <Suspense fallback={<LoaderFallback />}>
+              <Outlet />
+            </Suspense>
           </Container>
           <Footer />
         </>

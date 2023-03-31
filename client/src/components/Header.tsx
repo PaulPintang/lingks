@@ -39,11 +39,6 @@ const Header = () => {
     }, 1000);
   };
 
-  // useEffect(() => {
-  //   user && dispatch(getBookmarks());
-  //   user && dispatch(userProfile());
-  // }, []);
-
   return (
     <main className="sticky top-0 z-10 bg-white">
       <Container className="lg:h-[100px] md:h-[100px] h-16">
