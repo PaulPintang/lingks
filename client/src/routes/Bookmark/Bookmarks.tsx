@@ -8,6 +8,7 @@ const BookmarkEmptyState = lazy(
   () => import("../../components/BookmarkEmptyState")
 );
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import LoaderFallback from "../../components/LoaderFallback";
 
 export interface ModalPropsInterface {
   opened: boolean;
@@ -27,7 +28,7 @@ const Bookmarks = () => {
     .sort((a, b) => b.createdAt!.localeCompare(a.createdAt!));
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<LoaderFallback />}>
       {bookmarks?.length !== 0 && (
         <div className="pb-3">
           <Title order={1}>Bookmarks</Title>
