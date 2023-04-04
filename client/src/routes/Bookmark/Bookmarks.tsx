@@ -51,7 +51,7 @@ const Bookmarks = () => {
                   });
               }}
               key={bookmark._id}
-              className="no-underline lg:w-[295px] md:w-[295px] w-full active:opacity-80 transition-all cursor-pointer hover:shadow-xl border-3"
+              className="lg:w-[295px] md:w-[295px] w-full active:opacity-80 transition-all cursor-pointer hover:shadow-xl border-3"
               shadow="sm"
               radius="md"
               withBorder

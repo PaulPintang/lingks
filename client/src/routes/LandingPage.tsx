@@ -17,7 +17,7 @@ const LandingPage = () => {
   return (
     <>
       <Header />
-      <Center className="w-full h-[calc(100vh-7rem)] lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] px-3">
+      <Center className="w-full h-[calc(100vh-7rem)] lg:h-[calc(100vh-146px)] md:h-[calc(100vh-146px)] px-3">
         <Flex
           justify="center"
           align="center"

@@ -25,7 +25,7 @@ const RootLayout = () => {
         <>
           <Header />
           <Toaster />
-          <Container className="min-h-[calc(100vh-110px)]">
+          <Container className="lg:min-h-[calc(100vh-146px)] md:min-h-[calc(100vh-146px)] min-h-[calc(100vh-110px)]">
             <Suspense fallback={<LoaderFallback />}>
               <Outlet />
             </Suspense>

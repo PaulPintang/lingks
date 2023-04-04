@@ -8,7 +8,7 @@ interface Props {
 
 const BookmarkEmptyState = ({ open }: Props) => {
   return (
-    <Center className="w-full h-[calc(100vh-8.5rem)] lg:h-[calc(100vh-170px)] md:h-[calc(100vh-170px)]">
+    <Center className="w-full h-[calc(100vh-8.5rem)] lg:h-[calc(100vh-166px)] md:h-[calc(100vh-166px)]">
       <Flex
         justify="center"
         align="center"

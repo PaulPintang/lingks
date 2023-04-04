@@ -243,7 +243,7 @@ const BookmarkView = () => {
             </div>
           </Flex>
           <ScrollArea
-            className="lg:h-[calc(100vh-251px)] md:h-[calc(100vh-251px)] h-auto"
+            className="lg:h-[calc(100vh-246px)] md:h-[calc(100vh-246px)] h-auto "
             type="scroll"
             scrollbarSize={10}
             w="100%"

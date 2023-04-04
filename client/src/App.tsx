@@ -27,7 +27,6 @@ const BookmarkView = lazy(
 const Bookmarks = lazy(() => import("./routes/Bookmark/Bookmarks"));
 const LandingPage = lazy(() => import("./routes/LandingPage"));
 
-// const RootLayout = lazy(() => import("./routes/RootLayout"));
 import RootLayout from "./routes/RootLayout";
 
 if (import.meta.env.VITE_NODE_ENV === "production") {
