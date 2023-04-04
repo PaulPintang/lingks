@@ -90,10 +90,10 @@ const BookmarkView = () => {
       });
   };
 
-  const onEditClick = (i: number) => {
-    const toEdit = links?.find((_, index) => index === i);
+  const onEditClick = (ID: string) => {
+    const toEdit = links?.find((link) => link._id === ID);
     setToEdit(toEdit!);
-    setIndex(i);
+    // setIndex(i);
     setDeleting(false);
     editLinkHandlers.toggle();
   };
@@ -331,7 +331,7 @@ const BookmarkView = () => {
                           </ActionIcon>
 
                           <ActionIcon
-                            onClick={() => onEditClick(i)}
+                            onClick={() => onEditClick(link._id!)}
                             color="gray"
                             variant="transparent"
                           >
@@ -355,7 +355,6 @@ const BookmarkView = () => {
           opened={editLink}
           close={editLinkHandlers.close}
           toEdit={toEdit}
-          index={index!}
           bookmark={bookmark}
           links={links!}
         />

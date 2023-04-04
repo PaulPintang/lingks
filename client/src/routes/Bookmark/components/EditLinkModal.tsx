@@ -13,13 +13,12 @@ import ToasterNotification from "../../../components/ToasterNotification";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 interface Props extends ModalPropsInterface {
-  index: number;
   bookmark: BookmarkInterface[];
   links: LinksInterface[];
   toEdit: LinksInterface;
 }
 
-const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
+const EditLinkModal = ({ opened, close, toEdit, links }: Props) => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const { isLoading } = useAppSelector((state) => state.bookmark);
@@ -47,8 +46,8 @@ const EditLinkModal = ({ opened, close, toEdit, index, links }: Props) => {
   const onEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAllLinks(
-      allLinks?.map((item, i) => {
-        if (i === index) {
+      allLinks?.map((item) => {
+        if (item._id === toEdit._id) {
           const updated = {
             ...item,
             name: name,
