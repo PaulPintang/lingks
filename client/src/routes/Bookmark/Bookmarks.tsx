@@ -7,6 +7,7 @@ import { useDisclosure } from "@mantine/hooks";
 const BookmarkEmptyState = lazy(
   () => import("../../components/BookmarkEmptyState")
 );
+
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import LoaderFallback from "../../components/LoaderFallback";
 
@@ -25,7 +26,8 @@ const Bookmarks = () => {
 
   const orderedBookmarks = bookmarks
     .slice()
-    .sort((a, b) => b.createdAt!.localeCompare(a.createdAt!));
+    // .sort((a, b) => b.createdAt!.localeCompare(a.createdAt!))
+    .sort((a, b) => b.updatedAt!.localeCompare(a.updatedAt!));
 
   return (
     <Suspense fallback={<LoaderFallback />}>

@@ -18,5 +18,5 @@ export interface BookmarkInterface {
   banner?: string | null;
   labels?: LabelInterface[];
   links?: LinksInterface[];
-  createdAt?: string;
+  updatedAt?: string;
 }
