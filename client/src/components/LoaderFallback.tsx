@@ -4,7 +4,7 @@ const LoaderFallback = () => {
   return (
     <LoadingOverlay
       className="h-screen"
-      loaderProps={{ size: "sm", variant: "bars" }}
+      loaderProps={{ size: 27, variant: "bars" }}
       visible={true}
       overlayOpacity={1}
     />

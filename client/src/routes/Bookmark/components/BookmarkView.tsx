@@ -103,7 +103,7 @@ const BookmarkView = () => {
       <Flex
         align="center"
         gap="sm"
-        className="sticky lg:top-[100px] md:top-[100px] top-[62px] z-[1] bg-white pb-3"
+        className="sticky lg:top-[100px] md:top-[100px] top-[57px] z-[1] bg-white pb-3"
       >
         <Link to="/bookmarks">
           <ActionIcon>
@@ -197,7 +197,7 @@ const BookmarkView = () => {
         <Grid.Col lg={8} md={8} sm={7} className="w-full pb-5 lg:pb-0 md:pb-0">
           <Flex
             justify="space-between"
-            className="sticky lg:top-[156px] md:top-[150px] top-[113px] pb-4 bg-white z-[1]"
+            className="sticky lg:top-[156px] md:top-[150px] top-[105px] pb-4 bg-white z-[1]"
           >
             {status === "pending" ? (
               <Skeleton
