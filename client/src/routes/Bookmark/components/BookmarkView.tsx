@@ -115,7 +115,7 @@ const BookmarkView = () => {
       <Grid>
         <Grid.Col lg={4} md={4} sm={5}>
           {bookmark.map((bookmark, index) => (
-            <Paper component="div" key={index}>
+            <Paper component="div" key={bookmark._id}>
               {status === "pending" ? (
                 <Skeleton
                   visible={true}
@@ -124,7 +124,7 @@ const BookmarkView = () => {
                 />
               ) : (
                 <Card
-                  key={index}
+                  key={bookmark._id}
                   className="lg:w-[295px] md:w-[295px] w-full lg:fixed md:fixed"
                 >
                   <Card.Section>
@@ -263,7 +263,7 @@ const BookmarkView = () => {
                   )
                 : orderedLinks?.map((link, i) => (
                     <Skeleton
-                      key={i}
+                      key={link._id}
                       visible={status === "pending" && true}
                       className="lg:w-[298px] md:w-[298px] w-full"
                     >

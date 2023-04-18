@@ -26,7 +26,6 @@ const Bookmarks = () => {
 
   const orderedBookmarks = bookmarks
     .slice()
-    // .sort((a, b) => b.createdAt!.localeCompare(a.createdAt!))
     .sort((a, b) => b.updatedAt!.localeCompare(a.updatedAt!));
 
   return (
