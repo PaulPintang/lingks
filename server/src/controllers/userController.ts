@@ -232,10 +232,11 @@ export const profile = async (
     const user = await User.findById(res.locals.user._id);
     const data: IUser | null = user;
     res.json({
+      _id: data?._id,
       name: data?.name,
       email: data?.email,
       image: data?.image.url,
-      _id: data?._id,
+      day: data.day,
     });
   } catch (error) {
     next(error);
