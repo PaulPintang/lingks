@@ -1,6 +1,6 @@
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 interface DataInterface {
   email: string;

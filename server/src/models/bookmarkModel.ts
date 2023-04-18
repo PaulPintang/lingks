@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IBookmark, ILink } from "../src/config/interfaces/BookmarkInterface";
+import { IBookmark, ILink } from "../interfaces/BookmarkInterface";
 
 const linksSchema = new Schema<ILink>({
   name: {
