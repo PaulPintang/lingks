@@ -6,8 +6,8 @@ import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import { lazy, Suspense } from "react";
 
 // Axios baseUrl
-axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
-// axios.defaults.baseURL = import.meta.env.VITE_LOCAL_SERVER;
+// axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+axios.defaults.baseURL = import.meta.env.VITE_LOCAL_SERVER;
 
 // Routes
 const Login = lazy(() => import("./routes/Authentication/Login"));

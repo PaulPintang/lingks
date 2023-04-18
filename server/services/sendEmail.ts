@@ -2,8 +2,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 const nodemailer = require("nodemailer");
 
+interface DataInterface {
+  email: string;
+  OTP: number;
+}
 // async..await is not allowed in global scope, must use a wrapper
-const sendEmail = async (data) => {
+const sendEmail = async (data: DataInterface) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -23,4 +27,4 @@ const sendEmail = async (data) => {
   return info.messageId;
 };
 
-module.exports = sendEmail;
+export default sendEmail;

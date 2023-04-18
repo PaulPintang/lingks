@@ -1,13 +1,13 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   getBookmark,
   addBookmark,
   deleteBookmark,
   updateBookmark,
   singleBookmark,
-} = require("../controllers/bookmarkController");
-const { Protected } = require("../middleware/authMiddleware");
+} from "../controllers/bookmarkController";
+import { Protected } from "../middleware/authMiddleware";
 
 router.get("/", Protected, getBookmark);
 router.post("/add", Protected, addBookmark);

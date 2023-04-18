@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
+import { IBookmark, ILink } from "../interfaces/BookmarkInterface";
 
-const linksSchema = mongoose.Schema({
+const linksSchema = new Schema<ILink>({
   name: {
     type: String,
   },
@@ -11,10 +12,10 @@ const linksSchema = mongoose.Schema({
   createdAt: { type: String },
 });
 
-const bookmarkSchema = mongoose.Schema(
+const bookmarkSchema = new Schema<IBookmark>(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     title: {
@@ -38,4 +39,4 @@ const bookmarkSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Bookmark", bookmarkSchema);
+export default model<IBookmark>("Bookmark", bookmarkSchema);

@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   registerUser,
   loginUser,
   generateOTP,
@@ -9,9 +9,8 @@ const {
   resetPassword,
   updateProfile,
   deleteAccount,
-} = require("../controllers/userController");
-const { Protected } = require("../middleware/authMiddleware");
-// const sendEmail = require("../services/sendEmail");
+} from "../controllers/userController";
+import { Protected } from "../middleware/authMiddleware";
 
 router.post("/", registerUser);
 router.post("/login", loginUser);
