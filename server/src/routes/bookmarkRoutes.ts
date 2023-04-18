@@ -7,7 +7,7 @@ import {
   updateBookmark,
   singleBookmark,
 } from "../controllers/bookmarkController";
-import { Protected } from "../middleware/authMiddleware";
+import { Protected } from "../src/config/middleware/authMiddleware";
 
 router.get("/", Protected, getBookmark);
 router.post("/add", Protected, addBookmark);
